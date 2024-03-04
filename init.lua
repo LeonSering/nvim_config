@@ -78,6 +78,7 @@ vim.api.nvim_set_hl(0, 'MatchParen', {ctermfg = NONE, ctermbg = 'darkgrey' , cte
 ----------------------------
 ------- KEY MAPPINGS -------
 ----------------------------
+
 -- pressing Enter after { adds a } to the line below
 vim.keymap.set('i', '{<CR>', '{<CR>}<ESC>O')
 
@@ -102,6 +103,7 @@ vim.keymap.set('i', '<C-/>', '<C-o>:CommentToggle<CR>') -- toggle comment
 -- paste
 vim.keymap.set('i', '<C-v>', '<C-r>+') -- paste
 
+
 -- VISUAL MODE --
 vim.keymap.set('v', '<C-c>', '"+y') -- copy
 vim.keymap.set('v', '<C-x>', '"+d') -- copy
@@ -118,6 +120,10 @@ vim.keymap.set('c', '<C-l>', '<Right>')
 vim.keymap.set('c', '<C-s>', '<Bs>') -- delete character under cursor
 vim.keymap.set('c', '<C-x>', '<Del>') -- delete single char on the right of cursor
 -- default setting: <C-u> delete everthing on the left
+
+
+vim.keymap.set('n', '<leader>/', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>') -- open keymappings.md in sidepanel
+vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/init.lua<CR>') -- open init.lua in sidepanel
 
 -- DISABLE KEYS --
 -- disable some unused keys

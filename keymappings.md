@@ -1,4 +1,6 @@
 # Normal Mode
+[space]/ - open this keymappings.md
+[space]\ - open init.lua (config file)
 ## Basic Movement
 h, j, k, l - left, down, up, right
 0 - to first character in line
@@ -9,27 +11,27 @@ gM - middle of line
 H - go to the upper part of the window
 M - go to the middle of the window
 L - go to the lower part of the window
-f{char} : to the next occurence of {char}
-F{char} : to the last occurence of {char}
-t{char} : to the character before the next occurence of {char}
-T{char} : to the character after the last occurence of {char}
-; : repeat last f, F, t or T
-, : repeat last f, F, t or T but reversied
-G : goto the last line
-gg : goto the first line 
-:[N] : goto line N
-[N]% : goto N percent of the file
-w : one word forward
-W : one blank-separated word forward
-e : to the end of the next word
-E : to the end of the next blank-separated word
-b : one word backwards
-B : one blank-sperated word backwards
-) : sentence forward
-( : sentence backwards
-} : paragraph forward
-{ : paragraph backwards
-% : find the next bracket
+f{char} - to the next occurence of {char}
+F{char} - to the last occurence of {char}
+t{char} - to the character before the next occurence of {char}
+T{char} - to the character after the last occurence of {char}
+; - repeat last f, F, t or T
+, - repeat last f, F, t or T but reversied
+G - goto the last line
+gg - goto the first line 
+:[N] - goto line N
+[N]% - goto N percent of the file
+w - one word forward
+W - one blank-separated word forward
+e - to the end of the next word
+E - to the end of the next blank-separated word
+b - one word backwards
+B - one blank-sperated word backwards
+) - sentence forward
+( - sentence backwards
+} - paragraph forward
+{ - paragraph backwards
+% - find the next bracket
 
 ## scrolling
 Ctrl-E - go down a line and scroll window
@@ -220,7 +222,6 @@ Ctrl-[Left] - dissmiss suggestion
 Ctrl-[Right] - ask for suggestion
 Ctrl-[Up] - next suggestion
 Ctrl-[Down] - previous suggestion
-
 
 # Telescope
 [Space]ff - find files
