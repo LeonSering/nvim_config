@@ -1,6 +1,16 @@
 # Normal Mode
+## basic commands
 [space]/ - open this keymappings.md
 [space]\ - open init.lua (config file)
+u - undo
+U - undo all changes on the line (to the last saved version)
+Ctrl-R - redo
+:w - write file
+:q - quit file
+:wq - write and quite file
+:q! - quite file without saving
+K - show help or documentary for the word under the cursor
+
 ## Basic Movement
 h, j, k, l - left, down, up, right
 0 - to first character in line
@@ -46,16 +56,6 @@ zz - center the screen on the cursor
 zt - center the screen on the top
 zb - center the screen on the bottom
 
-## basic commands
-u - undo
-U - undo all changes on the line (to the last saved version)
-Ctrl-R - redo
-:w - write file
-:q - quit file
-:wq - write and quite file
-:q! - quite file without saving
-K - show help or documentary for the word under the cursor
-
 ## copy and past
 p - paste after cursor
 P - past before cursor
@@ -64,6 +64,7 @@ yy - yank line
 Y - yank until end of line
 "{char} - select a register for the next yank or past command (default is * (middle mouse))
 :reg - show the content of all registers
+
 #### registers
 0 or " - yank register
 1-9 - yank history
@@ -94,6 +95,22 @@ J - join lines (in visual mode, joins all selected lines)
 cw - delete the next word and go to insert mode (can use other motions as well)
 C - delete everthing on right and go to insert mode
 cc or S - delete line and go to insert mode
+
+## inside/around commands
+ciw or Enter - change word under cursor
+ci( or [space]Enter - change inside parentheses
+cis - change current sentence 
+cip - change current paragraph
+
+[brackets] = (, ), [, ], {, }, <, >, ", ', `, also w for word, s for sentence, p for paragraph
+ci[bracket] - change inside brackets
+ca[bracket] - change around brackets
+di[bracket] - delete inside brackets
+da[bracket] - delete around brackets
+yi[bracket] - yank inside brackets
+ya[bracket] - yank around brackets
+vi[bracket] - select inside brackets
+va[bracket] - select around brackets
 
 ## enter visual mode
 v - enter visual mode
@@ -267,3 +284,13 @@ Ctrl-Up,Ctrl-Down - last and next history
 [Space]SW - search current word in working directory (normal mode)
 [Space]sr - search and replace in current file (normal or visual mode)
 [Space]sr - search current word in current file (normal mode)
+#### in spectre
+? - show mappings
+Enter - open file
+ti - toggle ignore case
+dd - toggle item
+[Space]r - replace current item
+[Space]R - replace all marked items
+
+# GitBlame
+[Space]gb - git blame

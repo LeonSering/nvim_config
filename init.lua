@@ -19,18 +19,19 @@ vim.opt.rtp:prepend(lazypath)
 -- Plugins:
 require("lazy").setup(
 {
-  'numToStr/Comment.nvim',opts = {mappings = {basic = false, extra = false,}},lazy = false, -- for commentart
+  'numToStr/Comment.nvim', -- for commentary
   'petertriho/nvim-scrollbar', -- scrollbar on right side
   'kevinhwang91/nvim-hlslens', -- better in page search with / and ?
   'chentoast/marks.nvim', -- better marks
   'github/copilot.vim', -- copilot autocompletion
-  'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end,
   'nvim-lua/plenary.nvim', -- required for telescope
   'nvim-telescope/telescope.nvim', tag = '0.1.5', dependencies = { 'nvim-lua/plenary.nvim' },
+  -- 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
   'nvim-treesitter/nvim-treesitter', -- syntax highlighting requires nvim 0.8
-  -- 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
   'nvim-tree/nvim-web-devicons', -- for spectre
   'nvim-pack/nvim-spectre', -- search and replace
+  'f-person/git-blame.nvim', -- git blame on <leader>gb
+  'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end,
   --[[ 
   "williamboman/mason.nvim", -- package manager for language servers
   'williamboman/mason-lspconfig.nvim', -- language server configurations
@@ -46,6 +47,7 @@ require("lazy").setup(
 -- set <leader> key to <space>
 vim.g.mapleader = " "
 vim.opt.autowriteall = true -- auto save
+vim.opt.hidden = false -- allow switching between buffers without saving
 vim.opt.undofile = true -- save undo history between sessions
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -121,7 +123,9 @@ vim.keymap.set('c', '<C-s>', '<Bs>') -- delete character under cursor
 vim.keymap.set('c', '<C-x>', '<Del>') -- delete single char on the right of cursor
 -- default setting: <C-u> delete everthing on the left
 
-
+-- NORMAL MODE --
+vim.keymap.set('n', '<Cr>', 'ciw') -- change word under cursor
+vim.keymap.set('n', '<leader><Cr>', 'ci(') -- change text inside parenthesis
 vim.keymap.set('n', '<leader>/', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>') -- open keymappings.md in sidepanel
 vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/init.lua<CR>') -- open init.lua in sidepanel
 
@@ -166,7 +170,12 @@ vim.keymap.set('c', '<Right>', '<Nop>') -- disable Right in insert mode (use <C-
 -- comment --
 -------------
 
-require('Comment').setup()
+require('Comment').setup({
+  mappings = {
+    basic = false,
+    extra = false,
+  },
+})
 vim.keymap.set('n', '<C-k>', '<Plug>(comment_toggle_linewise_current)<up>')
 vim.keymap.set('n', '<C-j>', '<Plug>(comment_toggle_linewise_current)<down>')
 vim.keymap.set('x', '<C-k>', '<Plug>(comment_toggle_linewise_visual)<up>')
@@ -397,6 +406,9 @@ require('telescope').setup {
     commands = {
       initial_mode = "insert",
     },
+    keymaps = {
+      initial_mode = "insert",
+    },
     builtin = {
       initial_mode = "insert",
     },
@@ -432,7 +444,18 @@ vim.api.nvim_set_hl(0, 'TelescopeMatching', {ctermfg = 'darkyellow', bold = true
 -------------
 
 require('spectre').setup({
-	highlight = {ui = "String", search = "DiffChange", replace = "DiffDelete"}
+	highlight = {ui = "String", search = "DiffChange", replace = "DiffDelete"},
+  mapping = {
+    ['run_current_replace'] = {
+      map = "<leader>r",
+    },
+    ['toggle_live_update']={
+      desc = "toggle live update"
+    },
+    ['send_to_qf'] = {
+      desc = "all items to quickfix"
+    },
+  }
 })
 
 vim.keymap.set('n', '<leader>SR', function() require("spectre").open() end, {
@@ -455,6 +478,18 @@ vim.keymap.set('v', '<leader>sr', 'y<cmd>lua require("spectre").open_file_search
 })
 
 
+--------------
+-- GitBlame --
+--------------
+
+require('gitblame').setup {
+     --Note how the `gitblame_` prefix is omitted in `setup`
+    enabled = false,
+    message_template = '* <sha> <summary> • <author> • <date>',
+    highlight_group = "Question",
+    delay = 0,
+}
+vim.api.nvim_set_keymap('n', '<Leader>gb', '<Cmd>GitBlameToggle<CR>', kopts)
 
 
 -- which-key
@@ -476,3 +511,4 @@ rt.setup({
   },
 })
 ]]
+
