@@ -24,14 +24,28 @@ require("lazy").setup(
   'kevinhwang91/nvim-hlslens', -- better in page search with / and ?
   'chentoast/marks.nvim', -- better marks
   'github/copilot.vim', -- copilot autocompletion
-  'nvim-lua/plenary.nvim', -- required for telescope
-  'nvim-telescope/telescope.nvim', tag = '0.1.5', dependencies = { 'nvim-lua/plenary.nvim' },
-  -- 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-  'nvim-treesitter/nvim-treesitter', -- syntax highlighting requires nvim 0.8
-  'nvim-tree/nvim-web-devicons', -- for spectre
-  'nvim-pack/nvim-spectre', -- search and replace
+  {'nvim-telescope/telescope.nvim', tag = '0.1.5', dependencies = { -- fuzzy finder
+    'nvim-lua/plenary.nvim', 
+    'nvim-treesitter/nvim-treesitter', -- for syntax highlighting
+    'nvim-tree/nvim-web-devicons', -- for icons
+    {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'}, -- fzf backend, 
+    -- if fzf not found: Do :Lazy -> Enter on telescope-fzf-native.nvim -> gb to build
+  }},
+  {'nvim-pack/nvim-spectre', dependencies = { -- search and replace
+    'nvim-lua/plenary.nvim', 
+    'nvim-tree/nvim-web-devicons', -- for icons
+  }},
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' }
+  },
   'f-person/git-blame.nvim', -- git blame on <leader>gb
-  'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end,
+  {'stevearc/aerial.nvim', dependencies = {
+    'nvim-treesitter/nvim-treesitter',
+    'nvim-tree/nvim-web-devicons',
+  }},
+  'rust-lang/rust.vim' -- running RustFmt and other short cuts
+  -- {'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end},
   --[[ 
   "williamboman/mason.nvim", -- package manager for language servers
   'williamboman/mason-lspconfig.nvim', -- language server configurations
@@ -81,10 +95,11 @@ vim.api.nvim_set_hl(0, 'MatchParen', {ctermfg = NONE, ctermbg = 'darkgrey' , cte
 ------- KEY MAPPINGS -------
 ----------------------------
 
--- pressing Enter after { adds a } to the line below
-vim.keymap.set('i', '{<CR>', '{<CR>}<ESC>O')
 
 -- INSERT MODE --
+
+vim.keymap.set('i', '{<CR>', '{<CR>}<ESC>O') -- pressing Enter after { adds a } to the line below
+
 -- movement
 vim.keymap.set('i', '<C-h>', '<Left>')
 vim.keymap.set('i', '<C-j>', '<Down>')
@@ -108,7 +123,8 @@ vim.keymap.set('i', '<C-v>', '<C-r>+') -- paste
 
 -- VISUAL MODE --
 vim.keymap.set('v', '<C-c>', '"+y') -- copy
-vim.keymap.set('v', '<C-x>', '"+d') -- copy
+vim.keymap.set('v', '<C-x>', '"+d') -- cut 
+vim.keymap.set('v', 'y', 'ygv<esc>') -- keep cursor at current position after yank
 
 
 -- COMMAND LINE MODE --
@@ -128,6 +144,14 @@ vim.keymap.set('n', '<Cr>', 'ciw') -- change word under cursor
 vim.keymap.set('n', '<leader><Cr>', 'ci(') -- change text inside parenthesis
 vim.keymap.set('n', '<leader>/', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>') -- open keymappings.md in sidepanel
 vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/init.lua<CR>') -- open init.lua in sidepanel
+vim.keymap.set('n', '<C-d>', '<C-d>zz') -- move down half a page and center cursor
+vim.keymap.set('n', '<C-u>', '<C-u>zz') -- move down half a page and center cursor
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "json",
+  callback = function(args)
+    vim.keymap.set('n', '<leader>p', ':%!jq . %<CR>') -- format json with jq
+  end
+})
 
 -- DISABLE KEYS --
 -- disable some unused keys
@@ -300,6 +324,7 @@ vim.keymap.set('i', '<Tab>', '\t') -- disable tab to accept copilot suggestion
 ---------------
 
 local builtin = require('telescope.builtin')
+vim.keymap.set('n', '\\', builtin.resume, {})
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fo', builtin.oldfiles, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
@@ -363,6 +388,7 @@ require('telescope').setup {
         width = 0.5,
         height = 0.8,
       },
+      no_ignore = true,
     },
     oldfiles = {
       theme = "dropdown",
@@ -435,7 +461,7 @@ require('telescope').setup {
 
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
--- require('telescope').load_extension('fzf')
+require("telescope").load_extension("fzf")
 
 vim.api.nvim_set_hl(0, 'TelescopeMatching', {ctermfg = 'darkyellow', bold = true}) -- highlight matching text
 
@@ -478,6 +504,30 @@ vim.keymap.set('v', '<leader>sr', 'y<cmd>lua require("spectre").open_file_search
 })
 
 
+-------------
+-- Lualine --
+-------------
+
+require('lualine').setup {
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {
+      {'filename', path = 1}
+    },
+    lualine_x = {
+      {function()
+        local space = vim.fn.search([[\s\+$]], 'nwc')
+        return space ~= 0 and "TW:"..space or ""
+        end, color = {fg = 'red'}}, 
+      'encoding', 
+      'filetype'
+    },
+    lualine_y = {'progress'},
+    lualine_z = {'location'},
+  },
+}
+
 --------------
 -- GitBlame --
 --------------
@@ -492,7 +542,52 @@ require('gitblame').setup {
 vim.api.nvim_set_keymap('n', '<Leader>gb', '<Cmd>GitBlameToggle<CR>', kopts)
 
 
--- which-key
+------------
+-- Aerial --
+------------
+
+require("aerial").setup({
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+  on_attach = function(bufnr)
+    -- Jump forwards/backwards with '{' and '}'
+    vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+    vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+  end,
+  layout = {placement = "edge"},
+  close_automatic_events = {"unfocus", "switch_buffer"},
+  autojump = true,
+  close_on_select = true,
+})
+-- You probably also want to set a keymap to toggle aerial
+vim.keymap.set({"n", "v"}, "<C-a>", "<cmd>AerialToggle<CR>")
+vim.keymap.set("i", "<C-a>", "<Esc><cmd>AerialToggle<CR>")
+-- TODO
+-- vim.keymap.set('n', '<leader>a', require("telescope").extensions.aerial.aerial(), {})
+
+----------
+-- Rust -- 
+----------
+
+-- run RustFmt on the current file only
+-- cargo test and scroll to the bottom of the vim-terminal
+vim.keymap.set('n', '<space>t', ':RustTest<CR>G') -- run test under cursor
+vim.keymap.set('n', '<space>T', ':RustTest!<CR>G') -- run all tests
+
+-- cargo run and scroll to the bottom of the vim-terminal
+vim.keymap.set('n', '<space>rr', ':Crun<CR>G')
+-- cargo build and scroll to the bottom of the vim-terminal
+vim.keymap.set('n', '<space>rb', ':Cbuild<CR>G')
+
+-- RustFmt
+vim.keymap.set('n', '<space>p', ':RustFmt<CR>')
+
+vim.g.rustfmt_autosave = 1 -- automatic run :RustFmt on save
+
+
+---------------
+-- which-key --
+---------------
+
 -- require("which-key").setup ()
 
 --[[

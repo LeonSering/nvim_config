@@ -1,7 +1,7 @@
 # Normal Mode
 ## basic commands
-[space]/ - open this keymappings.md
-[space]\ - open init.lua (config file)
+[Space]/ - open this keymappings.md
+[Space]\ - open init.lua (config file)
 u - undo
 U - undo all changes on the line (to the last saved version)
 Ctrl-R - redo
@@ -10,6 +10,7 @@ Ctrl-R - redo
 :wq - write and quite file
 :q! - quite file without saving
 K - show help or documentary for the word under the cursor
+[Space]p - format code (supports json, rs so far)
 
 ## Basic Movement
 h, j, k, l - left, down, up, right
@@ -28,7 +29,7 @@ T{char} - to the character after the last occurence of {char}
 ; - repeat last f, F, t or T
 , - repeat last f, F, t or T but reversied
 G - goto the last line
-gg - goto the first line 
+gg - goto the first line
 :[N] - goto line N
 [N]% - goto N percent of the file
 w - one word forward
@@ -98,8 +99,8 @@ cc or S - delete line and go to insert mode
 
 ## inside/around commands
 ciw or Enter - change word under cursor
-ci( or [space]Enter - change inside parentheses
-cis - change current sentence 
+ci( or [Space]Enter - change inside parentheses
+cis - change current sentence
 cip - change current paragraph
 
 [brackets] = (, ), [, ], {, }, <, >, ", ', `, also w for word, s for sentence, p for paragraph
@@ -241,14 +242,15 @@ Ctrl-[Up] - next suggestion
 Ctrl-[Down] - previous suggestion
 
 # Telescope
+\ - resume last telescope picker
 [Space]ff - find files
 [Space]fo - select old files
 [Space]fg - live grep in working directory
-[Space]fu - fuzzy find in current file 
+[Space]fu - fuzzy find in current file
 [Space]fb - select buffers
 [Space]fh - find help tags
 [Space]fc - select from command history
-[Space]f/ - select from search history 
+[Space]f/ - select from search history
 [Space]ft - find tags
 [Space]fi - find tags in curent buffer
 [Space]fm - select marks
@@ -268,7 +270,7 @@ Ctrl-[Down] - previous suggestion
 #### insert mode:
 Enter - open file
 Ctrl-V - open file in vertical split
-Ctrl-{J,K} - move up and down in insert mode 
+Ctrl-{J,K} - move up and down in insert mode
 Ctrl-Up,Ctrl-Down - last and next history
 Ctrl-? - show help
 Esc - go to normal mode
@@ -294,3 +296,15 @@ dd - toggle item
 
 # GitBlame
 [Space]gb - git blame
+
+# Aerial
+[Ctrl-a] - toggle aerial view (also in visual and insert mode)
+\a - open telescope picker for aerial
+
+# Rust
+[Space]t - runt test under cursor
+[Space]T - run all tests
+[Space]rb - build project
+[Space]rr - run project
+[Space]p - format code with RustFmt
+
