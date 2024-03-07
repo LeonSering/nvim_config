@@ -18,6 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Plugins:
 require("lazy").setup({
+  { "anuvyklack/windows.nvim", dependencies = "anuvyklack/middleclass", }, -- enlarge current window, equal all others
   'numToStr/Comment.nvim', -- for commentary
   'petertriho/nvim-scrollbar', -- scrollbar on right side
   'kevinhwang91/nvim-hlslens', -- better in page search with / and ?
@@ -43,7 +44,8 @@ require("lazy").setup({
     'nvim-treesitter/nvim-treesitter',
     'nvim-tree/nvim-web-devicons',
   }},
-  'rust-lang/rust.vim' -- running RustFmt and other short cuts
+  'rust-lang/rust.vim', -- running RustFmt and other short cuts
+  'nvim-tree/nvim-tree.lua', -- file explorer
   -- {'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end},
   --[[ 
   "williamboman/mason.nvim", -- package manager for language servers
@@ -57,14 +59,18 @@ require("lazy").setup({
 --- BASIC CONFIGURATION ----
 ----------------------------
 
+-- disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- active window width is >=130 all other windows are equally sized
-vim.opt.winwidth = 130
-vim.cmd([[
-  augroup AutoSwitchWindows
-    autocmd!
-    autocmd WinEnter * wincmd =
-  augroup END
-]])
+--[[ vim.opt.winwidth = 130
+vim.api.nvim_create_autocmd("WinEnter", {
+  pattern = "*",
+  callback = function()
+    vim.cmd("wincmd =")
+  end
+}) ]]
 
 vim.g.mapleader = " " -- set <leader> key to <space>
 vim.opt.autowriteall = true -- auto save
@@ -135,7 +141,6 @@ vim.api.nvim_set_hl(0, 'MatchParen', {ctermbg = 'darkgray', bg = 'DarkGray', bol
 ----------------------------
 ------- KEY MAPPINGS -------
 ----------------------------
-
 
 -- INSERT MODE / COMMAND LINE MODE --
 
@@ -238,6 +243,13 @@ vim.keymap.set('c', '<Right>', '<Nop>') -- disable Right in insert mode (use <C-
 ----------------------------
 ------- PLUGIN SETUP -------
 ----------------------------
+
+-------------
+-- Windows --
+-------------
+
+require('windows').setup()
+
 
 -------------
 -- comment --
@@ -639,6 +651,55 @@ vim.keymap.set('n', '<space>p', ':RustFmt<CR>')
 
 vim.g.rustfmt_autosave = 1 -- automatic run :RustFmt on save
 
+---------------
+-- Nvim-tree --
+---------------
+local function my_on_attach(bufnr)
+  local api = require "nvim-tree.api"
+
+  local function opts(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  -- default mappings
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- custom mappings
+  vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
+  vim.keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
+  vim.keymap.set('n', 'v',     api.node.open.vertical,                opts('Open: Vertical Split'))
+  vim.keymap.set('n', '<C-n>',     api.tree.close,                opts('Open: Vertical Split'))
+end
+
+require("nvim-tree").setup({
+  on_attach = my_on_attach,
+  auto_close = true,
+  actions = {
+    open_file = {
+        quit_on_open = true,
+    },
+  },
+  view = {
+    width = 40,
+  }
+  --[[ sort = {
+    sorter = "case_sensitive",
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  }, ]]
+})
+
+-- close if nvim-tree is the last buffer
+vim.api.nvim_create_autocmd('BufEnter', {
+    command = "if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif",
+    nested = true,
+})
+
+vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeFindFile<CR>')
 
 ---------------
 -- which-key --
