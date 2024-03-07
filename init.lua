@@ -17,8 +17,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Plugins:
-require("lazy").setup(
-{
+require("lazy").setup({
   'numToStr/Comment.nvim', -- for commentary
   'petertriho/nvim-scrollbar', -- scrollbar on right side
   'kevinhwang91/nvim-hlslens', -- better in page search with / and ?
@@ -58,37 +57,79 @@ require("lazy").setup(
 --- BASIC CONFIGURATION ----
 ----------------------------
 
--- set <leader> key to <space>
-vim.g.mapleader = " "
+-- active window width is >=130 all other windows are equally sized
+vim.opt.winwidth = 130
+vim.cmd([[
+  augroup AutoSwitchWindows
+    autocmd!
+    autocmd WinEnter * wincmd =
+  augroup END
+]])
+
+vim.g.mapleader = " " -- set <leader> key to <space>
 vim.opt.autowriteall = true -- auto save
 vim.opt.hidden = false -- allow switching between buffers without saving
 vim.opt.undofile = true -- save undo history between sessions
 vim.opt.splitright = true
 vim.opt.splitbelow = true
--- vim.opt.ctermcolors = true -- enable for colorschemes
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.clipboard:append("unnamed") -- yanks into "middle-mouse" clipboard
 
+vim.opt.scrolloff = 4 -- always show lines below coursor
+
+
+-------------------------
+------ COLORSCHEME ------
+-------------------------
+
+-- vim.opt.termguicolors = true -- enable for colorschemes
+-- vim.cmd("syntax on")
+-- vim.cmd("colorscheme torte")
+
+local transparent_background = function()
+  vim.api.nvim_set_hl(0, 'Normal', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'NonText', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'TelescopeNormal', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'TelescopeBorder', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'NormalNC', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'NormalSB', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'NormalFloat', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'SignColumn', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'VertSplit', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'LineNr', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'CursorLineNr', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'CursorLine', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'Folded', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'SpecialKey', {bg = 'None', ctermbg = 'none'}) -- background color
+end
+
+transparent_background()
+vim.api.nvim_create_autocmd({"ColorScheme"}, {
+  pattern = "*",
+  callback = function()
+    transparent_background()
+  end
+})
+
 -- line numbers
 vim.opt.number = true
-vim.api.nvim_set_hl(0, 'LineNr', {ctermfg = 'grey', bold = false})
+vim.api.nvim_set_hl(0, 'LineNr', {ctermfg = 'gray', fg = 'Gray', bold = false})
 
--- always show lines below coursor
-vim.opt.scrolloff = 4
 
 -- highlight the cursor line
 vim.opt.cursorline = true
-vim.api.nvim_set_hl(0, 'CursorLineNr', {ctermfg = 'white', bold = true })
+vim.api.nvim_set_hl(0, 'CursorLineNr', {ctermfg = 'white', fg = 'white', bold = true })
 vim.opt.cursorlineopt = "number"
 
--- remove sign column background
-vim.api.nvim_set_hl(0, 'SignColumn', {ctermbg = NONE}) 
+-- highlight pmenu
+vim.api.nvim_set_hl(0, 'Pmenu', {ctermfg = 'white', ctermbg = 'black', fg = 'White', bg = 'Black', bold = false })
+-- vim.api.nvim_set_hl(0, 'Pmenu', {ctermfg = 'white', ctermbg = 'darkgrey', fg = 'White', bg = 'DarkGray', bold = false })
 
 -- color of matching parenthesis
-vim.api.nvim_set_hl(0, 'MatchParen', {ctermfg = NONE, ctermbg = 'darkgrey' , cterm = NONE, bold = true }) 
+vim.api.nvim_set_hl(0, 'MatchParen', {ctermbg = 'darkgray', bg = 'DarkGray', bold = true }) 
 
 
 ----------------------------
@@ -96,21 +137,28 @@ vim.api.nvim_set_hl(0, 'MatchParen', {ctermfg = NONE, ctermbg = 'darkgrey' , cte
 ----------------------------
 
 
--- INSERT MODE --
+-- INSERT MODE / COMMAND LINE MODE --
 
 vim.keymap.set('i', '{<CR>', '{<CR>}<ESC>O') -- pressing Enter after { adds a } to the line below
 
 -- movement
-vim.keymap.set('i', '<C-h>', '<Left>')
-vim.keymap.set('i', '<C-j>', '<Down>')
-vim.keymap.set('i', '<C-k>', '<Up>')
-vim.keymap.set('i', '<C-l>', '<Right>')
+vim.keymap.set({'i', 'c'}, '<C-h>', '<Left>')
+vim.keymap.set({'i', 'c'}, '<C-j>', '<Down>')
+vim.keymap.set({'i', 'c'}, '<C-k>', '<Up>')
+vim.keymap.set({'i', 'c'}, '<C-l>', '<Right>')
 
 -- deletion
-vim.keymap.set('i', '<C-s>', '<Bs>') -- delete character under cursor
-vim.keymap.set('i', '<C-b>', '<C-o>db') -- delete previous word
+vim.keymap.set({'i', 'c'}, '<C-s>', '<Bs>') -- delete character under cursor
+vim.keymap.set('i', '<C-b>', 
+function()
+  if vim.api.nvim_win_get_cursor(0)[2] == vim.api.nvim_get_current_line():len() then
+    return "<C-o>vbd"
+  else
+    return "<C-o>db"
+  end
+end, {expr = true}) -- delete previous word
 -- default setting: <C-u> delete everthing on the left
-vim.keymap.set('i', '<C-x>', '<Del>') -- delete single char on the right of cursor
+vim.keymap.set({'i', 'c'}, '<C-x>', '<Del>') -- delete single char on the right of cursor
 vim.keymap.set('i', '<C-w>', '<C-o>dw') -- delete next word
 vim.keymap.set('i', '<C-a>', '<C-o>d$') -- delete to end of line
 
@@ -118,7 +166,7 @@ vim.keymap.set('i', '<C-a>', '<C-o>d$') -- delete to end of line
 vim.keymap.set('i', '<C-/>', '<C-o>:CommentToggle<CR>') -- toggle comment
 
 -- paste
-vim.keymap.set('i', '<C-v>', '<C-r>+') -- paste
+vim.keymap.set({'i', 'c'}, '<C-v>', '<C-r>+') -- paste
 
 
 -- VISUAL MODE --
@@ -127,21 +175,22 @@ vim.keymap.set('v', '<C-x>', '"+d') -- cut
 vim.keymap.set('v', 'y', 'ygv<esc>') -- keep cursor at current position after yank
 
 
--- COMMAND LINE MODE --
--- movement
-vim.keymap.set('c', '<C-h>', '<Left>')
-vim.keymap.set('c', '<C-j>', '<Down>')
-vim.keymap.set('c', '<C-k>', '<Up>')
-vim.keymap.set('c', '<C-l>', '<Right>')
-
--- deletion
-vim.keymap.set('c', '<C-s>', '<Bs>') -- delete character under cursor
-vim.keymap.set('c', '<C-x>', '<Del>') -- delete single char on the right of cursor
--- default setting: <C-u> delete everthing on the left
-
 -- NORMAL MODE --
 vim.keymap.set('n', '<Cr>', 'ciw') -- change word under cursor
+vim.keymap.set('n', '<Bs>', 'ch') -- change word under cursor
 vim.keymap.set('n', '<leader><Cr>', 'ci(') -- change text inside parenthesis
+vim.keymap.set('n', '<leader>(', 'ci(') -- change text inside parenthesis
+vim.keymap.set('n', '<leader>)', 'ci)') -- change text inside parenthesis
+vim.keymap.set('n', '<leader>[', 'ci[') -- change text inside brackets
+vim.keymap.set('n', '<leader>]', 'ci]') -- change text inside brackets
+vim.keymap.set('n', '<leader>{', 'ci{') -- change text inside curly brackets
+vim.keymap.set('n', '<leader>{', 'ci}') -- change text inside curly brackets
+vim.keymap.set('n', '<leader><', 'ci<') -- change text inside tag
+vim.keymap.set('n', '<leader>>', 'ci>') -- change text inside tag
+vim.keymap.set('n', '<leader>"', 'ci"') -- change text inside double quotes
+vim.keymap.set('n', "<leader>'", "ci'") -- change text inside single quotes
+vim.keymap.set('n', '<leader>`', 'ci`') -- change text inside double quotes
+
 vim.keymap.set('n', '<leader>/', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>') -- open keymappings.md in sidepanel
 vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/init.lua<CR>') -- open init.lua in sidepanel
 vim.keymap.set('n', '<C-d>', '<C-d>zz') -- move down half a page and center cursor
@@ -156,7 +205,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- DISABLE KEYS --
 -- disable some unused keys
 vim.keymap.set('n', '!', '<Nop>') -- disable ! in normal mode
-vim.keymap.set('n', 'q:', '<Nop>') -- disable q: in normal mode
+vim.keymap.set({'n', 'v'}, 'q:', '<Nop>') -- disable q: in normal and visual mode
 vim.keymap.set('n', 'q/', '<Nop>') -- disable q/ in normal mode
 vim.keymap.set('n', 'q?', '<Nop>') -- disable q? in normal mode
 vim.keymap.set('n', 'ZZ', '<Nop>') -- disable ZZ in normal mode
@@ -246,9 +295,9 @@ vim.keymap.set('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
 vim.keymap.set('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
 
 -- highlighting
-vim.api.nvim_set_hl(0, 'HlSearchNear', {ctermfg = 'green', ctermbg = 'black', bold = true })
-vim.api.nvim_set_hl(0, 'IncSearch', {ctermfg = 'black', ctermbg = 'green' , bold = true }) -- nearest match
-vim.api.nvim_set_hl(0, 'Search', {ctermfg = 'black', ctermbg = 'lightgrey' , bold = true }) -- other matches
+vim.api.nvim_set_hl(0, 'HlSearchNear', {ctermfg = 'green', ctermbg = 'black', fg = 'LightGreen', bg = 'Black', bold = true })
+vim.api.nvim_set_hl(0, 'IncSearch', {ctermfg = 'black', ctermbg = 'green', fg = 'Black', bg = 'LightGreen', bold = true }) -- nearest match
+vim.api.nvim_set_hl(0, 'Search', {ctermfg = 'black', ctermbg = 'lightgrey', fg = 'Black', bg = 'LightGray', bold = true }) -- other matches
 
 
 ---------------
@@ -262,12 +311,12 @@ require("scrollbar").setup({
     },
     marks = {
         Cursor = {text = "◉",color_nr = 15},
-        Search = {color_nr = 10}, -- green
-        Error = {color_nr = 9}, -- red
-        Warn = {color_nr = 11}, -- yellow
-        Info = {color_nr = 14}, -- cyan
-        Hint = {color_nr = 15}, -- white
-        Misc = {color_nr = 15}, -- white
+        Search = {color_nr = 'green', color = 'Green'},
+        Error = {color_nr = 'red', color = 'Red'},
+        Warn = {color_nr = 'yellow', color = 'Yellow'},
+        Info = {color_nr = 'cyan', color = 'Cyan'},
+        Hint = {color_nr = 'white', color = 'White'},
+        Misc = {color_nr = 'white', color = 'White'},
     },
     handlers = {
         search = true, -- Requires hlslens
@@ -299,8 +348,8 @@ require('marks').setup {
   -- default 10.
   sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
 }
-vim.api.nvim_set_hl(0, 'MarkSignHl', {ctermbg = 'none', ctermfg = 'grey', bold = true})
-vim.api.nvim_set_hl(0, 'MarkSignNumHl', {ctermbg = 'none', ctermfg = 'none'})
+vim.api.nvim_set_hl(0, 'MarkSignHl', {ctermbg = 'none', ctermfg = 'gray', bg = 'None', fg = 'Gray', bold = true})
+vim.api.nvim_set_hl(0, 'MarkSignNumHl', {ctermbg = 'none', ctermfg = 'none' , bg = 'None', fg = 'None'})
 
 
 --------------------
@@ -463,7 +512,7 @@ require('telescope').setup {
 -- load_extension, somewhere after setup function:
 require("telescope").load_extension("fzf")
 
-vim.api.nvim_set_hl(0, 'TelescopeMatching', {ctermfg = 'darkyellow', bold = true}) -- highlight matching text
+vim.api.nvim_set_hl(0, 'TelescopeMatching', {ctermfg = 'darkyellow', fg = 'Yellow', bold = true}) -- highlight matching text
 
 -------------
 -- Spectre --
@@ -509,11 +558,12 @@ vim.keymap.set('v', '<leader>sr', 'y<cmd>lua require("spectre").open_file_search
 -------------
 
 require('lualine').setup {
+  -- options = {theme = 'papercolor_dark'},
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch', 'diff', 'diagnostics'},
     lualine_c = {
-      {'filename', path = 1}
+      {'filename', path = 1, color = {fg = 'lightgrey'}},
     },
     lualine_x = {
       {function()
@@ -525,6 +575,12 @@ require('lualine').setup {
     },
     lualine_y = {'progress'},
     lualine_z = {'location'},
+  },
+  inactive_sections = {
+    lualine_c = {
+      {'filename', path = 1, color = {fg = 'lightgrey'}},
+    },
+    lualine_x = {},
   },
 }
 

@@ -98,13 +98,13 @@ C - delete everthing on right and go to insert mode
 cc or S - delete line and go to insert mode
 
 ## inside/around commands
-ciw or Enter - change word under cursor
-ci( or [Space]Enter - change inside parentheses
+Enter or ciw - change word under cursor
+[Space]Enter ci( - change inside parentheses
 cis - change current sentence
 cip - change current paragraph
 
 [brackets] = (, ), [, ], {, }, <, >, ", ', `, also w for word, s for sentence, p for paragraph
-ci[bracket] - change inside brackets
+[space][bracket] or ci[bracket] - change inside brackets
 ca[bracket] - change around brackets
 di[bracket] - delete inside brackets
 da[bracket] - delete around brackets
