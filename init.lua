@@ -18,7 +18,9 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Plugins:
 require("lazy").setup({
-  { "anuvyklack/windows.nvim", dependencies = "anuvyklack/middleclass", }, -- enlarge current window, equal all others
+  { 'anuvyklack/windows.nvim', dependencies = { -- enlarge current window, equal all others
+    'anuvyklack/middleclass', 
+  }},
   'numToStr/Comment.nvim', -- for commentary
   'petertriho/nvim-scrollbar', -- scrollbar on right side
   'kevinhwang91/nvim-hlslens', -- better in page search with / and ?
@@ -36,23 +38,32 @@ require("lazy").setup({
     'nvim-tree/nvim-web-devicons', -- for icons
   }},
   {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' }
-  },
+    'nvim-lualine/lualine.nvim', dependencies = {
+      'nvim-tree/nvim-web-devicons',
+  }},
   'f-person/git-blame.nvim', -- git blame on <leader>gb
   {'stevearc/aerial.nvim', dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'nvim-tree/nvim-web-devicons',
   }},
+  { 'smoka7/hop.nvim', version = "*", opts = {}, },
   'rust-lang/rust.vim', -- running RustFmt and other short cuts
   'nvim-tree/nvim-tree.lua', -- file explorer
   -- {'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end},
-  --[[
   "williamboman/mason.nvim", -- package manager for language servers
   'williamboman/mason-lspconfig.nvim', -- language server configurations
-  'neovim/nvim-lspconfig', -- language server configurations
-  'simrat39/rust-tools.nvim', -- rust tools
-  ]]
+  { 'mrcjkb/rustaceanvim', version = '^4', ft = { 'rust' }, },
+
+ 'hrsh7th/nvim-cmp', -- Completion framework
+ 'hrsh7th/cmp-nvim-lsp', -- LSP completion source
+
+  -- Useful completion sources:
+ 'hrsh7th/cmp-nvim-lua',
+ 'hrsh7th/cmp-nvim-lsp-signature-help',
+ 'hrsh7th/cmp-vsnip',
+ 'hrsh7th/cmp-path',
+ 'hrsh7th/cmp-buffer',
+ 'hrsh7th/vim-vsnip',
 })
 
 ----------------------------
@@ -752,26 +763,142 @@ vim.api.nvim_set_hl(0, 'NvimTreeCursorLine', {ctermbg = 'darkgray', bg = 'DarkGr
 vim.api.nvim_set_hl(0, 'SpellCap', {ctermbg = 'None', bg = 'None', bold = true }) -- Readme.md and toml files
 vim.api.nvim_set_hl(0, 'SpellRare', {ctermbg = 'white', ctermfg = 'black', bg = 'White', fg = 'Black', bold = true }) -- Copies files
 
+---------
+-- hop --
+---------
+
+require("hop").setup({
+  multi_windows = true,
+})
+
+-- place this in one of your configuration file(s)
+local hop = require('hop')
+local directions = require('hop.hint').HintDirection
+vim.keymap.set('n', 'g', function() -- TODO choose different key
+  hop.hint_words({multi_windows = true})
+end, {remap=true})
+vim.keymap.set('', 'f', function()
+  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+end, {remap=true})
+vim.keymap.set('', 'F', function()
+  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+end, {remap=true})
+vim.keymap.set('', 't', function()
+  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+end, {remap=true})
+vim.keymap.set('', 'T', function()
+  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+end, {remap=true})
+
 ---------------
 -- which-key --
 ---------------
 
 -- require("which-key").setup ()
 
---[[
+-----------
+-- mason --
+-----------
+
 require("mason").setup()
 require("mason-lspconfig").setup()
-local rt = require("rust-tools")
+-- to install rust-analyzer run in nvim:
+-- :MasonInstall rust-analyzer codelldb
 
-rt.setup({
-  server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+
+--------------
+-- nvim-cmp --
+--------------
+
+--Set completeopt to have a better completion experience
+-- :help completeopt
+-- menuone: popup even when there's only one match
+-- noinsert: Do not insert text until a selection is made
+-- noselect: Do not select, force to select one from the menu
+-- shortness: avoid showing extra messages when using completion
+-- updatetime: set updatetime for CursorHold
+vim.opt.completeopt = {'menuone', 'noselect', 'noinsert'}
+vim.opt.shortmess = vim.opt.shortmess + { c = true}
+vim.api.nvim_set_option('updatetime', 300) 
+
+-- Fixed column for diagnostics to appear
+-- Show autodiagnostic popup on cursor hover_range
+-- Goto previous / next diagnostic warning / error 
+-- Show inlay_hints more frequently 
+vim.cmd([[
+set signcolumn=yes
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+]])
+
+-- Completion Plugin Setup
+local cmp = require'cmp'
+cmp.setup({
+  -- Enable LSP snippets
+  snippet = {
+    expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
     end,
   },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-S-f>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    })
+  },
+  -- Installed sources:
+  sources = {
+    { name = 'path' },                              -- file paths
+    { name = 'nvim_lsp', keyword_length = 3 },      -- from language server
+    { name = 'nvim_lsp_signature_help'},            -- display function signatures with current parameter emphasized
+    { name = 'nvim_lua', keyword_length = 2},       -- complete neovim's Lua runtime API such vim.lsp.*
+    { name = 'buffer', keyword_length = 2 },        -- source current buffer
+    { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip 
+    { name = 'calc'},                               -- source for math calculation
+  },
+  window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+  },
+  formatting = {
+      fields = {'menu', 'abbr', 'kind'},
+      format = function(entry, item)
+          local menu_icon ={
+              nvim_lsp = 'λ',
+              vsnip = '⋗',
+              buffer = 'Ω',
+              path = '🖫',
+          }
+          item.menu = menu_icon[entry.source.name]
+          return item
+      end,
+  },
 })
-]]
 
+----------------
+-- Treesitter --
+----------------
+
+-- Treesitter Plugin Setup 
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { "lua", "rust", "toml", "json", "yaml", "markdown"},
+  auto_install = true,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting=false,
+  },
+  ident = { enable = true }, 
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = nil,
+  }
+}
