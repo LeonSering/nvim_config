@@ -252,8 +252,10 @@ require('windows').setup({
     winwidth = 50, -- width of current window &textwidth + value
   }
 })
-vim.keymap.set({'n', 'i', 'v'}, '<A-d>', '<cmd>wincmd w<CR>')
 vim.keymap.set({'n', 'i', 'v'}, '<A-a>', '<cmd>wincmd W<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-h>', '<cmd>wincmd W<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-d>', '<cmd>wincmd w<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-l>', '<cmd>wincmd w<CR>')
 vim.keymap.set({'n', 'i', 'v'}, '<A-e>', '<cmd>wincmd v<CR>')
 vim.keymap.set({'n', 'i', 'v'}, '<A-z>', '<cmd>q<CR>')
 vim.keymap.set({'n', 'i', 'v'}, '<A-x>', '<cmd>wincmd R<CR>')

@@ -215,8 +215,8 @@ Ctrl=-x - delete block and yank into register + (system clipboard)
 
 # Windows Control
 ## Custom settings (All Modes)
-Alt-D - go to next window (cyclic)
-Alt-A - go to previous window (cyclic)
+Alt-A or Alt-H - go to previous window (cyclic)
+Alt-D or Alt-L - go to next window (cyclic)
 Alt-E - split window vertically
 Alt-Z - close window
 Alt-X - rotate windows to the left
