@@ -192,7 +192,7 @@ Ctrl-{H,J,K,L} : left, down, up, right
 Ctrl-/ - toggle comment for line
 
 ## inserting
-Ctrl-V{key} - insert {key} literally
+Ctrl-V - paste content of + register (system clipboard)
 Ctrl-R{register} - insert content of register {register}
 
 ## deleting
@@ -213,7 +213,19 @@ Ctrl-/ - toggle comment for block
 Ctrl=-c - yank into register + (system clipboard)
 Ctrl=-x - delete block and yank into register + (system clipboard)
 
-# Windows Control (Normal Mode)
+# Windows Control
+## Custom settings (All Modes)
+Alt-D - go to next window (cyclic)
+Alt-A - go to previous window (cyclic)
+Alt-E - split window vertically
+Alt-Z - close window
+Alt-X - rotate windows to the left
+Alt-C - rotate windows to the right
+Alt-W - maximize current window
+Alt-S - equalize all windows
+Alt-Q - close all other windows
+
+## Default settings (Normal Mode)
 Ctrl-W followed by:
     w - go to next window (Ctrl can be hold)
     l - go to window on the left
@@ -223,7 +235,7 @@ Ctrl-W followed by:
     s - split window horizontal
     v - split window vertically
     n - create new empty window
-    o - make current window the only one (close all others)
+    o - close all other windows
     p - previsou active windows
     r - rotate to the right or upwards
     R - rotate to the left or downwards
@@ -298,8 +310,33 @@ dd - toggle item
 [Space]gb - git blame
 
 # Aerial
-[Ctrl-a] - toggle aerial view (also in visual and insert mode)
+Ctrl-a - toggle aerial view (also in visual and insert mode)
 \a - open telescope picker for aerial
+
+# NvimTree
+Ctrl-n - toggle nvim-tree
+#### in nvim-tree
+? or g? - show mappings
+Enter - open file
+v - open file in vertical split
+r - rename show full path
+Ctrl-R - rename omit base name
+Backspace - Close directory
+Tab - open preview (open but stay in nvim-tree)
+f - start filter
+F - clear filter
+c - copy node
+p - paste node
+d - delete
+R - refresh view
+Ctrl-K - info about node
+Ctrl-] - change root
+a - create new file
+H - toggle hidden files
+I - toggle gitignored files
+P - go to parent directory
+E - expand all
+W - collapse all
 
 # Rust
 [Space]t - runt test under cursor

@@ -71,7 +71,7 @@ vim.api.nvim_create_autocmd("WinEnter", {
     vim.cmd("wincmd =")
   end
 }) ]]
-
+vim.o.equalalways = false
 vim.g.mapleader = " " -- set <leader> key to <space>
 vim.opt.autowriteall = true -- auto save
 vim.opt.hidden = false -- allow switching between buffers without saving
@@ -248,8 +248,20 @@ vim.keymap.set('c', '<Right>', '<Nop>') -- disable Right in insert mode (use <C-
 -- Windows --
 -------------
 
-require('windows').setup()
-
+require('windows').setup({
+  autowidth = {
+    winwidth = 50, -- width of current window &textwidth + value
+  }
+})
+vim.keymap.set({'n', 'i', 'v'}, '<A-d>', '<cmd>wincmd w<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-a>', '<cmd>wincmd W<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-e>', '<cmd>wincmd v<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-z>', '<cmd>q<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-x>', '<cmd>wincmd R<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-c>', '<cmd>wincmd r<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-w>', '<cmd>WindowsMaximize<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-s>', '<cmd>wincmd =<CR>')
+vim.keymap.set({'n', 'i', 'v'}, '<A-q>', '<cmd>wincmd o<CR>')
 
 -------------
 -- comment --
@@ -660,37 +672,61 @@ local function my_on_attach(bufnr)
   local function opts(desc)
     return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
   end
-
   -- default mappings
   api.config.mappings.default_on_attach(bufnr)
-
   -- custom mappings
-  vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
-  vim.keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
-  vim.keymap.set('n', 'v',     api.node.open.vertical,                opts('Open: Vertical Split'))
-  vim.keymap.set('n', '<C-n>',     api.tree.close,                opts('Open: Vertical Split'))
+  -- vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
+  vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+  vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split'))
+  vim.keymap.set('n', 'r', api.fs.rename_full, opts('Rename: Full Path'))
 end
-
+local HEIGHT_RATIO = 0.8 -- You can change this
+local WIDTH_RATIO = 0.5  -- You can change this too
 require("nvim-tree").setup({
   on_attach = my_on_attach,
-  auto_close = true,
   actions = {
     open_file = {
         quit_on_open = true,
+        window_picker = { enable = false },
     },
   },
   view = {
-    width = 40,
-  }
+    relativenumber = true,
+    float = {
+      enable = true,
+      open_win_config = function()
+        local screen_w = vim.opt.columns:get()
+        local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+        local window_w = screen_w * WIDTH_RATIO
+        local window_h = screen_h * HEIGHT_RATIO
+        local window_w_int = math.floor(window_w)
+        local window_h_int = math.floor(window_h)
+        local center_x = (screen_w - window_w) / 2
+        local center_y = ((vim.opt.lines:get() - window_h) / 2)
+                         - vim.opt.cmdheight:get()
+        return {
+          border = "rounded",
+          relative = "editor",
+          row = center_y,
+          col = center_x,
+          width = window_w_int,
+          height = window_h_int,
+        }
+        end,
+    },
+    width = function()
+      return math.floor(vim.opt.columns:get() * WIDTH_RATIO)
+    end,
+  },
   --[[ sort = {
     sorter = "case_sensitive",
   },
   renderer = {
     group_empty = true,
-  },
+  }, ]]
   filters = {
     dotfiles = true,
-  }, ]]
+  },
 })
 
 -- close if nvim-tree is the last buffer
@@ -699,7 +735,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
     nested = true,
 })
 
-vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeFindFile<CR>')
+vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeFindFileToggle<CR>')
 
 ---------------
 -- which-key --
