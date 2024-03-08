@@ -269,7 +269,7 @@ Ctrl-[Down] - previous suggestion
 [Space]fr - select from register
 [Space]fj - select jumplist
 [Space]fq - select quickfix
-[Space]f; - find commands
+[Space]f: - find commands
 [Space]fs - select spell suggestions
 [Space]fk - find keymaps
 [Space]fz - find telescope picker
@@ -336,7 +336,7 @@ H - toggle hidden files
 I - toggle gitignored files
 P - go to parent directory
 E - expand all
-W - collapse all
+W or C - collapse all
 
 # Rust
 [Space]t - runt test under cursor

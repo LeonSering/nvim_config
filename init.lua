@@ -25,14 +25,14 @@ require("lazy").setup({
   'chentoast/marks.nvim', -- better marks
   'github/copilot.vim', -- copilot autocompletion
   {'nvim-telescope/telescope.nvim', tag = '0.1.5', dependencies = { -- fuzzy finder
-    'nvim-lua/plenary.nvim', 
+    'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter', -- for syntax highlighting
     'nvim-tree/nvim-web-devicons', -- for icons
-    {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'}, -- fzf backend, 
+    {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'}, -- fzf backend,
     -- if fzf not found: Do :Lazy -> Enter on telescope-fzf-native.nvim -> gb to build
   }},
   {'nvim-pack/nvim-spectre', dependencies = { -- search and replace
-    'nvim-lua/plenary.nvim', 
+    'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons', -- for icons
   }},
   {
@@ -47,11 +47,11 @@ require("lazy").setup({
   'rust-lang/rust.vim', -- running RustFmt and other short cuts
   'nvim-tree/nvim-tree.lua', -- file explorer
   -- {'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end},
-  --[[ 
+  --[[
   "williamboman/mason.nvim", -- package manager for language servers
   'williamboman/mason-lspconfig.nvim', -- language server configurations
   'neovim/nvim-lspconfig', -- language server configurations
-  'simrat39/rust-tools.nvim', -- rust tools 
+  'simrat39/rust-tools.nvim', -- rust tools
   ]]
 })
 
@@ -105,7 +105,6 @@ local transparent_background = function()
   vim.api.nvim_set_hl(0, 'NormalFloat', {bg = 'None', ctermbg = 'none'}) -- background color
   vim.api.nvim_set_hl(0, 'SignColumn', {bg = 'None', ctermbg = 'none'}) -- background color
   vim.api.nvim_set_hl(0, 'VertSplit', {bg = 'None', ctermbg = 'none'}) -- background color
-  vim.api.nvim_set_hl(0, 'LineNr', {bg = 'None', ctermbg = 'none'}) -- background color
   vim.api.nvim_set_hl(0, 'CursorLineNr', {bg = 'None', ctermbg = 'none'}) -- background color
   vim.api.nvim_set_hl(0, 'CursorLine', {bg = 'None', ctermbg = 'none'}) -- background color
   vim.api.nvim_set_hl(0, 'Folded', {bg = 'None', ctermbg = 'none'}) -- background color
@@ -131,11 +130,11 @@ vim.api.nvim_set_hl(0, 'CursorLineNr', {ctermfg = 'white', fg = 'white', bold = 
 vim.opt.cursorlineopt = "number"
 
 -- highlight pmenu
-vim.api.nvim_set_hl(0, 'Pmenu', {ctermfg = 'white', ctermbg = 'black', fg = 'White', bg = 'Black', bold = false })
--- vim.api.nvim_set_hl(0, 'Pmenu', {ctermfg = 'white', ctermbg = 'darkgrey', fg = 'White', bg = 'DarkGray', bold = false })
+vim.api.nvim_set_hl(0, 'Pmenu', {ctermfg = 'lightgray', ctermbg = 'black', fg = 'LightGray', bg = 'Black', bold = false })
+vim.api.nvim_set_hl(0, 'PmenuSel', {ctermfg = 'white', ctermbg = 'darkgray', fg = 'White', bg = 'DarkGray', bold = false })
 
 -- color of matching parenthesis
-vim.api.nvim_set_hl(0, 'MatchParen', {ctermbg = 'darkgray', bg = 'DarkGray', bold = true }) 
+vim.api.nvim_set_hl(0, 'MatchParen', {ctermbg = 'darkgray', bg = 'DarkGray', bold = true })
 
 
 ----------------------------
@@ -154,7 +153,7 @@ vim.keymap.set({'i', 'c'}, '<C-l>', '<Right>')
 
 -- deletion
 vim.keymap.set({'i', 'c'}, '<C-s>', '<Bs>') -- delete character under cursor
-vim.keymap.set('i', '<C-b>', 
+vim.keymap.set('i', '<C-b>',
 function()
   if vim.api.nvim_win_get_cursor(0)[2] == vim.api.nvim_get_current_line():len() then
     return "<C-o>vbd"
@@ -176,7 +175,7 @@ vim.keymap.set({'i', 'c'}, '<C-v>', '<C-r>+') -- paste
 
 -- VISUAL MODE --
 vim.keymap.set('v', '<C-c>', '"+y') -- copy
-vim.keymap.set('v', '<C-x>', '"+d') -- cut 
+vim.keymap.set('v', '<C-x>', '"+d') -- cut
 vim.keymap.set('v', 'y', 'ygv<esc>') -- keep cursor at current position after yank
 
 
@@ -209,6 +208,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- DISABLE KEYS --
 -- disable some unused keys
+vim.keymap.set('n', '<C-w>', '<Nop>') -- disable <C-w> in normal mode
 vim.keymap.set('n', '!', '<Nop>') -- disable ! in normal mode
 vim.keymap.set({'n', 'v'}, 'q:', '<Nop>') -- disable q: in normal and visual mode
 vim.keymap.set('n', 'q/', '<Nop>') -- disable q/ in normal mode
@@ -235,8 +235,6 @@ vim.keymap.set('i', '<Right>', '<Nop>') -- disable Right in insert mode (use <C-
 vim.keymap.set('c', '<BS>', '<Nop>') -- disable Backspace in insert mode (use <C-s> instead)
 vim.keymap.set('c', '<Del>', '<Nop>') -- disable Backspace in insert mode (use <C-x> instead)
 vim.keymap.set('c', '<Left>', '<Nop>') -- disable Left in insert mode (use <C-h> instead)
-vim.keymap.set('c', '<Down>', '<Nop>') -- disable Down in insert mode (use <C-j> instead)
-vim.keymap.set('c', '<Up>', '<Nop>') -- disable Up in insert mode (use <C-k> instead)
 vim.keymap.set('c', '<Right>', '<Nop>') -- disable Right in insert mode (use <C-l> instead)
 
 
@@ -361,8 +359,8 @@ require('marks').setup {
   cyclic = true,
   -- whether the shada file is updated after modifying uppercase marks. default false
   force_write_shada = false,
-  -- how often (in ms) to redraw signs/recompute mark positions. 
-  -- higher values will have better performance but may cause visual lag, 
+  -- how often (in ms) to redraw signs/recompute mark positions.
+  -- higher values will have better performance but may cause visual lag,
   -- while lower values may cause performance penalties. default 150.
   refresh_interval = 250,
   -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
@@ -412,7 +410,7 @@ vim.keymap.set('n', '<leader>fm', builtin.marks, {})
 vim.keymap.set('n', '<leader>fr', builtin.registers, {})
 vim.keymap.set('n', '<leader>fj', builtin.jumplist, {})
 vim.keymap.set('n', '<leader>fq', builtin.quickfix, {})
-vim.keymap.set('n', '<leader>f;', builtin.commands, {})
+vim.keymap.set('n', '<leader>f:', builtin.commands, {})
 vim.keymap.set('n', '<leader>fs', builtin.spell_suggest, {})
 vim.keymap.set('n', '<leader>fk', builtin.keymaps, {})
 vim.keymap.set('n', '<leader>fz', builtin.builtin, {})
@@ -421,7 +419,7 @@ vim.keymap.set('n', '<leader>fzo', builtin.vim_options, {})
 vim.keymap.set('n', '<leader>fzh', builtin.highlights, {})
 vim.keymap.set('n', '<leader>fza', builtin.autocommands, {})
 
--- TODO lsp picker 
+-- TODO lsp picker
 -- TODO git picker
 -- vim.keymap.set('n', '<leader>fa', function() require('telescope.builtin').live_grep({cwd = '/home/leon/nvim_keymapping/'}) end)
 -- TODO open nvim.md in sidepanel
@@ -593,8 +591,8 @@ require('lualine').setup {
       {function()
         local space = vim.fn.search([[\s\+$]], 'nwc')
         return space ~= 0 and "TW:"..space or ""
-        end, color = {fg = 'red'}}, 
-      'encoding', 
+        end, color = {fg = 'red'}},
+      'encoding',
       'filetype'
     },
     lualine_y = {'progress'},
@@ -645,7 +643,7 @@ vim.keymap.set("i", "<C-a>", "<Esc><cmd>AerialToggle<CR>")
 -- vim.keymap.set('n', '<leader>a', require("telescope").extensions.aerial.aerial(), {})
 
 ----------
--- Rust -- 
+-- Rust --
 ----------
 
 -- run RustFmt on the current file only
@@ -679,10 +677,23 @@ local function my_on_attach(bufnr)
   vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
   vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split'))
   vim.keymap.set('n', 'r', api.fs.rename_full, opts('Rename: Full Path'))
+  vim.keymap.set('n', '<Esc>', api.tree.close, opts('Close'))
+  vim.keymap.set('n', 'C', api.tree.collapse_all, opts('Collapse All'))
+  vim.keymap.set('n', 'f', function()
+    api.tree.expand_all()
+    api.live_filter.start()
+  end, opts('Live Filter: Start'))
+  vim.keymap.set('n', 'F', function()
+    api.tree.collapse_all()
+    api.live_filter.clear()
+  end, opts('Live Filter: Clear'))
 end
 local HEIGHT_RATIO = 0.8 -- You can change this
 local WIDTH_RATIO = 0.5  -- You can change this too
 require("nvim-tree").setup({
+  disable_netrw = true,
+  respect_buf_cwd = true,
+  sync_root_with_cwd = true,
   on_attach = my_on_attach,
   actions = {
     open_file = {
@@ -691,7 +702,6 @@ require("nvim-tree").setup({
     },
   },
   view = {
-    relativenumber = true,
     float = {
       enable = true,
       open_win_config = function()
@@ -718,14 +728,12 @@ require("nvim-tree").setup({
       return math.floor(vim.opt.columns:get() * WIDTH_RATIO)
     end,
   },
-  --[[ sort = {
-    sorter = "case_sensitive",
+  live_filter = {
+    always_show_folders = false,
   },
-  renderer = {
-    group_empty = true,
-  }, ]]
   filters = {
     dotfiles = true,
+    exclude = { ".gitignore" }
   },
 })
 
@@ -736,6 +744,10 @@ vim.api.nvim_create_autocmd('BufEnter', {
 })
 
 vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeFindFileToggle<CR>')
+vim.keymap.set({'i', 'v'}, '<C-n>', '<Esc><Cmd>NvimTreeFindFileToggle<CR>')
+vim.api.nvim_set_hl(0, 'NvimTreeCursorLine', {ctermbg = 'darkgray', bg = 'DarkGray', bold = true })
+vim.api.nvim_set_hl(0, 'SpellCap', {ctermbg = 'None', bg = 'None', bold = true }) -- Readme.md and toml files
+vim.api.nvim_set_hl(0, 'SpellRare', {ctermbg = 'white', ctermfg = 'black', bg = 'White', fg = 'Black', bold = true }) -- Copies files
 
 ---------------
 -- which-key --
