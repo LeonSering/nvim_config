@@ -196,6 +196,7 @@ vim.keymap.set('n', "<leader>'", "ci'") -- change text inside single quotes
 vim.keymap.set('n', '<leader>`', 'ci`') -- change text inside double quotes
 
 vim.keymap.set('n', '<leader>/', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>') -- open keymappings.md in sidepanel
+vim.keymap.set('n', '<leader>?', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>') -- open keymappings.md in sidepanel
 vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/init.lua<CR>') -- open init.lua in sidepanel
 vim.keymap.set('n', '<C-d>', '<C-d>zz') -- move down half a page and center cursor
 vim.keymap.set('n', '<C-u>', '<C-u>zz') -- move down half a page and center cursor

@@ -1,6 +1,6 @@
 # Normal Mode
 ## basic commands
-[Space]/ - open this keymappings.md
+[Space]/ or [Space]? - open this keymappings.md
 [Space]\ - open init.lua (config file)
 u - undo
 U - undo all changes on the line (to the last saved version)
