@@ -22,12 +22,11 @@ gM - middle of line
 H - go to the upper part of the window
 M - go to the middle of the window
 L - go to the lower part of the window
-f{char} - to the next occurence of {char}
-F{char} - to the last occurence of {char}
-t{char} - to the character before the next occurence of {char}
-T{char} - to the character after the last occurence of {char}
-; - repeat last f, F, t or T
-, - repeat last f, F, t or T but reversied
+f{char} - to the next occurence of {char} in current line (using hop char1)
+F{char} - to the last occurence of {char} in current line (usung hop char1)
+t{char} - hop char1 current window
+T{char} - hop char1 all visible windows
+; - hop word on all visible windows
 G - goto the last line
 gg - goto the first line
 :[N] - goto line N
@@ -277,6 +276,10 @@ Ctrl-[Down] - previous suggestion
 [Space]fzo - find vim-options
 [Space]fzh - find highlights
 [Space]fza - find autocommands
+[space]fa - open aerial picker
+[Space]fe - list diagnostics
+[Space]fv - list symbols (variable names) of current file
+[Space]fV - list symbols (variable names) of workspace
 
 ## in telescope picker
 #### insert mode:
@@ -337,6 +340,21 @@ I - toggle gitignored files
 P - go to parent directory
 E - expand all
 W or C - collapse all
+
+
+# LSP
+[Space]a - code action
+[Space]d - peek definition
+[Space]t - peek type definition
+[Space]u - list usages/references
+[Space]i - Lspsaga finder (show, definition, type_definition, references, and implementation)
+[Space]e - goto next diagnostics or show diagnostics under cursor
+[Space]E - goto previous diagnostics
+[Space]r - rename
+[Space]fe - list diagnostics
+[Space]fv - list symbols (variable names) of current file
+[Space]fV - list symbols (variable names) of workspace
+[Space]p - format code
 
 # Rust
 [Space]t - runt test under cursor

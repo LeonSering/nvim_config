@@ -52,18 +52,22 @@ require("lazy").setup({
   -- {'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end},
   "williamboman/mason.nvim", -- package manager for language servers
   'williamboman/mason-lspconfig.nvim', -- language server configurations
-  { 'mrcjkb/rustaceanvim', version = '^4', ft = { 'rust' }, },
+  'neovim/nvim-lspconfig',
+  {'nvimdev/lspsaga.nvim', dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons'}},
+  -- { 'mrcjkb/rustaceanvim', version = '^4', ft = { 'rust' }, },
 
  'hrsh7th/nvim-cmp', -- Completion framework
  'hrsh7th/cmp-nvim-lsp', -- LSP completion source
+ 'L3MON4D3/LuaSnip', -- Snippet engine for cmp
 
   -- Useful completion sources:
- 'hrsh7th/cmp-nvim-lua',
+ 'hrsh7th/cmp-nvim-lua', -- for editing this init.lua file
  'hrsh7th/cmp-nvim-lsp-signature-help',
- 'hrsh7th/cmp-vsnip',
+ 'hrsh7th/cmp-nvim-lsp-document-symbol',
+ 'saadparwaiz1/cmp_luasnip',
  'hrsh7th/cmp-path',
  'hrsh7th/cmp-buffer',
- 'hrsh7th/vim-vsnip',
+ { 'windwp/nvim-autopairs', config = true } -- for automatically insert parenthesis when choosing function from completion
 })
 
 ----------------------------
@@ -75,13 +79,6 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- active window width is >=130 all other windows are equally sized
---[[ vim.opt.winwidth = 130
-vim.api.nvim_create_autocmd("WinEnter", {
-  pattern = "*",
-  callback = function()
-    vim.cmd("wincmd =")
-  end
-}) ]]
 vim.o.equalalways = false
 vim.g.mapleader = " " -- set <leader> key to <space>
 vim.opt.autowriteall = true -- auto save
@@ -101,10 +98,6 @@ vim.opt.scrolloff = 4 -- always show lines below coursor
 -------------------------
 ------ COLORSCHEME ------
 -------------------------
-
--- vim.opt.termguicolors = true -- enable for colorschemes
--- vim.cmd("syntax on")
--- vim.cmd("colorscheme torte")
 
 local transparent_background = function()
   vim.api.nvim_set_hl(0, 'Normal', {bg = 'None', ctermbg = 'none'}) -- background color
@@ -368,7 +361,7 @@ require('marks').setup {
   -- whether to map keybinds or not. default true
   default_mappings = true,
   -- which builtin marks to show. default {}
-  builtin_marks = { ".", "<", ">", '"', "`", "^", "[", "]" },
+  builtin_marks = {"<", ">", "^", "[", "]" },
   -- whether movements cycle back to the beginning/end of buffer. default true
   cyclic = true,
   -- whether the shada file is updated after modifying uppercase marks. default false
@@ -433,7 +426,11 @@ vim.keymap.set('n', '<leader>fzo', builtin.vim_options, {})
 vim.keymap.set('n', '<leader>fzh', builtin.highlights, {})
 vim.keymap.set('n', '<leader>fza', builtin.autocommands, {})
 
--- TODO lsp picker
+vim.keymap.set('n', '<leader>fe', builtin.diagnostics, {})
+vim.keymap.set('n', '<leader>fv', builtin.lsp_document_symbols, {})
+vim.keymap.set('n', '<leader>fV', builtin.lsp_workspace_symbols, {})
+vim.keymap.set('n', '<leader>FV', builtin.lsp_workspace_symbols, {})
+
 -- TODO git picker
 -- vim.keymap.set('n', '<leader>fa', function() require('telescope.builtin').live_grep({cwd = '/home/leon/nvim_keymapping/'}) end)
 -- TODO open nvim.md in sidepanel
@@ -531,6 +528,10 @@ require('telescope').setup {
     },
     autocommands = {
       initial_mode = "insert",
+    },
+    lsp_workspace_symbols = {
+      initial_mode = "insert",
+      fname_width = 0.4,
     },
   },
   extensions = {
@@ -653,8 +654,8 @@ require("aerial").setup({
 -- You probably also want to set a keymap to toggle aerial
 vim.keymap.set({"n", "v"}, "<C-a>", "<cmd>AerialToggle<CR>")
 vim.keymap.set("i", "<C-a>", "<Esc><cmd>AerialToggle<CR>")
--- TODO
--- vim.keymap.set('n', '<leader>a', require("telescope").extensions.aerial.aerial(), {})
+require("telescope").load_extension("aerial")
+vim.keymap.set('n', '<leader>fa', require("telescope").extensions.aerial.aerial, {})
 
 ----------
 -- Rust --
@@ -662,16 +663,17 @@ vim.keymap.set("i", "<C-a>", "<Esc><cmd>AerialToggle<CR>")
 
 -- run RustFmt on the current file only
 -- cargo test and scroll to the bottom of the vim-terminal
-vim.keymap.set('n', '<space>t', ':RustTest<CR>G') -- run test under cursor
-vim.keymap.set('n', '<space>T', ':RustTest!<CR>G') -- run all tests
+vim.keymap.set('n', '<leader>ct', ':RustTest<CR>G') -- run test under cursor
+vim.keymap.set('n', '<leader>cT', ':RustTest!<CR>G') -- run all tests
+vim.keymap.set('n', '<leader>CT', ':RustTest!<CR>G') -- run all tests
 
 -- cargo run and scroll to the bottom of the vim-terminal
-vim.keymap.set('n', '<space>rr', ':Crun<CR>G')
+vim.keymap.set('n', '<leader>cr', ':Crun<CR>G')
 -- cargo build and scroll to the bottom of the vim-terminal
-vim.keymap.set('n', '<space>rb', ':Cbuild<CR>G')
+vim.keymap.set('n', '<leader>cb', ':Cbuild<CR>G')
 
 -- RustFmt
-vim.keymap.set('n', '<space>p', ':RustFmt<CR>')
+vim.keymap.set('n', '<leader>p', ':RustFmt<CR>')
 
 vim.g.rustfmt_autosave = 1 -- automatic run :RustFmt on save
 
@@ -714,6 +716,9 @@ require("nvim-tree").setup({
         quit_on_open = true,
         window_picker = { enable = false },
     },
+  },
+  diagnostics = {
+    enable = true,
   },
   view = {
     float = {
@@ -774,7 +779,7 @@ require("hop").setup({
 -- place this in one of your configuration file(s)
 local hop = require('hop')
 local directions = require('hop.hint').HintDirection
-vim.keymap.set('n', 'g', function() -- TODO choose different key
+vim.keymap.set('n', ';', function() -- TODO choose different key
   hop.hint_words({multi_windows = true})
 end, {remap=true})
 vim.keymap.set('', 'f', function()
@@ -784,10 +789,10 @@ vim.keymap.set('', 'F', function()
   hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
 end, {remap=true})
 vim.keymap.set('', 't', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+  hop.hint_char1()
 end, {remap=true})
 vim.keymap.set('', 'T', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+  hop.hint_char1({multi_windows = true})
 end, {remap=true})
 
 ---------------
@@ -806,82 +811,7 @@ require("mason-lspconfig").setup()
 -- :MasonInstall rust-analyzer codelldb
 
 
---------------
--- nvim-cmp --
---------------
 
---Set completeopt to have a better completion experience
--- :help completeopt
--- menuone: popup even when there's only one match
--- noinsert: Do not insert text until a selection is made
--- noselect: Do not select, force to select one from the menu
--- shortness: avoid showing extra messages when using completion
--- updatetime: set updatetime for CursorHold
-vim.opt.completeopt = {'menuone', 'noselect', 'noinsert'}
-vim.opt.shortmess = vim.opt.shortmess + { c = true}
-vim.api.nvim_set_option('updatetime', 300) 
-
--- Fixed column for diagnostics to appear
--- Show autodiagnostic popup on cursor hover_range
--- Goto previous / next diagnostic warning / error 
--- Show inlay_hints more frequently 
-vim.cmd([[
-set signcolumn=yes
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-]])
-
--- Completion Plugin Setup
-local cmp = require'cmp'
-cmp.setup({
-  -- Enable LSP snippets
-  snippet = {
-    expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    -- Add tab support
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-S-f>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    })
-  },
-  -- Installed sources:
-  sources = {
-    { name = 'path' },                              -- file paths
-    { name = 'nvim_lsp', keyword_length = 3 },      -- from language server
-    { name = 'nvim_lsp_signature_help'},            -- display function signatures with current parameter emphasized
-    { name = 'nvim_lua', keyword_length = 2},       -- complete neovim's Lua runtime API such vim.lsp.*
-    { name = 'buffer', keyword_length = 2 },        -- source current buffer
-    { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip 
-    { name = 'calc'},                               -- source for math calculation
-  },
-  window = {
-      completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
-  },
-  formatting = {
-      fields = {'menu', 'abbr', 'kind'},
-      format = function(entry, item)
-          local menu_icon ={
-              nvim_lsp = 'λ',
-              vsnip = '⋗',
-              buffer = 'Ω',
-              path = '🖫',
-          }
-          item.menu = menu_icon[entry.source.name]
-          return item
-      end,
-  },
-})
 
 ----------------
 -- Treesitter --
@@ -896,9 +826,282 @@ require('nvim-treesitter.configs').setup {
     additional_vim_regex_highlighting=false,
   },
   ident = { enable = true }, 
-  rainbow = {
-    enable = true,
-    extended_mode = true,
-    max_file_lines = nil,
-  }
+  -- rainbow = {
+    -- enable = true,
+    -- extended_mode = true,
+    -- max_file_lines = nil,
+  -- }
 }
+
+---------------
+-- LSPConfig --
+---------------
+
+
+-- Setup language servers.
+local lspconfig = require('lspconfig')
+lspconfig.pyright.setup {}
+lspconfig.rust_analyzer.setup {
+  -- Server-specific settings. See `:help lspconfig-setup`
+  settings = {
+    ['rust-analyzer'] = {
+      checkOnSave = {
+        command = 'clippy',
+      },
+    },
+  },
+}
+
+-- Set up diagnostics.
+vim.diagnostic.config({
+    virtual_text = false, -- disable inline diagnostics
+    signs = true,
+})
+
+-- set hotkey for formatting
+vim.keymap.set('n', '<space>p', function() vim.lsp.buf.format { async = true } end, opts)
+
+-- DISPLAY DIAGNOSTICS IN THE COMMAND BAR
+-- Location information about the last message printed. The format is
+-- `(did print, buffer number, line number)`.
+local last_echo = { false, -1, -1 }
+-- The timer used for displaying a diagnostic in the commandline.
+local echo_timer = nil
+-- The timer after which to display a diagnostic in the commandline.
+local echo_timeout = 250
+-- The highlight group to use for warning messages.
+local warning_hlgroup = 'WarningMsg'
+-- The highlight group to use for error messages.
+local error_hlgroup = 'ErrorMsg'
+-- If the first diagnostic line has fewer than this many characters, also add
+-- the second line to it.
+local short_line_limit = 20
+  -- Shows the current line's diagnostics in a floating window.
+function show_line_diagnostics()
+	vim.lsp.diagnostic.show_line_diagnostics({ severity_limit = 'Warning' }, vim.fn.bufnr(''))
+end
+-- Prints the first diagnostic for the current line.
+local echo_diagnostic = function()
+	if echo_timer then
+		echo_timer:stop()
+	end
+	echo_timer = vim.defer_fn(function()
+		local line = vim.fn.line('.') - 1
+		local bufnr = vim.api.nvim_win_get_buf(0)
+		if last_echo[1] and last_echo[2] == bufnr and last_echo[3] == line then
+			return
+		end
+		local diags = vim.lsp.diagnostic.get_line_diagnostics()
+		if #diags == 0 then
+			-- If we previously echo'd a message, clear it out by echoing an empty
+			-- message.
+			if last_echo[1] then
+				last_echo = { false, -1, -1 }
+				vim.api.nvim_command('echo ""')
+			end
+			return
+		end
+		last_echo = { true, bufnr, line }
+		local diag = diags[1]
+		local width = vim.api.nvim_get_option('columns') - 15
+		local lines = vim.split(diag.message, '\n')
+		local message = lines[1]
+		local trimmed = false
+		if #lines > 1 and #message <= short_line_limit then
+			message = message .. ' ' .. lines[2]
+		end
+		if width > 0 and #message >= width then
+			message = message:sub(1, width) .. '...'
+		end
+		local kind = 'Warning'
+		local hlgroup = warning_hlgroup
+		if diag.severity == vim.lsp.protocol.DiagnosticSeverity.Error then
+			kind = 'Error'
+			hlgroup = error_hlgroup
+		end
+		local chunks = {
+			{ kind , hlgroup},
+			{ ' ' .. message },
+		}
+		vim.api.nvim_echo(chunks, false, {})
+	end, echo_timeout)
+end
+vim.api.nvim_create_autocmd({"CursorMoved"}, {
+  pattern = "*",
+  callback = function()
+    echo_diagnostic()
+  end,
+})
+
+
+-------------
+-- LSPSaga --
+-------------
+
+require('lspsaga').setup({
+  symbol_in_winbar = {
+    enable = false,
+  },
+  code_action = {
+    keys = {
+      quit = {'<Esc>', 'q'},
+      exec = '<Cr>',
+    },
+  },
+  definition = {
+      keys = {
+          edit = '<Cr>',
+          vsplit = 'v',
+          quit = '<Esc>',
+          close = 'q',
+      }
+  },
+  finder = {
+    default = 'def+tyd+ref+imp',
+      keys = {
+          edit = '<Cr>',
+          vsplit = 'v',
+          quit = '<Esc>',
+          close = 'q',
+      }
+  },
+  lightbulb = {
+    virtual_text = false,
+  },
+  rename = {
+    in_select = false,
+    auto_save = true,
+    keys = {
+      quit = {'<Esc><Esc>', 'q'},
+      exec = '<Cr>',
+      select = 'x',
+    },
+  },
+  beacon = {
+    frequency = 15,
+  },
+  diagnostic = {
+    extend_relatedInformation = true,
+    keys = {
+      quit = {'<Esc>', 'q'},
+    }
+  },
+})
+
+vim.keymap.set('n', '<leader>q', '<cmd>Lspsaga code_action<CR>')
+vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
+vim.keymap.set('n', '<leader>d', '<cmd>Lspsaga peek_definition<CR>')
+vim.keymap.set('n', '<leader>t', '<cmd>Lspsaga peek_type_definition<CR>')
+vim.keymap.set('n', '<leader>u', '<cmd>Lspsaga finder ref<CR>')
+vim.keymap.set('n', '<leader>i', '<cmd>Lspsaga finder<CR>')
+vim.keymap.set('n', '<leader>r', '<cmd>Lspsaga rename<CR>')
+vim.keymap.set('n', '<leader>e', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
+vim.keymap.set('n', '<leader>E', '<cmd>Lspsaga diagnostic_jump_next<CR>')
+
+vim.api.nvim_set_hl(0, 'CodeActionNumber', {bg = 'None', ctermbg = 'none'})
+
+
+--------------
+-- nvim-cmp --
+--------------
+--Set completeopt to have a better completion experience
+-- :help completeopt
+-- menuone: popup even when there's only one match
+-- noinsert: Do not insert text until a selection is made
+-- noselect: Do not select, force to select one from the menu
+-- shortness: avoid showing extra messages when using completion
+-- updatetime: set updatetime for CursorHold
+require("luasnip.loaders.from_vscode").lazy_load()
+-- vim.opt.completeopt = {'menuone', 'noinsert'}
+vim.opt.completeopt = {'menu', 'menuone', 'noinsert'} 
+vim.opt.shortmess = vim.opt.shortmess + { c = true}
+-- vim.api.nvim_set_option('updatetime', 300) 
+-- Completion Plugin Setup
+local cmp = require('cmp')
+cmp.setup({
+  completion = {
+    autocomplete = false, -- no automatic popup
+  },
+  -- Enable LSP snippets
+  snippet = {
+    expand = function(args)
+        require('luasnip').lsp_expand(args.body)
+    end,
+  },
+  mapping = {
+   ['<C-j>'] = function(fallback)
+     if cmp.visible() then
+       if cmp.core.view.custom_entries_view:is_direction_top_down() then
+         cmp.select_next_item({behavior=cmp.SelectBehavior.Select})
+       else
+         cmp.select_prev_item({behavior=cmp.SelectBehavior.Select})
+       end
+     else
+       fallback()
+     end
+   end,
+   ['<C-k>'] = function(fallback)
+     if cmp.visible() then
+       if cmp.core.view.custom_entries_view:is_direction_top_down() then
+         cmp.select_prev_item({behavior=cmp.SelectBehavior.Select})
+       else
+         cmp.select_next_item({behavior=cmp.SelectBehavior.Select})
+       end
+     else
+       fallback()
+     end
+   end,
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item({behavior=cmp.SelectBehavior.Select}),
+    ['<Tab>'] = cmp.mapping.select_next_item({behavior=cmp.SelectBehavior.Select}),
+    --[[ ['<Tab>'] = function()
+      if cmp.visible() then
+        cmp.select_next_item({behavior=cmp.SelectBehavior.Select})
+      else 
+        cmp.complete()
+      end
+    end, ]]
+    ['<C-S-f>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = function()
+      if cmp.visible() then
+        cmp.confirm()
+      else
+        cmp.complete()
+      end
+    end,
+    ['<Esc>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    }),
+  },
+  -- Installed sources:
+  sources = {
+    { name = 'path' },                              -- file paths
+    { name = 'nvim_lsp'},      -- from language server
+    { name = 'nvim_lsp_signature_help'},            -- display function signatures with current parameter emphasized
+    { name = 'nvim_lsp_document_symbol' },          -- document symbols
+    { name = 'nvim_lua', keyword_length = 2},       -- complete neovim's Lua runtime API such vim.lsp.*
+    { name = 'buffer', keyword_length = 2 },        -- source current buffer
+    { name = 'luasnip', keyword_length = 2 },       -- nvim-cmp source for vim-vsnip 
+    { name = 'calc'},                               -- source for math calculation
+  },
+  window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+  },
+  view = {
+    entries = { name = 'custom', selection_order = 'bottom_up' }
+  },
+})
+vim.opt.pumheight = 10  -- limit the number of suggestions
+
+require('nvim-autopairs').setup({
+  disable_filetype = { "rs"},
+})
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
