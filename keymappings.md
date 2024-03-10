@@ -11,6 +11,7 @@ Ctrl-R - redo
 :q! - quite file without saving
 K - show help or documentary for the word under the cursor
 [Space]p - format code (supports json, rs so far)
+z= - show spelling suggestions
 
 ## Basic Movement
 h, j, k, l - left, down, up, right
@@ -19,6 +20,7 @@ h, j, k, l - left, down, up, right
 $ - end of line
 gm - middle of screen line
 gM - middle of line
+ge - previous end of word
 H - go to the upper part of the window
 M - go to the middle of the window
 L - go to the lower part of the window
@@ -27,8 +29,8 @@ F{char} - to the last occurence of {char} in current line (usung hop char1)
 t{char} - hop char1 current window
 T{char} - hop char1 all visible windows
 ; - hop word on all visible windows
-G - goto the last line
-gg - goto the first line
+G - goto the very last line
+gg - goto the very first line
 :[N] - goto line N
 [N]% - goto N percent of the file
 w - one word forward
@@ -102,15 +104,15 @@ Enter or ciw - change word under cursor
 cis - change current sentence
 cip - change current paragraph
 
-[brackets] = (, ), [, ], {, }, <, >, ", ', `, also w for word, s for sentence, p for paragraph
-[space][bracket] or ci[bracket] - change inside brackets
-ca[bracket] - change around brackets
-di[bracket] - delete inside brackets
-da[bracket] - delete around brackets
-yi[bracket] - yank inside brackets
-ya[bracket] - yank around brackets
-vi[bracket] - select inside brackets
-va[bracket] - select around brackets
+[Bracket] = (, ), [, ], {, }, <, >, ", ', `, also w for word, s for sentence, p for paragraph
+[Space][Bracket] or ci[Bracket] - change inside brackets
+ca[Bracket] - change around brackets
+di[Bracket] - delete inside brackets
+da[Bracket] - delete around brackets
+yi[Bracket] - yank inside brackets
+ya[Bracket] - yank around brackets
+vi[Bracket] - select inside brackets
+va[Bracket] - select around brackets
 
 ## enter visual mode
 v - enter visual mode
@@ -159,7 +161,6 @@ dm- - delete all marks on the current line
 dm[Space] - delete all marks in the current buffer
 m] - move to the next mark
 m[ - move to the previous mark
-m: - preview all marks
 m{0-9} - set bookmark (can be set multiple times)
 dm{0-9} - delete all bookmarks of the group
 m} - move to the next bookmark of the same group
@@ -209,8 +210,8 @@ Ctrl-D (insert mode) - unindent line
 # Visual Mode:
 o - exchange cursor position with start of highlighting
 Ctrl-/ - toggle comment for block
-Ctrl=-c - yank into register + (system clipboard)
-Ctrl=-x - delete block and yank into register + (system clipboard)
+Ctrl-c - yank into register + (system clipboard)
+Ctrl-x - delete block and yank into register + (system clipboard)
 
 # Windows Control
 ## Custom settings (All Modes)
@@ -224,7 +225,7 @@ Alt-W - maximize current window
 Alt-S - equalize all windows
 Alt-Q - close all other windows
 
-## Default settings (Normal Mode)
+## Default settings (Normal Mode) - disabled
 Ctrl-W followed by:
     w - go to next window (Ctrl can be hold)
     l - go to window on the left
@@ -247,10 +248,10 @@ Ctrl-W followed by:
 Ctrl-Enter - accept full suggestion
 Ctrl-P - accept line
 Ctrl-O - accept word
-Ctrl-[Left] - dissmiss suggestion
-Ctrl-[Right] - ask for suggestion
-Ctrl-[Up] - next suggestion
-Ctrl-[Down] - previous suggestion
+Ctrl-Right - request suggestion
+Ctrl-Up - next suggestion
+Ctrl-Down - previous suggestion
+Ctrl-Left - dissmiss suggestion
 
 # Telescope
 \ - resume last telescope picker
@@ -276,7 +277,7 @@ Ctrl-[Down] - previous suggestion
 [Space]fzo - find vim-options
 [Space]fzh - find highlights
 [Space]fza - find autocommands
-[space]fa - open aerial picker
+[Space]fa - open aerial picker
 [Space]fe - list diagnostics
 [Space]fv - list symbols (variable names) of current file
 [Space]fV - list symbols (variable names) of workspace
@@ -310,11 +311,11 @@ dd - toggle item
 [Space]R - replace all marked items
 
 # GitBlame
-[Space]gb - git blame
+[Space]gb - toggle git blame
 
 # Aerial
 Ctrl-a - toggle aerial view (also in visual and insert mode)
-\a - open telescope picker for aerial
+[Space]fa - open telescope picker for aerial
 
 # NvimTree
 Ctrl-n - toggle nvim-tree
@@ -332,7 +333,7 @@ c - copy node
 p - paste node
 d - delete
 R - refresh view
-Ctrl-K - info about node
+K - info about node
 Ctrl-] - change root
 a - create new file
 H - toggle hidden files
@@ -340,7 +341,6 @@ I - toggle gitignored files
 P - go to parent directory
 E - expand all
 W or C - collapse all
-
 
 # LSP
 [Space]a - code action
@@ -356,9 +356,24 @@ W or C - collapse all
 [Space]fV - list symbols (variable names) of workspace
 [Space]p - format code
 
+# Autocomplete (cmp)
+Ctrl-Space - open autocomplete menu
+## in autocomplete menu
+Ctrl-j - move down
+Ctrl-k - move up
+Ctrl-Tab - next suggestion
+Ctrl-Shift-Tab - previous suggestion
+Enter - accept full suggestion
+Ctrl-Shift-j - scroll docs down
+Ctrl-Shift-k - scroll docs up
+Ctrl-Space - confirm selection
+Enter - confirm selection
+Esc - close menu
+
+
 # Rust
-[Space]t - runt test under cursor
-[Space]T - run all tests
+[Space]rt - runt test under cursor
+[Space]rT or [Space]RT - run all tests
 [Space]rb - build project
 [Space]rr - run project
 [Space]p - format code with RustFmt

@@ -19,13 +19,15 @@ vim.opt.rtp:prepend(lazypath)
 -- Plugins:
 require("lazy").setup({
   { 'anuvyklack/windows.nvim', dependencies = { -- enlarge current window, equal all others
-    'anuvyklack/middleclass', 
+    'anuvyklack/middleclass',
   }},
   'numToStr/Comment.nvim', -- for commentary
   'petertriho/nvim-scrollbar', -- scrollbar on right side
   'kevinhwang91/nvim-hlslens', -- better in page search with / and ?
   'chentoast/marks.nvim', -- better marks
   'github/copilot.vim', -- copilot autocompletion
+  'nvim-treesitter/nvim-treesitter', -- syntax highlighting
+  'HiPhish/nvim-ts-rainbow2', -- rainbow brackets
   {'nvim-telescope/telescope.nvim', tag = '0.1.5', dependencies = { -- fuzzy finder
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter', -- for syntax highlighting
@@ -46,10 +48,10 @@ require("lazy").setup({
     'nvim-treesitter/nvim-treesitter',
     'nvim-tree/nvim-web-devicons',
   }},
-  { 'smoka7/hop.nvim', version = "*", opts = {}, },
+  'smoka7/hop.nvim', -- jump to any word in the buffer
   'rust-lang/rust.vim', -- running RustFmt and other short cuts
   'nvim-tree/nvim-tree.lua', -- file explorer
-  -- {'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end},
+  {'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end},
   "williamboman/mason.nvim", -- package manager for language servers
   'williamboman/mason-lspconfig.nvim', -- language server configurations
   'neovim/nvim-lspconfig',
@@ -147,8 +149,6 @@ vim.api.nvim_set_hl(0, 'MatchParen', {ctermbg = 'darkgray', bg = 'DarkGray', bol
 
 -- INSERT MODE / COMMAND LINE MODE --
 
-vim.keymap.set('i', '{<CR>', '{<CR>}<ESC>O') -- pressing Enter after { adds a } to the line below
-
 -- movement
 vim.keymap.set({'i', 'c'}, '<C-h>', '<Left>')
 vim.keymap.set({'i', 'c'}, '<C-j>', '<Down>')
@@ -193,23 +193,23 @@ vim.keymap.set('n', '<leader>[', 'ci[') -- change text inside brackets
 vim.keymap.set('n', '<leader>]', 'ci]') -- change text inside brackets
 vim.keymap.set('n', '<leader>{', 'ci{') -- change text inside curly brackets
 vim.keymap.set('n', '<leader>{', 'ci}') -- change text inside curly brackets
-vim.keymap.set('n', '<leader><', 'ci<') -- change text inside tag
-vim.keymap.set('n', '<leader>>', 'ci>') -- change text inside tag
+vim.keymap.set('n', '<leader><', 'ci<', {desc = "ci<"}) -- change text inside tag
+vim.keymap.set('n', '<leader>>', 'ci>', {desc = "ci>"}) -- change text inside tag
 vim.keymap.set('n', '<leader>"', 'ci"') -- change text inside double quotes
 vim.keymap.set('n', "<leader>'", "ci'") -- change text inside single quotes
 vim.keymap.set('n', '<leader>`', 'ci`') -- change text inside double quotes
 
-vim.keymap.set('n', '<leader>/', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>') -- open keymappings.md in sidepanel
-vim.keymap.set('n', '<leader>?', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>') -- open keymappings.md in sidepanel
-vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/init.lua<CR>') -- open init.lua in sidepanel
+vim.keymap.set('n', '<leader>/', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>', {desc = "Open keymappings.md"})
+vim.keymap.set('n', '<leader>?', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>', {desc = "Open keymappings.md"})
+vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/init.lua<CR>', {desc = "Open init.lua"})
 vim.keymap.set('n', '<C-d>', '<C-d>zz') -- move down half a page and center cursor
 vim.keymap.set('n', '<C-u>', '<C-u>zz') -- move down half a page and center cursor
-vim.api.nvim_create_autocmd("FileType", {
+--[[ vim.api.nvim_create_autocmd("FileType", {
   pattern = "json",
   callback = function(args)
     vim.keymap.set('n', '<leader>p', ':%!jq . %<CR>') -- format json with jq
   end
-})
+}) ]]
 
 -- DISABLE KEYS --
 -- disable some unused keys
@@ -220,6 +220,8 @@ vim.keymap.set('n', 'q/', '<Nop>') -- disable q/ in normal mode
 vim.keymap.set('n', 'q?', '<Nop>') -- disable q? in normal mode
 vim.keymap.set('n', 'ZZ', '<Nop>') -- disable ZZ in normal mode
 vim.keymap.set('n', 'ZQ', '<Nop>') -- disable ZQ in normal mode
+vim.keymap.set('n', 'gf', '<Nop>') -- disable gf in normal mode
+vim.keymap.set('n', 'gx', '<Nop>') -- disable gf in normal mode
 vim.keymap.set('i', '<C-z>', '<Nop>') -- disable <C-z> in insert mode
 vim.keymap.set('i', '<C-c>', '<Nop>') -- disable <C-c> in insert mode
 vim.keymap.set('i', '<C-@>', '<Nop>') -- disable <C-@> in insert mode
@@ -318,10 +320,10 @@ vim.keymap.set('n', 'n',
 vim.keymap.set('n', 'N',
     [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
     kopts)
-vim.keymap.set('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-vim.keymap.set('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-vim.keymap.set('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-vim.keymap.set('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+vim.keymap.set('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], {silent = true, desc="Search word under cursor forward"})
+vim.keymap.set('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], {silent = true, desc="Search word under cursor backward"})
+vim.keymap.set('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], {silent= true, desc="Search word under cursor forward"})
+vim.keymap.set('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], {silent = true, desc="Search word under cursor backward"})
 
 -- highlighting
 vim.api.nvim_set_hl(0, 'HlSearchNear', {ctermfg = 'green', ctermbg = 'black', fg = 'LightGreen', bg = 'Black', bold = true })
@@ -364,8 +366,6 @@ require('marks').setup {
   builtin_marks = {"<", ">", "^", "[", "]" },
   -- whether movements cycle back to the beginning/end of buffer. default true
   cyclic = true,
-  -- whether the shada file is updated after modifying uppercase marks. default false
-  force_write_shada = false,
   -- how often (in ms) to redraw signs/recompute mark positions.
   -- higher values will have better performance but may cause visual lag,
   -- while lower values may cause performance penalties. default 150.
@@ -376,6 +376,9 @@ require('marks').setup {
   -- the priority applies to all marks.
   -- default 10.
   sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
+  mappings = {
+    preview = "", -- disable preview
+  },
 }
 vim.api.nvim_set_hl(0, 'MarkSignHl', {ctermbg = 'none', ctermfg = 'gray', bg = 'None', fg = 'Gray', bold = true})
 vim.api.nvim_set_hl(0, 'MarkSignNumHl', {ctermbg = 'none', ctermfg = 'none' , bg = 'None', fg = 'None'})
@@ -403,37 +406,35 @@ vim.keymap.set('i', '<Tab>', '\t') -- disable tab to accept copilot suggestion
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '\\', builtin.resume, {})
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fo', builtin.oldfiles, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fu', builtin.current_buffer_fuzzy_find, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-vim.keymap.set('n', '<leader>fc', builtin.command_history, {})
-vim.keymap.set('n', '<leader>f/', builtin.search_history, {})
-vim.keymap.set('n', '<leader>ft', builtin.tags, {})
-vim.keymap.set('n', '<leader>fi', builtin.current_buffer_tags, {})
-vim.keymap.set('n', '<leader>fm', builtin.marks, {})
-vim.keymap.set('n', '<leader>fr', builtin.registers, {})
-vim.keymap.set('n', '<leader>fj', builtin.jumplist, {})
-vim.keymap.set('n', '<leader>fq', builtin.quickfix, {})
-vim.keymap.set('n', '<leader>f:', builtin.commands, {})
-vim.keymap.set('n', '<leader>fs', builtin.spell_suggest, {})
-vim.keymap.set('n', '<leader>fk', builtin.keymaps, {})
-vim.keymap.set('n', '<leader>fz', builtin.builtin, {})
-vim.keymap.set('n', '<leader>fzc', builtin.colorscheme, {})
-vim.keymap.set('n', '<leader>fzo', builtin.vim_options, {})
-vim.keymap.set('n', '<leader>fzh', builtin.highlights, {})
-vim.keymap.set('n', '<leader>fza', builtin.autocommands, {})
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {desc = "Telescope: Find files"})
+vim.keymap.set('n', '<leader>fo', builtin.oldfiles, {desc = "Telescope: Open old files"})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {desc = "Telescope: Live grep"})
+vim.keymap.set('n', '<leader>fu', builtin.current_buffer_fuzzy_find, {desc = "Telescope: Fuzzy find in current buffer"})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {desc = "Telescope: Buffers"})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {desc = "Telescope: Help tags"})
+vim.keymap.set('n', '<leader>fc', builtin.command_history, {desc = "Telescope: Command history"})
+vim.keymap.set('n', '<leader>f/', builtin.search_history, {desc = "Telescope: Search history"})
+vim.keymap.set('n', '<leader>ft', builtin.tags, {desc = "Telescope: Tags"})
+vim.keymap.set('n', '<leader>fi', builtin.current_buffer_tags, {desc = "Telescope: Tags in current buffer"})
+vim.keymap.set('n', '<leader>fm', builtin.marks, {desc = "Telescope: Marks"})
+vim.keymap.set('n', '<leader>fr', builtin.registers, {desc = "Telescope: Registers"})
+vim.keymap.set('n', '<leader>fj', builtin.jumplist, {desc = "Telescope: Jump list"})
+vim.keymap.set('n', '<leader>fq', builtin.quickfix, {desc = "Telescope: Quickfix"})
+vim.keymap.set('n', '<leader>f:', builtin.commands, {desc = "Telescope: Commands"})
+vim.keymap.set('n', '<leader>fs', builtin.spell_suggest, {desc = "Telescope: Spell suggest"})
+vim.keymap.set('n', '<leader>fk', builtin.keymaps, {desc = "Telescope: Keymaps"})
+vim.keymap.set('n', '<leader>fz', builtin.builtin, {desc = "Telescope: Builtin"})
+vim.keymap.set('n', '<leader>fzc', builtin.colorscheme, {desc = "Telescope: Colorscheme"})
+vim.keymap.set('n', '<leader>fzo', builtin.vim_options, {desc = "Telescope: Vim options"})
+vim.keymap.set('n', '<leader>fzh', builtin.highlights, {desc = "Telescope: Highlights"})
+vim.keymap.set('n', '<leader>fza', builtin.autocommands, {desc = "Telescope: Autocommands"})
 
-vim.keymap.set('n', '<leader>fe', builtin.diagnostics, {})
-vim.keymap.set('n', '<leader>fv', builtin.lsp_document_symbols, {})
-vim.keymap.set('n', '<leader>fV', builtin.lsp_workspace_symbols, {})
-vim.keymap.set('n', '<leader>FV', builtin.lsp_workspace_symbols, {})
+vim.keymap.set('n', '<leader>fe', builtin.diagnostics, {desc = "Telescope: Diagnostics"})
+vim.keymap.set('n', '<leader>fv', builtin.lsp_document_symbols, {desc = "Telescope: LSP document symbols"})
+vim.keymap.set('n', '<leader>fV', builtin.lsp_workspace_symbols, {desc = "Telescope: LSP workspace symbols"})
+vim.keymap.set('n', '<leader>FV', builtin.lsp_workspace_symbols, {desc = "Telescope: LSP workspace symbols"})
 
 -- TODO git picker
--- vim.keymap.set('n', '<leader>fa', function() require('telescope.builtin').live_grep({cwd = '/home/leon/nvim_keymapping/'}) end)
--- TODO open nvim.md in sidepanel
 
 require('telescope').setup {
   defaults = {
@@ -655,7 +656,7 @@ require("aerial").setup({
 vim.keymap.set({"n", "v"}, "<C-a>", "<cmd>AerialToggle<CR>")
 vim.keymap.set("i", "<C-a>", "<Esc><cmd>AerialToggle<CR>")
 require("telescope").load_extension("aerial")
-vim.keymap.set('n', '<leader>fa', require("telescope").extensions.aerial.aerial, {})
+vim.keymap.set('n', '<leader>fa', require("telescope").extensions.aerial.aerial, {desc = "Telescope: Aerial"})
 
 ----------
 -- Rust --
@@ -663,18 +664,14 @@ vim.keymap.set('n', '<leader>fa', require("telescope").extensions.aerial.aerial,
 
 -- run RustFmt on the current file only
 -- cargo test and scroll to the bottom of the vim-terminal
-vim.keymap.set('n', '<leader>ct', ':RustTest<CR>G') -- run test under cursor
-vim.keymap.set('n', '<leader>cT', ':RustTest!<CR>G') -- run all tests
-vim.keymap.set('n', '<leader>CT', ':RustTest!<CR>G') -- run all tests
+vim.keymap.set('n', '<leader>ct', ':RustTest<CR>G', {desc = "Cargo: Run current test"}) -- run test under cursor
+vim.keymap.set('n', '<leader>cT', ':RustTest!<CR>G', {desc = "Cargo: Run all tests"}) -- run all tests
+vim.keymap.set('n', '<leader>CT', ':RustTest!<CR>G', {desc = {"Cargo: Run all tests"}}) -- run all tests
 
 -- cargo run and scroll to the bottom of the vim-terminal
-vim.keymap.set('n', '<leader>cr', ':Crun<CR>G')
+vim.keymap.set('n', '<leader>cr', ':Crun<CR>G', {desc = "Cargo: Run"})
 -- cargo build and scroll to the bottom of the vim-terminal
-vim.keymap.set('n', '<leader>cb', ':Cbuild<CR>G')
-
--- RustFmt
-vim.keymap.set('n', '<leader>p', ':RustFmt<CR>')
-
+vim.keymap.set('n', '<leader>cb', ':Cbuild<CR>G', {desc = "Cargo: Build"})
 vim.g.rustfmt_autosave = 1 -- automatic run :RustFmt on save
 
 ---------------
@@ -695,6 +692,7 @@ local function my_on_attach(bufnr)
   vim.keymap.set('n', 'r', api.fs.rename_full, opts('Rename: Full Path'))
   vim.keymap.set('n', '<Esc>', api.tree.close, opts('Close'))
   vim.keymap.set('n', 'C', api.tree.collapse_all, opts('Collapse All'))
+  vim.keymap.set('n', 'K', api.node.show_info_popup, opts('Info'))
   vim.keymap.set('n', 'f', function()
     api.tree.expand_all()
     api.live_filter.start()
@@ -799,7 +797,7 @@ end, {remap=true})
 -- which-key --
 ---------------
 
--- require("which-key").setup ()
+require("which-key").setup ()
 
 -----------
 -- mason --
@@ -817,7 +815,7 @@ require("mason-lspconfig").setup()
 -- Treesitter --
 ----------------
 
--- Treesitter Plugin Setup 
+-- Treesitter Plugin Setup
 require('nvim-treesitter.configs').setup {
   ensure_installed = { "lua", "rust", "toml", "json", "yaml", "markdown"},
   auto_install = true,
@@ -825,12 +823,11 @@ require('nvim-treesitter.configs').setup {
     enable = true,
     additional_vim_regex_highlighting=false,
   },
-  ident = { enable = true }, 
-  -- rainbow = {
-    -- enable = true,
-    -- extended_mode = true,
-    -- max_file_lines = nil,
-  -- }
+  ident = { enable = true },
+  rainbow = {
+    enable = true,
+    strategy = {require('ts-rainbow').strategy['local']} -- only highlight parentheses close to the cursor
+  }
 }
 
 ---------------
@@ -859,7 +856,7 @@ vim.diagnostic.config({
 })
 
 -- set hotkey for formatting
-vim.keymap.set('n', '<space>p', function() vim.lsp.buf.format { async = true } end, opts)
+vim.keymap.set('n', '<leader>p', function() vim.lsp.buf.format { async = true } end, {desc = "LSP: Format"})
 
 -- DISPLAY DIAGNOSTICS IN THE COMMAND BAR
 -- Location information about the last message printed. The format is
@@ -988,15 +985,15 @@ require('lspsaga').setup({
   },
 })
 
-vim.keymap.set('n', '<leader>q', '<cmd>Lspsaga code_action<CR>')
-vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
-vim.keymap.set('n', '<leader>d', '<cmd>Lspsaga peek_definition<CR>')
-vim.keymap.set('n', '<leader>t', '<cmd>Lspsaga peek_type_definition<CR>')
-vim.keymap.set('n', '<leader>u', '<cmd>Lspsaga finder ref<CR>')
-vim.keymap.set('n', '<leader>i', '<cmd>Lspsaga finder<CR>')
-vim.keymap.set('n', '<leader>r', '<cmd>Lspsaga rename<CR>')
-vim.keymap.set('n', '<leader>e', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
-vim.keymap.set('n', '<leader>E', '<cmd>Lspsaga diagnostic_jump_next<CR>')
+vim.keymap.set('n', '<leader>q', '<cmd>Lspsaga code_action<CR>', {desc = "LSP: Code action"})
+vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>', {desc = "LSP: Hover"})
+vim.keymap.set('n', '<leader>d', '<cmd>Lspsaga peek_definition<CR>', {desc = "LSP: Peek definition"})
+vim.keymap.set('n', '<leader>t', '<cmd>Lspsaga peek_type_definition<CR>', {desc = "LSP: Peek type definition"})
+vim.keymap.set('n', '<leader>u', '<cmd>Lspsaga finder ref<CR>', {desc = "LSP: List references"})
+vim.keymap.set('n', '<leader>i', '<cmd>Lspsaga finder<CR>', {desc = "LSP: List def, type def, ref, impl"})
+vim.keymap.set('n', '<leader>r', '<cmd>Lspsaga rename<CR>', {desc = "LSP: Rename"})
+vim.keymap.set('n', '<leader>e', '<cmd>Lspsaga diagnostic_jump_prev<CR>', {desc = "LSP: Previous diagnostic"})
+vim.keymap.set('n', '<leader>E', '<cmd>Lspsaga diagnostic_jump_next<CR>', {desc = "LSP: Next diagnostic"})
 
 vim.api.nvim_set_hl(0, 'CodeActionNumber', {bg = 'None', ctermbg = 'none'})
 
@@ -1013,9 +1010,9 @@ vim.api.nvim_set_hl(0, 'CodeActionNumber', {bg = 'None', ctermbg = 'none'})
 -- updatetime: set updatetime for CursorHold
 require("luasnip.loaders.from_vscode").lazy_load()
 -- vim.opt.completeopt = {'menuone', 'noinsert'}
-vim.opt.completeopt = {'menu', 'menuone', 'noinsert'} 
+vim.opt.completeopt = {'menu', 'menuone', 'noinsert'}
 vim.opt.shortmess = vim.opt.shortmess + { c = true}
--- vim.api.nvim_set_option('updatetime', 300) 
+-- vim.api.nvim_set_option('updatetime', 300)
 -- Completion Plugin Setup
 local cmp = require('cmp')
 cmp.setup({
@@ -1057,12 +1054,12 @@ cmp.setup({
     --[[ ['<Tab>'] = function()
       if cmp.visible() then
         cmp.select_next_item({behavior=cmp.SelectBehavior.Select})
-      else 
+      else
         cmp.complete()
       end
     end, ]]
-    ['<C-S-f>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-S-j>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-S-k>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = function()
       if cmp.visible() then
         cmp.confirm()
@@ -1084,7 +1081,7 @@ cmp.setup({
     { name = 'nvim_lsp_document_symbol' },          -- document symbols
     { name = 'nvim_lua', keyword_length = 2},       -- complete neovim's Lua runtime API such vim.lsp.*
     { name = 'buffer', keyword_length = 2 },        -- source current buffer
-    { name = 'luasnip', keyword_length = 2 },       -- nvim-cmp source for vim-vsnip 
+    { name = 'luasnip', keyword_length = 2 },       -- nvim-cmp source for vim-vsnip
     { name = 'calc'},                               -- source for math calculation
   },
   window = {
@@ -1098,7 +1095,6 @@ cmp.setup({
 vim.opt.pumheight = 10  -- limit the number of suggestions
 
 require('nvim-autopairs').setup({
-  disable_filetype = { "rs"},
 })
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on(
