@@ -25,9 +25,10 @@ require("lazy").setup({
   'petertriho/nvim-scrollbar', -- scrollbar on right side
   'kevinhwang91/nvim-hlslens', -- better in page search with / and ?
   'chentoast/marks.nvim', -- better marks
+  { "kylechui/nvim-surround", event = "VeryLazy"}, -- surround text with brackets
   'github/copilot.vim', -- copilot autocompletion
-  'nvim-treesitter/nvim-treesitter', -- syntax highlighting
-  'HiPhish/nvim-ts-rainbow2', -- rainbow brackets
+  {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'}, -- syntax highlighting
+  {'HiPhish/rainbow-delimiters.nvim'}, -- rainbow brackets
   {'nvim-telescope/telescope.nvim', tag = '0.1.5', dependencies = { -- fuzzy finder
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter', -- for syntax highlighting
@@ -43,6 +44,7 @@ require("lazy").setup({
     'nvim-lualine/lualine.nvim', dependencies = {
       'nvim-tree/nvim-web-devicons',
   }},
+  'lewis6991/gitsigns.nvim', -- show git changes in the sign column
   'f-person/git-blame.nvim', -- git blame on <leader>gb
   {'stevearc/aerial.nvim', dependencies = {
     'nvim-treesitter/nvim-treesitter',
@@ -55,6 +57,7 @@ require("lazy").setup({
   "williamboman/mason.nvim", -- package manager for language servers
   'williamboman/mason-lspconfig.nvim', -- language server configurations
   'neovim/nvim-lspconfig',
+  {'j-hui/fidget.nvim', opts = {}}, -- shows loading process of lsp
   {'nvimdev/lspsaga.nvim', dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons'}},
   -- { 'mrcjkb/rustaceanvim', version = '^4', ft = { 'rust' }, },
 
@@ -69,7 +72,7 @@ require("lazy").setup({
  'saadparwaiz1/cmp_luasnip',
  'hrsh7th/cmp-path',
  'hrsh7th/cmp-buffer',
- { 'windwp/nvim-autopairs', config = true } -- for automatically insert parenthesis when choosing function from completion
+ { 'windwp/nvim-autopairs', config = true }, -- for automatically insert parenthesis when choosing function from completion
 })
 
 ----------------------------
@@ -79,7 +82,6 @@ require("lazy").setup({
 -- disable netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-
 -- active window width is >=130 all other windows are equally sized
 vim.o.equalalways = false
 vim.g.mapleader = " " -- set <leader> key to <space>
@@ -93,9 +95,30 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.clipboard:append("unnamed") -- yanks into "middle-mouse" clipboard
-
+vim.g.have_nerd_font = true
+vim.opt.breakindent = true -- auto indent when breaking lines
 vim.opt.scrolloff = 4 -- always show lines below coursor
 
+-- Case-insensitive searching UNLESS \C or capital in search
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+vim.opt.signcolumn = "yes" -- always show sign column
+
+-- Sets how neovim will display certain whitespace in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', nbsp = '␣' }
+
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
 
 -------------------------
 ------ COLORSCHEME ------
@@ -142,6 +165,12 @@ vim.api.nvim_set_hl(0, 'PmenuSel', {ctermfg = 'white', ctermbg = 'darkgray', fg 
 -- color of matching parenthesis
 vim.api.nvim_set_hl(0, 'MatchParen', {ctermbg = 'darkgray', bg = 'DarkGray', bold = true })
 
+-- vimdiff
+vim.api.nvim_set_hl(0, 'DiffAdd', {ctermbg = 22, bg = 'DarkGreen'})
+vim.api.nvim_set_hl(0, 'DiffChange', {ctermbg = 17, bg = 'NavyBlue'})
+vim.api.nvim_set_hl(0, 'DiffDelete', {ctermbg = 'black', bg = 'Black'})
+vim.api.nvim_set_hl(0, 'DiffText', {ctermbg = 52, bg = 'DarkRed'})
+
 
 ----------------------------
 ------- KEY MAPPINGS -------
@@ -184,6 +213,7 @@ vim.keymap.set('v', 'y', 'ygv<esc>') -- keep cursor at current position after ya
 
 
 -- NORMAL MODE --
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>') -- clear search highlight
 vim.keymap.set('n', '<Cr>', 'ciw') -- change word under cursor
 vim.keymap.set('n', '<Bs>', 'ch') -- change word under cursor
 vim.keymap.set('n', '<leader><Cr>', 'ci(') -- change text inside parenthesis
@@ -434,6 +464,7 @@ vim.keymap.set('n', '<leader>fv', builtin.lsp_document_symbols, {desc = "Telesco
 vim.keymap.set('n', '<leader>fV', builtin.lsp_workspace_symbols, {desc = "Telescope: LSP workspace symbols"})
 vim.keymap.set('n', '<leader>FV', builtin.lsp_workspace_symbols, {desc = "Telescope: LSP workspace symbols"})
 
+vim.keymap.set('n', '<leader>gd', builtin.git_bcommits, {desc = "Telescope: Git commits (buffer)"})
 -- TODO git picker
 
 require('telescope').setup {
@@ -534,6 +565,17 @@ require('telescope').setup {
       initial_mode = "insert",
       fname_width = 0.4,
     },
+    git_bcommits = {
+      mappings = {
+        i = {
+          ["<CR>"] = "select_vertical",
+        },
+        n = {
+          ["<CR>"] = "select_vertical",
+        },
+      },
+    }
+
   },
   extensions = {
     fzf = {
@@ -621,6 +663,29 @@ require('lualine').setup {
     lualine_x = {},
   },
 }
+
+
+-------------
+-- GitSign --
+-------------
+
+require('gitsigns').setup {
+  signcolumn = false, -- Toggle with `:Gitsigns toggle_signs`
+  sign_priority = 1000,
+  attach_to_untracked = true,
+    on_attach = function(bufnr)
+    local function map(mode, lhs, rhs, opts)
+        opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
+        vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+    end
+    map('n', '<leader>gs', '<cmd>Gitsigns toggle_signs<CR>')
+    map('n', '<leader>gw', '<cmd>Gitsigns toggle_word_diff<CR>')
+  end
+}
+vim.api.nvim_set_hl(0, 'GitSignsAdd', {ctermfg = 'darkgreen', fg = 'DarkGreen', ctermbg = 'none', bg = 'None', bold = true})
+vim.api.nvim_set_hl(0, 'GitSignsChange', {ctermfg = 'darkblue', fg = 'DarkBlue', ctermbg = 'none', bg = 'None', bold = true})
+vim.api.nvim_set_hl(0, 'GitSignsDelete', {ctermfg = 'magenta', fg = 'DarkRed', ctermbg = 'none', bg = 'None', bold = true})
+
 
 --------------
 -- GitBlame --
@@ -824,10 +889,19 @@ require('nvim-treesitter.configs').setup {
     additional_vim_regex_highlighting=false,
   },
   ident = { enable = true },
-  rainbow = {
-    enable = true,
-    strategy = {require('ts-rainbow').strategy['local']} -- only highlight parentheses close to the cursor
-  }
+}
+
+------------------------
+-- rainbow-delimiters --
+------------------------
+-- This module contains a number of default definitions
+local rainbow_delimiters = require 'rainbow-delimiters'
+
+---@type rainbow_delimiters.config
+vim.g.rainbow_delimiters = {
+    strategy = {
+        [''] = rainbow_delimiters.strategy['global'],
+    },
 }
 
 ---------------
@@ -1094,6 +1168,11 @@ cmp.setup({
 })
 vim.opt.pumheight = 10  -- limit the number of suggestions
 
+
+--------------------
+-- nvim-autopairs --
+--------------------
+
 require('nvim-autopairs').setup({
 })
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
@@ -1101,3 +1180,24 @@ cmp.event:on(
   'confirm_done',
   cmp_autopairs.on_confirm_done()
 )
+
+-------------------
+-- nvim-surround --
+-------------------
+
+require('nvim-surround').setup({
+  surrounds = {
+      ["("] = false,
+      ["{"] = false,
+      ["["] = false,
+      ["<"] = false,
+  },
+  aliases = {
+      ["("] = ")",
+      ["{"] = "}",
+      ["["] = "]",
+      ["<"] = ">",
+      ["b"] = {">", ")", "]", "}"}
+  },
+})
+vim.g.surround_insert_space = 0 -- no space when inserting brackets

@@ -24,10 +24,10 @@ ge - previous end of word
 H - go to the upper part of the window
 M - go to the middle of the window
 L - go to the lower part of the window
-f{char} - to the next occurence of {char} in current line (using hop char1)
-F{char} - to the last occurence of {char} in current line (usung hop char1)
-t{char} - hop char1 current window
-T{char} - hop char1 all visible windows
+f[char] - to the next occurence of [char] in current line (using hop char1)
+F[char] - to the last occurence of [char] in current line (usung hop char1)
+t[char] - hop char1 current window
+T[char] - hop char1 all visible windows
 ; - hop word on all visible windows
 G - goto the very last line
 gg - goto the very first line
@@ -61,10 +61,10 @@ zb - center the screen on the bottom
 ## copy and past
 p - paste after cursor
 P - past before cursor
-y - yank visual (or next motion)
+y - yank next motion (or selection in visual mode)
 yy - yank line
 Y - yank until end of line
-"{char} - select a register for the next yank or past command (default is * (middle mouse))
+"[char] - select a register for the next yank or past command (default is * (middle mouse))
 :reg - show the content of all registers
 
 #### registers
@@ -90,10 +90,10 @@ O - open a new line above and append text
 ## deleting
 x or Del - delete the character under the cursor
 X - delete the character before the cursor
-d{movement} - delete next movement
+d[motion] - delete next motion
 dd - delete full line
 D - delete end of line
-J - join lines (in visual mode, joins all selected lines)
+J - join line below (in visual mode, joins all selected lines)
 cw - delete the next word and go to insert mode (can use other motions as well)
 C - delete everthing on right and go to insert mode
 cc or S - delete line and go to insert mode
@@ -114,6 +114,14 @@ ya[Bracket] - yank around brackets
 vi[Bracket] - select inside brackets
 va[Bracket] - select around brackets
 
+## surround
+ys[motion][new] - add surrounding [new] to [motion]
+cs[old][new] - change surrounding [old] with [new]
+ds[old] - delete surrounding [old]
+yss[new] - add surrounding [new] to line
+S[new] - in visual mode: add surrounding [new]
+[new/old] = [Bracket], b (brackets: >,),],}), q (quotes: ',",`), s (brackets, quotes), t (html-tags), f (function), i (individual start and end)
+
 ## enter visual mode
 v - enter visual mode
 V - enter visual mode full line
@@ -131,23 +139,23 @@ R - enter replace mode
 
 ## repeating commands
 . - repeat last change
-q{char} - record types characters into register {char}
+q[char] - record types characters into register [char]
 q - stop recording
 Q - replay last recorded macro
-@{char} - execute content of register {char}
+@[char] - execute content of register [char]
 
 ## search
-/{pattern} - search word forward
-?{pattern} - search word backwards
+/[pattern] - search word forward
+?[pattern] - search word backwards
 * - search identifier under cursor forward
 sharp (#) - search identifier under cursor backward
 n - go to next finding
 N - go to previous finding
 
 ## marks
-m{mark} - mark current position with mark {char}
-'{mark} - go to first non-blank character of the line of the mark
-`{mark} - go to the exact position of the mark
+m[mark] - mark current position with [mark]
+'[mark] - go to first non-blank character of the line of the mark
+`[mark] - go to the exact position of the mark
 :marks : print the active marks
 Ctrl-O : go to the previous position in the jump list
 Ctrl-I : go to the next position in the jump list
@@ -161,15 +169,15 @@ dm- - delete all marks on the current line
 dm[Space] - delete all marks in the current buffer
 m] - move to the next mark
 m[ - move to the previous mark
-m{0-9} - set bookmark (can be set multiple times)
-dm{0-9} - delete all bookmarks of the group
+m[0-9] - set bookmark (can be set multiple times)
+dm[0-9] - delete all bookmarks of the group
 m} - move to the next bookmark of the same group
 m{ - move to the previous bookmark of the same group
 dm= - delete bookmark under cursor
 
 #### marks types
-{char} - local mark
-{CHAR} - global mark
+[char] - local mark
+[CHAR] - global mark
 ` - go to position before the last jump
 " - go to the position when last exiting the file
 ^ - go to the position where the last time Insert mode was stopped
@@ -193,7 +201,7 @@ Ctrl-/ - toggle comment for line
 
 ## inserting
 Ctrl-V - paste content of + register (system clipboard)
-Ctrl-R{register} - insert content of register {register}
+Ctrl-R[register] - insert content of register [register]
 
 ## deleting
 Ctrl-S - delete the character under the cursor
@@ -208,10 +216,13 @@ Ctrl-T (insert mode) - indent line
 Ctrl-D (insert mode) - unindent line
 
 # Visual Mode:
-o - exchange cursor position with start of highlighting
+o - exchange cursor position with start of selection
+J - joins all selected lines
+S[new] - change surrounding delimiter to [new]
 Ctrl-/ - toggle comment for block
 Ctrl-c - yank into register + (system clipboard)
 Ctrl-x - delete block and yank into register + (system clipboard)
+
 
 # Windows Control
 ## Custom settings (All Modes)
@@ -310,8 +321,11 @@ dd - toggle item
 [Space]r - replace current item
 [Space]R - replace all marked items
 
-# GitBlame
+# Git
 [Space]gb - toggle git blame
+[Space]gs - toggle git signs (line diff in signcolumn)
+[Space]gw - toggle git inline changes (word diff)
+[Space]gd - open git history of buffer to open vimdiff
 
 # Aerial
 Ctrl-a - toggle aerial view (also in visual and insert mode)
@@ -377,4 +391,5 @@ Esc - close menu
 [Space]rb - build project
 [Space]rr - run project
 [Space]p - format code with RustFmt
+
 
