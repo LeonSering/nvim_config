@@ -147,20 +147,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -------------------------
 
 local transparent_background = function()
-  vim.api.nvim_set_hl(0, 'Normal', { bg = 'None', ctermbg = 'none' })          -- background color
-  vim.api.nvim_set_hl(0, 'NonText', { bg = 'None', ctermbg = 'none' })         -- background color
-  vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = 'None', ctermbg = 'none' }) -- background color
-  vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = 'None', ctermbg = 'none' }) -- background color
-  vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'None', ctermbg = 'none' })        -- background color
-  vim.api.nvim_set_hl(0, 'NormalSB', { bg = 'None', ctermbg = 'none' })        -- background color
-  vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'None', ctermbg = 'none' })     -- background color
-  vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'None', ctermbg = 'none' })      -- background color
-  vim.api.nvim_set_hl(0, 'VertSplit', { bg = 'None', ctermbg = 'none' })       -- background color
-  vim.api.nvim_set_hl(0, 'CursorLineNr', { bg = 'None', ctermbg = 'none' })    -- background color
-  vim.api.nvim_set_hl(0, 'CursorLine', { bg = 'None', ctermbg = 'none' })      -- background color
-  vim.api.nvim_set_hl(0, 'Folded', { bg = 'None', ctermbg = 'none' })          -- background color
-  vim.api.nvim_set_hl(0, 'SpecialKey', { bg = 'None', ctermbg = 'none' })      -- background color
-  vim.api.nvim_set_hl(0, 'FoldColumn', { bg = 'None', ctermbg = 'none' })      -- background color
+  vim.api.nvim_set_hl(0, 'Normal', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'NonText', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'NormalSB', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'VertSplit', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'CursorLineNr', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'CursorLine', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'Folded', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'SpecialKey', { bg = 'None', ctermbg = 'none' })
+  vim.api.nvim_set_hl(0, 'FoldColumn', { bg = 'None', ctermbg = 'none' })
 end
 
 transparent_background()
@@ -956,10 +956,10 @@ require 'lspconfig'.jsonls.setup {}
 
 require 'lspconfig'.pyright.setup {}
 
-require'lspconfig'.lua_ls.setup {
+require 'lspconfig'.lua_ls.setup {
   on_init = function(client)
     local path = client.workspace_folders[1].name
-    if vim.loop.fs_stat(path..'/.luarc.json') or vim.loop.fs_stat(path..'/.luarc.jsonc') then
+    if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
       return
     end
 
