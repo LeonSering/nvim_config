@@ -54,25 +54,23 @@ require("lazy").setup({
   'rust-lang/rust.vim', -- running RustFmt and other short cuts
   'nvim-tree/nvim-tree.lua', -- file explorer
   {'folke/which-key.nvim', event = "VeryLazy", init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end},
-  "williamboman/mason.nvim", -- package manager for language servers
+  {'williamboman/mason.nvim', dependencies = {'neovim/nvim-lspconfig'}}, -- package manager for language servers
   'williamboman/mason-lspconfig.nvim', -- language server configurations
-  'neovim/nvim-lspconfig',
   {'j-hui/fidget.nvim', opts = {}}, -- shows loading process of lsp
   {'nvimdev/lspsaga.nvim', dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons'}},
-  -- { 'mrcjkb/rustaceanvim', version = '^4', ft = { 'rust' }, },
-
- 'hrsh7th/nvim-cmp', -- Completion framework
- 'hrsh7th/cmp-nvim-lsp', -- LSP completion source
- 'L3MON4D3/LuaSnip', -- Snippet engine for cmp
+   'neovim/nvim-lspconfig',
+  'hrsh7th/nvim-cmp', -- Completion framework
+  'hrsh7th/cmp-nvim-lsp', -- LSP completion source
+  'L3MON4D3/LuaSnip', -- Snippet engine for cmp
 
   -- Useful completion sources:
- 'hrsh7th/cmp-nvim-lua', -- for editing this init.lua file
- 'hrsh7th/cmp-nvim-lsp-signature-help',
- 'hrsh7th/cmp-nvim-lsp-document-symbol',
- 'saadparwaiz1/cmp_luasnip',
- 'hrsh7th/cmp-path',
- 'hrsh7th/cmp-buffer',
- { 'windwp/nvim-autopairs', config = true }, -- for automatically insert parenthesis when choosing function from completion
+  'hrsh7th/cmp-nvim-lua', -- for editing this init.lua file
+  'hrsh7th/cmp-nvim-lsp-signature-help',
+  'hrsh7th/cmp-nvim-lsp-document-symbol',
+  'saadparwaiz1/cmp_luasnip',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-buffer',
+  { 'windwp/nvim-autopairs', config = true }, -- for automatically insert parenthesis when choosing function from completion
 })
 
 ----------------------------
@@ -105,6 +103,8 @@ vim.opt.smartcase = true
 
 vim.opt.signcolumn = "yes" -- always show sign column
 
+vim.opt.diffopt= "internal,filler,closeoff,hiddenoff" -- better diff
+vim.opt.fillchars = "diff: " -- better diff
 -- Sets how neovim will display certain whitespace in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
@@ -138,6 +138,8 @@ local transparent_background = function()
   vim.api.nvim_set_hl(0, 'CursorLine', {bg = 'None', ctermbg = 'none'}) -- background color
   vim.api.nvim_set_hl(0, 'Folded', {bg = 'None', ctermbg = 'none'}) -- background color
   vim.api.nvim_set_hl(0, 'SpecialKey', {bg = 'None', ctermbg = 'none'}) -- background color
+  vim.api.nvim_set_hl(0, 'FoldColumn', {bg = 'None', ctermbg = 'none'}) -- background color
+
 end
 
 transparent_background()
@@ -168,7 +170,7 @@ vim.api.nvim_set_hl(0, 'MatchParen', {ctermbg = 'darkgray', bg = 'DarkGray', bol
 -- vimdiff
 vim.api.nvim_set_hl(0, 'DiffAdd', {ctermbg = 22, bg = 'DarkGreen'})
 vim.api.nvim_set_hl(0, 'DiffChange', {ctermbg = 17, bg = 'NavyBlue'})
-vim.api.nvim_set_hl(0, 'DiffDelete', {ctermbg = 'black', bg = 'Black'})
+vim.api.nvim_set_hl(0, 'DiffDelete', {ctermfg = 'gray', ctermbg = 'none', fg = 'Gray', bg = 'None'})
 vim.api.nvim_set_hl(0, 'DiffText', {ctermbg = 52, bg = 'DarkRed'})
 
 
@@ -599,16 +601,10 @@ vim.api.nvim_set_hl(0, 'TelescopeMatching', {ctermfg = 'darkyellow', fg = 'Yello
 -------------
 
 require('spectre').setup({
-	highlight = {ui = "String", search = "DiffChange", replace = "DiffDelete"},
+	highlight = {ui = "String", search = "DiffDelete", replace = "DiffAdd"},
   mapping = {
     ['run_current_replace'] = {
       map = "<leader>r",
-    },
-    ['toggle_live_update']={
-      desc = "toggle live update"
-    },
-    ['send_to_qf'] = {
-      desc = "all items to quickfix"
     },
   }
 })
@@ -869,10 +865,11 @@ require("which-key").setup ()
 -----------
 
 require("mason").setup()
-require("mason-lspconfig").setup()
--- to install rust-analyzer run in nvim:
--- :MasonInstall rust-analyzer codelldb
-
+require("mason-lspconfig").setup( {
+  automatic_installation = true,
+})
+-- :MasonInstall codelldb
+vim.cmd("MasonUpdate") -- update language servers on startup
 
 
 
@@ -882,7 +879,7 @@ require("mason-lspconfig").setup()
 
 -- Treesitter Plugin Setup
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "lua", "rust", "toml", "json", "yaml", "markdown"},
+  ensure_installed = { "lua", "rust", "toml", "json", "yaml", "python"},
   auto_install = true,
   highlight = {
     enable = true,
@@ -911,7 +908,6 @@ vim.g.rainbow_delimiters = {
 
 -- Setup language servers.
 local lspconfig = require('lspconfig')
-lspconfig.pyright.setup {}
 lspconfig.rust_analyzer.setup {
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
@@ -922,6 +918,16 @@ lspconfig.rust_analyzer.setup {
     },
   },
 }
+
+require'lspconfig'.jsonls.setup{}
+
+require'lspconfig'.pyright.setup{}
+
+require'lspconfig'.lua_ls.setup {}
+
+require'lspconfig'.taplo.setup{} -- TOML
+
+require'lspconfig'.yamlls.setup{}
 
 -- Set up diagnostics.
 vim.diagnostic.config({
