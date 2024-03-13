@@ -120,6 +120,8 @@ cs[old][new] - change surrounding [old] with [new]
 ds[old] - delete surrounding [old]
 yss[new] - add surrounding [new] to line
 S[new] - in visual mode: add surrounding [new]
+[space]b - change brackets (same as csb)
+[space]B - change quotes (same as csq)
 [new/old] = [Bracket], b (brackets: >,),],}), q (quotes: ',",`), s (brackets, quotes), t (html-tags), f (function), i (individual start and end)
 
 ## enter visual mode
@@ -292,6 +294,7 @@ Ctrl-Left - dissmiss suggestion
 [Space]fe - list diagnostics
 [Space]fv - list symbols (variable names) of current file
 [Space]fV - list symbols (variable names) of workspace
+Ctrl-U / Ctrl-D - scroll preview window up/down (normal mode in telescope)
 
 ## in telescope picker
 #### insert mode:
