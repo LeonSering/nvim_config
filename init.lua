@@ -1,5 +1,4 @@
-require "options"
-require "mappings"
+require("options")
 
 -- bootstrap plugins & lazy.nvim
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim" -- path where its going to be installed
@@ -23,3 +22,6 @@ require("lazy").setup({
     {import = "plugins" },
   },
 })
+require("mappings")
+
+

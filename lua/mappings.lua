@@ -72,7 +72,6 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<A-q>', '<cmd>wincmd o<CR>')
 
 -- DISABLE KEYS --
 -- disable some unused keys
-vim.keymap.set('n', '<C-w>', '<Nop>')       -- disable <C-w> in normal mode
 vim.keymap.set('n', '!', '<Nop>')           -- disable ! in normal mode
 vim.keymap.set({ 'n', 'v' }, 'q:', '<Nop>') -- disable q: in normal and visual mode
 vim.keymap.set('n', 'q/', '<Nop>')          -- disable q/ in normal mode
@@ -89,14 +88,14 @@ vim.keymap.set('i', '<C-n>', '<Nop>')       -- disable <C-n> in insert mode
 vim.keymap.set('i', '<C-f>', '<Nop>')       -- disable <C-f> in insert mode
 
 -- disable keys for learning:
-vim.keymap.set('i', '<BS>', '<Nop>')    -- disable Backspace in insert mode (use <C-s> instead)
-vim.keymap.set('i', '<Del>', '<Nop>')   -- disable Backspace in insert mode (use <C-x> instead)
-vim.keymap.set('i', '<Home>', '<Nop>')  -- disable Home in insert mode (go to normal mode and use 0 instead)
-vim.keymap.set('i', '<End>', '<Nop>')   -- disable Home in insert mode (go to normal mode use $ instead)
-vim.keymap.set('i', '<Left>', '<Nop>')  -- disable Left in insert mode (use <C-h> instead)
-vim.keymap.set('i', '<Down>', '<Nop>')  -- disable Down in insert mode (use <C-j> instead)
-vim.keymap.set('i', '<Up>', '<Nop>')    -- disable Up in insert mode (use <C-k> instead)
-vim.keymap.set('i', '<Right>', '<Nop>') -- disable Right in insert mode (use <C-l> instead)
+vim.keymap.set({'i','v','c'}, '<BS>', '<Nop>')    -- disable Backspace in insert mode (use <C-s> instead)
+vim.keymap.set({'n','i','v','c'}, '<Del>', '<Nop>')   -- disable Backspace in insert mode (use <C-x> instead)
+vim.keymap.set({'n','i','v','c'}, '<Home>', '<Nop>')  -- disable Home in insert mode (go to normal mode and use 0 instead)
+vim.keymap.set({'n','i','v','c'}, '<End>', '<Nop>')   -- disable Home in insert mode (go to normal mode use $ instead)
+vim.keymap.set({'n','i','v','c'}, '<Left>', '<Nop>')  -- disable Left in insert mode (use <C-h> instead)
+vim.keymap.set({'n','i','v','c'}, '<Down>', '<Nop>')  -- disable Down in insert mode (use <C-j> instead)
+vim.keymap.set({'n','i','v','c'}, '<Up>', '<Nop>')    -- disable Up in insert mode (use <C-k> instead)
+vim.keymap.set({'n','i','v','c'}, '<Right>', '<Nop>') -- disable Right in insert mode (use <C-l> instead)
 
 vim.keymap.set('c', '<BS>', '<Nop>')    -- disable Backspace in insert mode (use <C-s> instead)
 vim.keymap.set('c', '<Del>', '<Nop>')   -- disable Backspace in insert mode (use <C-x> instead)
