@@ -45,6 +45,71 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+
+-------------------------
+-- Auto close brackets --
+-------------------------
+
+-- only close brackets when '{' or '(' is the last character and <CR> is pressed
+
+local waiting_for_brace = false
+
+-- set waiting_for_brace to true when '{' or '(' is pressed
+vim.keymap.set('i', '{', function()
+  waiting_for_brace = true
+  return "{"
+end, { expr = true })
+
+vim.keymap.set('i', '(', function()
+  waiting_for_brace = true
+  return "("
+end, { expr = true })
+
+vim.keymap.set('i', '[', function()
+  waiting_for_brace = true
+  return "["
+end, { expr = true })
+
+vim.keymap.set('i', '"', function()
+  waiting_for_brace = true
+  return '"'
+end, { expr = true })
+
+vim.keymap.set('i', '*', function()
+  waiting_for_brace = true
+  return '*'
+end, { expr = true })
+
+-- close brackets when <CR> is pressed but only if the cursor is at the end of the line and '(' or '{' is the last character
+vim.keymap.set('i', '<CR>', function()
+  if waiting_for_brace then
+    waiting_for_brace = false
+    if vim.fn.getline("."):sub(vim.fn.col(".") - 1, vim.fn.col(".")) == "{" then
+      return "<CR>}<ESC>O"
+    elseif vim.fn.getline("."):sub(vim.fn.col(".") - 1, vim.fn.col(".")) == "(" then
+      return "<CR>)<ESC>O"
+    elseif vim.fn.getline("."):sub(vim.fn.col(".") - 1, vim.fn.col(".")) == "[" then
+      return "<CR>]<ESC>O"
+    elseif vim.fn.getline("."):sub(vim.fn.col(".") - 3, vim.fn.col(".")) == '"""' then
+      return "<CR>\"\"\"<ESC>O"
+    elseif vim.fn.getline("."):sub(vim.fn.col(".") - 2, vim.fn.col(".")) == '/*' then
+      return "<CR><CR>**/<Up> * "
+    else
+      return "<CR>"
+    end
+  else
+    return "<CR>"
+  end
+end, { expr = true })
+
+-- reset waiting_for_brace when cursor is moved
+vim.api.nvim_create_autocmd('CursorMoved', {
+  desc = 'Reset waiting_for_brace when cursor is moved',
+  callback = function()
+    waiting_for_brace = false
+  end,
+})
+
 -------------------------
 ------ COLORSCHEME ------
 -------------------------

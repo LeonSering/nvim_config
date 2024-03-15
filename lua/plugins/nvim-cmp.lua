@@ -63,13 +63,6 @@ return {
           -- Add tab support
           ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
           ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-          --[[ ['<Tab>'] = function()
-      if cmp.visible() then
-        cmp.select_next_item({behavior=cmp.SelectBehavior.Select})
-      else
-        cmp.complete()
-      end
-    end, ]]
           ['<C-S-j>'] = cmp.mapping.scroll_docs(-4),
           ['<C-S-k>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = function()
