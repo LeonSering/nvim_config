@@ -9,7 +9,13 @@ return {
       vim.api.nvim_set_hl(0, group, {})
     end
 
+    -- enables auto-completion with snippets (automatic insertion of arguemnts)
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits', } }
+
     lspconfig.rust_analyzer.setup {
+      capabilities = capabilities,
       settings = {
         ['rust-analyzer'] = {
           checkOnSave = {
