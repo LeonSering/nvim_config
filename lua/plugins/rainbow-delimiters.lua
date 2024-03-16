@@ -5,6 +5,15 @@ return {
       strategy = {
         [''] = require('rainbow-delimiters').strategy['global'],
       },
+      highlight = {
+        -- 'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange', -- cterm is white
+        'RainbowDelimiterGreen',
+        -- 'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+      },
     }
   end
 }

@@ -3,8 +3,13 @@ return {
   config = function()
     -- Setup language servers.
     local lspconfig = require('lspconfig')
+
+    -- disable semantic highlighting for all languages
+    for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+      vim.api.nvim_set_hl(0, group, {})
+    end
+
     lspconfig.rust_analyzer.setup {
-      -- Server-specific settings. See `:help lspconfig-setup`
       settings = {
         ['rust-analyzer'] = {
           checkOnSave = {
@@ -14,11 +19,11 @@ return {
       },
     }
 
-    require 'lspconfig'.jsonls.setup {}
+    lspconfig.jsonls.setup {}
 
-    require 'lspconfig'.pyright.setup {}
+    lspconfig.pyright.setup {}
 
-    require 'lspconfig'.lua_ls.setup {
+    lspconfig.lua_ls.setup {
       on_init = function(client)
         local path = client.workspace_folders[1].name
         if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
@@ -36,12 +41,7 @@ return {
             checkThirdParty = false,
             library = {
               vim.env.VIMRUNTIME
-              -- Depending on the usage, you might want to add additional paths here.
-              -- "${3rd}/luv/library"
-              -- "${3rd}/busted/library",
             }
-            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-            -- library = vim.api.nvim_get_runtime_file("", true)
           }
         })
       end,
