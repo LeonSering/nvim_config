@@ -1,7 +1,5 @@
 # Normal Mode
 ## basic commands
-[Space]/ or [Space]? - open this keymappings.md
-[Space]\ - open init.lua (config file)
 u - undo
 U - undo all changes on the line (to the last saved version)
 Ctrl-R - redo
@@ -164,7 +162,7 @@ Ctrl-O : go to the previous position in the jump list
 Ctrl-I : go to the next position in the jump list
 :ju : print jump list
 
-#### moves from plugin
+#### moves from marks-plugin
 m, - set the next available (lowercase) mark
 m; - toggle mark at current line
 dmx - delete mark x
@@ -194,6 +192,15 @@ dm= - delete bookmark under cursor
 Ctrl-/ - toggle comment for line
 Ctrl-K - toggle comment for line and go up
 Ctrl-J - toggle comment for line and go down
+
+## open config files and cheat sheets
+[Space]\ - open nvim config file lua/options.lua
+[Space]| - open nvim config file lua/mappings.lua
+[Space]? - open this keymappings.md
+[Space]/n - open cheat sheet normal_mode.pdf 
+[Space]/s - open cheat sheet space.pdf 
+[Space]/c - open cheat sheet ctrl.pdf 
+[Space]/a - open cheat sheet alt.pdf 
 
 # Insert Mode:
 ## movement
@@ -229,19 +236,24 @@ Ctrl-x - delete block and yank into register + (system clipboard)
 
 # Windows Control
 ## Custom settings (All Modes)
-Alt-A or Alt-H - go to previous window (cyclic)
-Alt-D or Alt-L - go to next window (cyclic)
+Alt-Q - close all other windows
+Alt-W - maximize current window
+Alt-E - rotate windows to the left
+Alt-R - rotate windows to the right
+Alt-T - move current window to new tab
+Alt-A - go to previous window (cyclic)
+Alt-S - equalize width of all windows
+Alt-D - go to next window (cyclic)
+Alt-Z - close window
+Alt-X - open new buffer in vertical split
+Alt-C - close current tab
+Alt-V - split window vertically (dublicate current buffer)
+Alt-N - go to left tab (equals gT in normal mode)
+Alt-M - go to right tab (equals gt in normal mode)
+Alt-H - go to previous window (cyclic)
 Alt-J - go to window below
 Alt-K - go to window above
-Alt-M - go to left tab (equals gT in normal mode)
-Alt-N - go to right tab (equals gt in normal mode)
-Alt-E - split window vertically
-Alt-Z - close window
-Alt-X - rotate windows to the left
-Alt-C - rotate windows to the right
-Alt-W - maximize current window
-Alt-S - equalize all windows
-Alt-Q - close all other windows
+Alt-L - go to next window (cyclic)
 
 ## Default settings (Normal Mode) - disabled
 Ctrl-W followed by:
@@ -340,8 +352,6 @@ dd - toggle item
 [Space]gh - open git DiffviewFileHistory of current file
 [Space]gH - open git DiffviewFileHistory of working directory
 [Space]gd - open git Diffview against current index (three-way diff)
-#### in Diffview
-Ctrl-a - close Diffview
 
 # Aerial
 Ctrl-a - toggle aerial view (also in visual and insert mode)

@@ -61,25 +61,32 @@ vim.keymap.set('n', '<leader>"', 'ci"')                   -- change text inside 
 vim.keymap.set('n', "<leader>'", "ci'")                   -- change text inside single quotes
 vim.keymap.set('n', '<leader>`', 'ci`')                   -- change text inside double quotes
 
-vim.keymap.set('n', '<leader>/', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>', { desc = "Open keymappings.md" })
 vim.keymap.set('n', '<leader>?', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>', { desc = "Open keymappings.md" })
-vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/init.lua<CR>', { desc = "Open init.lua" })
+vim.keymap.set('n', '<leader>/n', '<Cmd>! xdg-open ~/.config/nvim/cheat_sheet/normal_mode.pdf<CR><Esc>', { desc = "Open Cheat Sheet normal_mode.pdf" })
+vim.keymap.set('n', '<leader>/c', '<Cmd>! xdg-open ~/.config/nvim/cheat_sheet/ctrl.pdf<CR><Esc>', { desc = "Open Cheat Sheet ctrl.pdf" })
+vim.keymap.set('n', '<leader>/a', '<Cmd>! xdg-open ~/.config/nvim/cheat_sheet/alt.pdf<CR><Esc>', { desc = "Open Cheat Sheet alt.pdf" })
+vim.keymap.set('n', '<leader>/s', '<Cmd>! xdg-open ~/.config/nvim/cheat_sheet/space.pdf<CR><Esc>', { desc = "Open Cheat Sheet space.pdf" })
+vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/lua/options.lua<CR>', { desc = "Open options.lua" })
+vim.keymap.set('n', '<leader>|', '<Cmd>vsplit ~/.config/nvim/lua/mappings.lua<CR>', { desc = "Open mappings.lua" })
 vim.keymap.set('n', '<C-d>', '<C-d>zz') -- move down half a page and center cursor
 vim.keymap.set('n', '<C-u>', '<C-u>zz') -- move down half a page and center cursor
 
 -- window control
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-q>', '<cmd>wincmd o<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-e>', '<cmd>wincmd R<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-r>', '<cmd>wincmd r<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-t>', '<cmd>wincmd T<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-a>', '<cmd>wincmd W<CR>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<A-h>', '<cmd>wincmd W<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-s>', '<cmd>wincmd =<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-d>', '<cmd>wincmd w<CR>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<A-l>', '<cmd>wincmd w<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-z>', '<cmd>q<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-x>', '<cmd>vsplit vnew<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-c>', '<cmd>tabclose<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-v>', '<cmd>wincmd v<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-h>', '<cmd>wincmd W<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-j>', '<cmd>wincmd j<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-k>', '<cmd>wincmd k<CR>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<A-e>', '<cmd>wincmd v<CR>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<A-z>', '<cmd>q<CR>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<A-x>', '<cmd>wincmd R<CR>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<A-c>', '<cmd>wincmd r<CR>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<A-s>', '<cmd>wincmd =<CR>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<A-q>', '<cmd>wincmd o<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-l>', '<cmd>wincmd w<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-m>', '<cmd>tabnext<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-n>', '<cmd>tabprevious<CR>')
 
