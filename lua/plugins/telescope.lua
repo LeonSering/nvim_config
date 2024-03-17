@@ -30,6 +30,7 @@ return {
           },
           n = {
             ["v"] = "select_vertical",
+            ["t"] = "select_tab",
             ["<C-Down>"] = "cycle_history_next",
             ["<C-Up>"] = "cycle_history_prev",
           }

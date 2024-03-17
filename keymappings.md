@@ -306,6 +306,7 @@ Ctrl-U / Ctrl-D - scroll preview window up/down (normal mode in telescope)
 #### insert mode:
 Enter - open file
 Ctrl-V - open file in vertical split
+Ctrl-T - open file in new tab
 Ctrl-{J,K} - move up and down in insert mode
 Ctrl-Up,Ctrl-Down - last and next history
 Ctrl-? - show help
@@ -313,6 +314,7 @@ Esc - go to normal mode
 #### normal mode:
 Enter - open file
 v - open file in vertical split
+t - open file in new tab
 j,k - move up and down
 Ctrl-Up,Ctrl-Down - last and next history
 ? - show help
@@ -350,7 +352,8 @@ Ctrl-n - toggle nvim-tree
 #### in nvim-tree
 ? or g? - show mappings
 Enter - open file
-v - open file in vertical split
+v / Ctrl-v - open file in vertical split
+t / Ctrl-t - open file in new tab
 r - rename show full path
 Ctrl-R - rename omit base name
 Backspace - Close directory

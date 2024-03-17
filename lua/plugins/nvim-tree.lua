@@ -13,6 +13,7 @@ return {
       -- vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
       vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
       vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split'))
+      vim.keymap.set('n', 't', api.node.open.tab, opts('Open: New Tab'))
       vim.keymap.set('n', 'r', api.fs.rename_full, opts('Rename: Full Path'))
       vim.keymap.set('n', '<Esc>', api.tree.close, opts('Close'))
       vim.keymap.set('n', 'C', api.tree.collapse_all, opts('Collapse All'))

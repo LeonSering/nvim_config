@@ -15,6 +15,7 @@ return {
       keys = {
         edit = '<Cr>',
         vsplit = 'v',
+        tabe = 't',
         quit = '<Esc>',
         close = 'q',
       }
@@ -24,6 +25,7 @@ return {
       keys = {
         edit = '<Cr>',
         vsplit = 'v',
+        tabe = 't',
         quit = '<Esc>',
         close = 'q',
       }
