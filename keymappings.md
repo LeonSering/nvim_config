@@ -231,6 +231,10 @@ Ctrl-x - delete block and yank into register + (system clipboard)
 ## Custom settings (All Modes)
 Alt-A or Alt-H - go to previous window (cyclic)
 Alt-D or Alt-L - go to next window (cyclic)
+Alt-J - go to window below
+Alt-K - go to window above
+Alt-M - go to left tab (equals gT in normal mode)
+Alt-N - go to right tab (equals gt in normal mode)
 Alt-E - split window vertically
 Alt-Z - close window
 Alt-X - rotate windows to the left

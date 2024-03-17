@@ -72,12 +72,16 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<A-a>', '<cmd>wincmd W<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-h>', '<cmd>wincmd W<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-d>', '<cmd>wincmd w<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-l>', '<cmd>wincmd w<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-j>', '<cmd>wincmd j<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-k>', '<cmd>wincmd k<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-e>', '<cmd>wincmd v<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-z>', '<cmd>q<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-x>', '<cmd>wincmd R<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-c>', '<cmd>wincmd r<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-s>', '<cmd>wincmd =<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-q>', '<cmd>wincmd o<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-m>', '<cmd>tabnext<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-n>', '<cmd>tabprevious<CR>')
 
 -- DISABLE KEYS --
 -- disable some unused keys
