@@ -387,11 +387,11 @@ Tab - open autocomplete menu (if text of the left)
 ## in autocomplete menu
 Ctrl-j - move down
 Ctrl-k - move up
-Ctrl-Tab - next suggestion
-Ctrl-Shift-Tab - previous suggestion
+Tab - next suggestion
+Shift-Tab - previous suggestion
 Enter or Ctrl-Space - confirm suggestion
-Ctrl-Shift-j - scroll docs down
-Ctrl-Shift-k - scroll docs up
+Ctrl-U - scroll docs up
+Ctrl-D - scroll docs down
 Esc - close menu
 
 ## in function snippet

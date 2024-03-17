@@ -73,8 +73,8 @@ return {
             fallback()
           end
         end,
-        ['<C-S-j>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-S-k>'] = cmp.mapping.scroll_docs(4),
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = function()
           if cmp.visible() then
             cmp.confirm()
