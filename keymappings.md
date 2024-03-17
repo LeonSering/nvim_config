@@ -12,6 +12,7 @@ Ctrl-R - redo
 K - show help or documentary for the word under the cursor
 [Space]p - format code (supports json, rs so far)
 z= - show spelling suggestions
+gt / gT - go to next / previous tab
 
 ## Basic Movement
 h, j, k, l - left, down, up, right
@@ -294,6 +295,7 @@ Ctrl-Left - dissmiss suggestion
 [Space]fe - list diagnostics
 [Space]fv - list symbols (variable names) of current file
 [Space]fV - list symbols (variable names) of workspace
+[Space]gl - open git log of current file to open vimdiff
 Ctrl-U / Ctrl-D - scroll preview window up/down (normal mode in telescope)
 
 ## in telescope picker
@@ -328,7 +330,12 @@ dd - toggle item
 [Space]gb - toggle git blame
 [Space]gs - toggle git signs (line diff in signcolumn)
 [Space]gw - toggle git inline changes (word diff)
-[Space]gd - open git history of buffer to open vimdiff
+[Space]gl - open git log of current file to open vimdiff
+[Space]gh - open git DiffviewFileHistory of current file
+[Space]gH - open git DiffviewFileHistory of working directory
+[Space]gd - open git Diffview against current index (three-way diff)
+#### in Diffview
+Ctrl-a - close Diffview
 
 # Aerial
 Ctrl-a - toggle aerial view (also in visual and insert mode)

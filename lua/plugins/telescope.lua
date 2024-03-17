@@ -166,7 +166,7 @@ return {
     vim.keymap.set('n', '<leader>fV', builtin.lsp_workspace_symbols, { desc = "Telescope: LSP workspace symbols" })
     vim.keymap.set('n', '<leader>FV', builtin.lsp_workspace_symbols, { desc = "Telescope: LSP workspace symbols" })
 
-    vim.keymap.set('n', '<leader>gd', builtin.git_bcommits, { desc = "Telescope: Git commits (buffer)" })
+    vim.keymap.set('n', '<leader>gl', builtin.git_bcommits, { desc = "Telescope: Git log of current file" })
     require("telescope").load_extension("aerial")
     vim.keymap.set('n', '<leader>fa', require("telescope").extensions.aerial.aerial, { desc = "Telescope: Aerial" })
   end
