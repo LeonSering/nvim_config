@@ -372,21 +372,24 @@ W or C - collapse all
 [Space]fv - list symbols (variable names) of current file
 [Space]fV - list symbols (variable names) of workspace
 [Space]p - format code
+Ctrl-e - toggle signature help (in insert mode)
 
 # Autocomplete (cmp)
 Ctrl-Space - open autocomplete menu
+Tab - open autocomplete menu (if text of the left)
 ## in autocomplete menu
 Ctrl-j - move down
 Ctrl-k - move up
 Ctrl-Tab - next suggestion
 Ctrl-Shift-Tab - previous suggestion
-Enter - accept full suggestion
+Enter or Ctrl-Space - confirm suggestion
 Ctrl-Shift-j - scroll docs down
 Ctrl-Shift-k - scroll docs up
-Ctrl-Space - confirm selection
-Enter - confirm selection
 Esc - close menu
 
+## in function snippet
+Tab - move to next placeholder
+Shift-Tab - move to previous placeholder
 
 # Rust
 [Space]rt - runt test under cursor

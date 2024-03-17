@@ -70,11 +70,6 @@ vim.keymap.set('i', '[', function()
   return "["
 end, { expr = true })
 
-vim.keymap.set('i', '"', function()
-  waiting_for_brace = true
-  return '"'
-end, { expr = true })
-
 vim.keymap.set('i', '*', function()
   waiting_for_brace = true
   return '*'
@@ -90,10 +85,8 @@ vim.keymap.set('i', '<CR>', function()
       return "<CR>)<ESC>O"
     elseif vim.fn.getline("."):sub(vim.fn.col(".") - 1, vim.fn.col(".")) == "[" then
       return "<CR>]<ESC>O"
-    elseif vim.fn.getline("."):sub(vim.fn.col(".") - 3, vim.fn.col(".")) == '"""' then
-      return "<CR>\"\"\"<ESC>O"
     elseif vim.fn.getline("."):sub(vim.fn.col(".") - 2, vim.fn.col(".")) == '/*' then
-      return "<CR><CR>**/<Up> * "
+      return "<CR><CR> */<Up> * "
     else
       return "<CR>"
     end

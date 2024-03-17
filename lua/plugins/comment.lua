@@ -1,10 +1,12 @@
 return {
   'numToStr/Comment.nvim', -- for commentary
-  mappings = {
-    basic = false,
-    extra = false,
-  },
   config = function()
+    require('Comment').setup({
+      mappings = {
+        basic = false,
+        extra = false,
+      }
+    })
     vim.keymap.set('n', '<C-k>', '<Plug>(comment_toggle_linewise_current)<up>')
     vim.keymap.set('n', '<C-j>', '<Plug>(comment_toggle_linewise_current)<down>')
     vim.keymap.set('v', '<C-k>', '<Plug>(comment_toggle_linewise_visual)<up>')

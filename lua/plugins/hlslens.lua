@@ -3,6 +3,7 @@ return {
   dependencies = {
     'petertriho/nvim-scrollbar', -- scrollbar on right side
   },
+  priority = 10, -- must be smaller than that of nvim-scrollbar
   config = function()
     require("scrollbar.handlers.search").setup({
       calm_down = true,  -- disable the search highlight when the cursor moves

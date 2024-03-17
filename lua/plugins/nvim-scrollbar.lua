@@ -1,8 +1,6 @@
 return {
   'petertriho/nvim-scrollbar', -- scrollbar on right side
-  dependecies = {
-    'kevinhwang91/nvim-hlslens', -- better in page search with / and ?
-  },
+  priority = 15, -- must be higher than that of nvim-hlslens
   opts = {
     handle = {
       color_nr = 8, -- cterm -- dark grey
