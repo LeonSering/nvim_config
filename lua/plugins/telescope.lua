@@ -81,12 +81,6 @@ return {
             },
           },
         },
-        tags = {
-          initial_mode = "insert",
-        },
-        current_buffer_tags = {
-          initial_mode = "insert",
-        },
         commands = {
           initial_mode = "insert",
         },
@@ -150,8 +144,6 @@ return {
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "Telescope: Help tags" })
     vim.keymap.set('n', '<leader>fc', builtin.command_history, { desc = "Telescope: Command history" })
     vim.keymap.set('n', '<leader>f/', builtin.search_history, { desc = "Telescope: Search history" })
-    vim.keymap.set('n', '<leader>ft', builtin.tags, { desc = "Telescope: Tags" })
-    vim.keymap.set('n', '<leader>fi', builtin.current_buffer_tags, { desc = "Telescope: Tags in current buffer" })
     vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = "Telescope: Marks" })
     vim.keymap.set('n', '<leader>fr', builtin.registers, { desc = "Telescope: Registers" })
     vim.keymap.set('n', '<leader>fj', builtin.jumplist, { desc = "Telescope: Jump list" })

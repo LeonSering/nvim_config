@@ -60,6 +60,8 @@ return {
     vim.keymap.set('n', '<leader>r', '<cmd>Lspsaga rename<CR>', { desc = "LSP: Rename" }),
     vim.keymap.set('n', '<leader>e', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { desc = "LSP: Previous diagnostic" }),
     vim.keymap.set('n', '<leader>E', '<cmd>Lspsaga diagnostic_jump_next<CR>', { desc = "LSP: Next diagnostic" }),
+    vim.keymap.set('n', '[e', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { desc = "LSP: Previous diagnostic" }),
+    vim.keymap.set('n', ']e', '<cmd>Lspsaga diagnostic_jump_next<CR>', { desc = "LSP: Next diagnostic" }),
 
     vim.api.nvim_set_hl(0, 'CodeActionNumber', { bg = 'None', ctermbg = 'none' }),
   }

@@ -9,8 +9,12 @@ return {
         opts = vim.tbl_extend('force', { noremap = true, silent = true }, opts or {})
         vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
       end
-      map('n', '<leader>gs', '<cmd>Gitsigns toggle_signs<CR>')
-      map('n', '<leader>gw', '<cmd>Gitsigns toggle_word_diff<CR>')
+      local gs = require('gitsigns')
+      map('n', '<leader>gs', '<cmd>Gitsigns toggle_signs<CR>', { desc = 'Toggle git signs' })
+      map('n', '<leader>gw', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'Toggle git word diff' })
+      map('n', ']g', '<cmd>Gitsigns next_hunk<CR>', { desc = 'Next git hunk' })
+      map('n', '[g', '<cmd>Gitsigns prev_hunk<CR>', { desc = 'Previous git hunk' })
+
     end,
     vim.api.nvim_set_hl(0, 'GitSignsAdd',
       { ctermfg = 'darkgreen', fg = 'DarkGreen', ctermbg = 'none', bg = 'None', bold = true }),

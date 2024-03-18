@@ -12,7 +12,7 @@ K - show help or documentary for the word under the cursor
 z= - show spelling suggestions
 gt / gT - go to next / previous tab
 
-## Basic Movement
+## basic movement
 h, j, k, l - left, down, up, right
 0 - to first character in line
 ^ - first non blank character in line
@@ -43,6 +43,13 @@ B - one blank-sperated word backwards
 } - paragraph forward
 { - paragraph backwards
 % - find the next bracket
+
+## jumps
+[m / ]m - go to previous / next method start
+[M / ]M - go to previous / next method end
+[t / ]t - go to previous / next TODO or NOTE
+[e / ]e - go to previous / next error or warning
+[g / ]g - go to previous / next git hunk
 
 ## scrolling
 Ctrl-E - go down a line and scroll window
@@ -289,7 +296,6 @@ Ctrl-Left - dissmiss suggestion
 [Space]fF or [Space] FF - find files including ignored and hidden files
 [Space]fo - select old / recent files
 [Space]fb - select buffers
-
 [Space]fg - live grep in working directory
 [Space]fu - fuzzy find in current file
 
@@ -309,8 +315,7 @@ Ctrl-Left - dissmiss suggestion
 [Space]fq - select quickfix
 [Space]fs - select spell suggestions
 
-[Space]ft - find tags
-[Space]fi - find tags in curent buffer
+[Space]ft - select TODOs and NOTEs
 
 [Space]fzc - select colorscheme
 [Space]fzo - find vim-options
