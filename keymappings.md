@@ -197,10 +197,10 @@ Ctrl-J - toggle comment for line and go down
 [Space]\ - open nvim config file lua/options.lua
 [Space]| - open nvim config file lua/mappings.lua
 [Space]? - open this keymappings.md
-[Space]/n - open cheat sheet normal_mode.pdf 
-[Space]/s - open cheat sheet space.pdf 
-[Space]/c - open cheat sheet ctrl.pdf 
-[Space]/a - open cheat sheet alt.pdf 
+[Space]/n - open cheat sheet normal_mode.pdf
+[Space]/s - open cheat sheet space.pdf
+[Space]/c - open cheat sheet ctrl.pdf
+[Space]/a - open cheat sheet alt.pdf
 
 # Insert Mode:
 ## movement
@@ -286,33 +286,41 @@ Ctrl-Left - dissmiss suggestion
 # Telescope
 \ - resume last telescope picker
 [Space]ff - find files
-[Space]fo - select old files
+[Space]fF or [Space] FF - find files including ignored and hidden files
+[Space]fo - select old / recent files
+[Space]fb - select buffers
+
 [Space]fg - live grep in working directory
 [Space]fu - fuzzy find in current file
-[Space]fb - select buffers
-[Space]fh - find help tags
-[Space]fc - select from command history
-[Space]f/ - select from search history
-[Space]ft - find tags
-[Space]fi - find tags in curent buffer
+
+[Space]fj - select jumplist
 [Space]fm - select marks
 [Space]fr - select from register
-[Space]fj - select jumplist
-[Space]fq - select quickfix
+[Space]f/ - select from search history
+[Space]fc - select from command history
 [Space]f: - find commands
-[Space]fs - select spell suggestions
+[Space]fh - find help tags
 [Space]fk - find keymaps
-[Space]fz - find telescope picker
+
+[Space]fe - list diagnostics
+[Space]fv - list symbols (variable names) of current file
+[Space]fV - list symbols (variable names) of workspace
+[Space]fa - open aerial picker
+[Space]fq - select quickfix
+[Space]fs - select spell suggestions
+
+[Space]ft - find tags
+[Space]fi - find tags in curent buffer
+
 [Space]fzc - select colorscheme
 [Space]fzo - find vim-options
 [Space]fzh - find highlights
 [Space]fza - find autocommands
-[Space]fa - open aerial picker
-[Space]fe - list diagnostics
-[Space]fv - list symbols (variable names) of current file
-[Space]fV - list symbols (variable names) of workspace
-[Space]gl - open git log of current file to open vimdiff
+
+[Space]fz - find telescope picker
+
 Ctrl-U / Ctrl-D - scroll preview window up/down (normal mode in telescope)
+Ctrl-V / Ctrl-T (or v / t in normal mode) - open in new vsplit / tab
 
 ## in telescope picker
 #### insert mode:
@@ -388,14 +396,19 @@ W or C - collapse all
 [Space]d - peek definition
 [Space]t - peek type definition
 [Space]u - list usages/references
-[Space]i - Lspsaga finder (show, definition, type_definition, references, and implementation)
+[Space]i - Lspsaga finder (show, definition, type-definition, references, and implementation)
+Enter / v / t - in preview window: open in current window, vertical split, new tab
+
 [Space]e - goto next diagnostics or show diagnostics under cursor
 [Space]E - goto previous diagnostics
 [Space]r - rename
+[Space]p - format code
+
 [Space]fe - list diagnostics
 [Space]fv - list symbols (variable names) of current file
 [Space]fV - list symbols (variable names) of workspace
-[Space]p - format code
+[Space]fq - select quickfix
+
 Ctrl-e - toggle signature help (in insert mode)
 
 # Autocomplete (cmp)
@@ -416,10 +429,8 @@ Tab - move to next placeholder
 Shift-Tab - move to previous placeholder
 
 # Rust
-[Space]rt - runt test under cursor
-[Space]rT or [Space]RT - run all tests
-[Space]rb - build project
-[Space]rr - run project
-[Space]p - format code with RustFmt
-
+[Space]ct - runt test under cursor
+[Space]cT or [Space]CT - run all tests
+[Space]cb - build project
+[Space]cr - run project
 
