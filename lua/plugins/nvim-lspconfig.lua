@@ -10,20 +10,21 @@ return {
     end
 
     -- enables auto-completion with snippets (automatic insertion of arguemnts)
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
+--[[     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits', } }
 
-    lspconfig.rust_analyzer.setup {
-      capabilities = capabilities,
-      settings = {
-        ['rust-analyzer'] = {
-          checkOnSave = {
-            command = 'clippy',
+      -- for rust lsp, see rustaceanvim.lua
+      lspconfig.rust_analyzer.setup {
+        capabilities = capabilities,
+        settings = {
+          ['rust-analyzer'] = {
+            checkOnSave = {
+              command = 'clippy',
+            },
           },
-        },
-      },
-    }
+        ,
+     } ]]
 
     lspconfig.jsonls.setup {}
 
@@ -56,9 +57,11 @@ return {
       }
     }
 
-    require 'lspconfig'.taplo.setup {} -- TOML
+    lspconfig.taplo.setup {} -- TOML
 
-    require 'lspconfig'.yamlls.setup {}
+    lspconfig.yamlls.setup {} -- YAML
+
+    lspconfig.marksman.setup {} -- markdown
 
     -- Set up diagnostics.
     vim.diagnostic.config({
@@ -68,6 +71,10 @@ return {
 
     -- set hotkey for formatting
     vim.keymap.set('n', '<leader>p', function() vim.lsp.buf.format { async = true } end, { desc = "LSP: Format" })
+    -- vim.keymap.set('n','l',function ()
+    -- local bufnr,_=vim.diagnostic.open_float()
+    -- vim.api.nvim_buf_set_option(bufnr,'filetype',vim.o.filetype)
+    -- end)
 
     -- DISPLAY DIAGNOSTICS IN THE COMMAND BAR
     -- Location information about the last message printed. The format is
@@ -79,6 +86,7 @@ return {
     local echo_timeout = 250
     -- The highlight group to use for warning messages.
     local warning_hlgroup = 'WarningMsg'
+    vim.api.nvim_set_hl(0, 'WarningMsg', { ctermfg = 'black', fg = 'Black', ctermbg = 'yellow', bg = 'Yellow' })
     -- The highlight group to use for error messages.
     local error_hlgroup = 'ErrorMsg'
     -- If the first diagnostic line has fewer than this many characters, also add

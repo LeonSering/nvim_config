@@ -132,6 +132,9 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   end
 })
 
+-- set termguicolors
+-- vim.opt.termguicolors = true
+
 -- line numbers
 vim.opt.number = true
 vim.api.nvim_set_hl(0, 'LineNr', { ctermfg = 'gray', fg = 'Gray', bold = false })

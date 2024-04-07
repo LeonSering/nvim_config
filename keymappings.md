@@ -383,6 +383,7 @@ Backspace - Close directory
 Tab - open preview (open but stay in nvim-tree)
 f - start filter
 F - clear filter
+x - cut node
 c - copy node
 p - paste node
 d - delete
@@ -404,8 +405,11 @@ W or C - collapse all
 [Space]i - Lspsaga finder (show, definition, type-definition, references, and implementation)
 Enter / v / t - in preview window: open in current window, vertical split, new tab
 
-[Space]e - goto next diagnostics or show diagnostics under cursor
-[Space]E - goto previous diagnostics
+]e - go to next diagnostic and open floating window
+[e - go to previous diagnostics and open floating window
+[Space]e - explain next diagnostics
+[Space]E - explain previous diagnostics
+[Space]l - toggle lsp lines
 [Space]r - rename
 [Space]p - format code
 
@@ -438,4 +442,5 @@ Shift-Tab - move to previous placeholder
 [Space]cT or [Space]CT - run all tests
 [Space]cb - build project
 [Space]cr - run project
+[Space]cd - open docs in browser
 

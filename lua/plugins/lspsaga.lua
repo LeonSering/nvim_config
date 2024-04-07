@@ -26,8 +26,7 @@ return {
         edit = '<Cr>',
         vsplit = 'v',
         tabe = 't',
-        quit = '<Esc>',
-        close = 'q',
+        quit = {'<Esc>', 'q'},
       }
     },
     lightbulb = {
@@ -37,7 +36,7 @@ return {
       in_select = false,
       auto_save = true,
       keys = {
-        quit = { '<Esc><Esc>', 'q' },
+        quit = { '<Esc><Esc>', '<C-c>' },
         exec = '<Cr>',
         select = 'x',
       },
@@ -46,20 +45,19 @@ return {
       frequency = 15,
     },
     diagnostic = {
-      extend_relatedInformation = true,
+      -- extend_relatedInformation = true,
       keys = {
-        quit = { '<Esc>', 'q' },
+        quit = { '<Esc>', 'q', '<C-c>' },
       }
     },
     vim.keymap.set('n', '<leader>q', '<cmd>Lspsaga code_action<CR>', { desc = "LSP: Code action" }),
-    vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>', { desc = "LSP: Hover" }),
     vim.keymap.set('n', '<leader>d', '<cmd>Lspsaga peek_definition<CR>', { desc = "LSP: Peek definition" }),
     vim.keymap.set('n', '<leader>t', '<cmd>Lspsaga peek_type_definition<CR>', { desc = "LSP: Peek type definition" }),
     vim.keymap.set('n', '<leader>u', '<cmd>Lspsaga finder ref<CR>', { desc = "LSP: List references" }),
     vim.keymap.set('n', '<leader>i', '<cmd>Lspsaga finder<CR>', { desc = "LSP: List def, type def, ref, impl" }),
-    vim.keymap.set('n', '<leader>r', '<cmd>Lspsaga rename<CR>', { desc = "LSP: Rename" }),
-    vim.keymap.set('n', '<leader>e', '<cmd>Lspsaga diagnostic_jump_next<CR>', { desc = "LSP: Next diagnostic" }),
-    vim.keymap.set('n', '<leader>E', '<cmd>Lspsaga diagnostic_jump_prec<CR>', { desc = "LSP: Previous diagnostic" }),
+    vim.keymap.set('n', '<leader>r', '<cmd>Lspsaga rename<CR>A', { desc = "LSP: Rename" }),
+    -- vim.keymap.set('n', '<leader>e', '<cmd>Lspsaga diagnostic_jump_next<CR>', { desc = "LSP: Next diagnostic" }),
+    -- vim.keymap.set('n', '<leader>E', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { desc = "LSP: Previous diagnostic" }),
     vim.keymap.set('n', '[e', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { desc = "LSP: Previous diagnostic" }),
     vim.keymap.set('n', ']e', '<cmd>Lspsaga diagnostic_jump_next<CR>', { desc = "LSP: Next diagnostic" }),
 

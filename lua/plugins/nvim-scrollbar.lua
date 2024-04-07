@@ -14,8 +14,12 @@ return {
       Hint = { color_nr = 'white', color = 'White' },
       Misc = { color_nr = 'white', color = 'White' },
     },
+    hide_if_all_visible = true,
     handlers = {
       search = true, -- Requires hlslens
+    },
+    excluded_buftypes = {
+        "terminal",
     },
   }
 }

@@ -17,6 +17,7 @@ return {
       -- can be either a table with all/none of the keys, or a single number, in which case
       -- the priority applies to all marks.
       -- default 10.
+      excluded_buftypes = { 'terminal', 'nofile', 'nowrite' },
       sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
       mappings = {
         preview = "", -- disable preview
