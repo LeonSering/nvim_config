@@ -56,8 +56,8 @@ return {
     vim.keymap.set('n', '<leader>u', '<cmd>Lspsaga finder ref<CR>', { desc = "LSP: List references" }),
     vim.keymap.set('n', '<leader>i', '<cmd>Lspsaga finder<CR>', { desc = "LSP: List def, type def, ref, impl" }),
     vim.keymap.set('n', '<leader>r', '<cmd>Lspsaga rename<CR>A', { desc = "LSP: Rename" }),
-    -- vim.keymap.set('n', '<leader>e', '<cmd>Lspsaga diagnostic_jump_next<CR>', { desc = "LSP: Next diagnostic" }),
-    -- vim.keymap.set('n', '<leader>E', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { desc = "LSP: Previous diagnostic" }),
+    vim.keymap.set('n', '<leader>E', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { desc = "LSP: Previous diagnostic" }),
+    vim.keymap.set('n', '<leader>e', '<cmd>Lspsaga diagnostic_jump_next<CR>', { desc = "LSP: Next diagnostic" }),
     vim.keymap.set('n', '[e', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { desc = "LSP: Previous diagnostic" }),
     vim.keymap.set('n', ']e', '<cmd>Lspsaga diagnostic_jump_next<CR>', { desc = "LSP: Next diagnostic" }),
 

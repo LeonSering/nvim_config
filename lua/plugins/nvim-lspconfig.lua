@@ -10,7 +10,7 @@ return {
     end
 
     -- enables auto-completion with snippets (automatic insertion of arguemnts)
---[[     local capabilities = vim.lsp.protocol.make_client_capabilities()
+    --[[     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits', } }
 
@@ -57,87 +57,144 @@ return {
       }
     }
 
-    lspconfig.taplo.setup {} -- TOML
+    lspconfig.taplo.setup {}    -- TOML
 
-    lspconfig.yamlls.setup {} -- YAML
+    lspconfig.yamlls.setup {}   -- YAML
 
     lspconfig.marksman.setup {} -- markdown
 
     -- Set up diagnostics.
     vim.diagnostic.config({
       virtual_text = false, -- disable inline diagnostics
-      signs = true,
+      signs = {
+        -- severity_sort = true,
+        severity = {min = vim.diagnostic.severity.WARN},
+        severity_sort = true,
+      }
     })
 
     -- set hotkey for formatting
     vim.keymap.set('n', '<leader>p', function() vim.lsp.buf.format { async = true } end, { desc = "LSP: Format" })
-    -- vim.keymap.set('n','l',function ()
-    -- local bufnr,_=vim.diagnostic.open_float()
-    -- vim.api.nvim_buf_set_option(bufnr,'filetype',vim.o.filetype)
-    -- end)
+    --[[ vim.keymap.set('n', '<leader>e', function()
+      vim.diagnostic.open_float({
+        border = 'rounded',
+        focusable = false,
+        scope = "cursor",
+        header = "",
+      })
+    end) ]]
 
     -- DISPLAY DIAGNOSTICS IN THE COMMAND BAR
+
     -- Location information about the last message printed. The format is
     -- `(did print, buffer number, line number)`.
     local last_echo = { false, -1, -1 }
+
     -- The timer used for displaying a diagnostic in the commandline.
     local echo_timer = nil
+
     -- The timer after which to display a diagnostic in the commandline.
-    local echo_timeout = 250
+    local echo_timeout = 0
+
     -- The highlight group to use for warning messages.
     local warning_hlgroup = 'WarningMsg'
     vim.api.nvim_set_hl(0, 'WarningMsg', { ctermfg = 'black', fg = 'Black', ctermbg = 'yellow', bg = 'Yellow' })
+
     -- The highlight group to use for error messages.
     local error_hlgroup = 'ErrorMsg'
+
+    -- The highlight group to use for hint messages.
+    local hint_hlgroup = 'MsgSeparator'
+
     -- If the first diagnostic line has fewer than this many characters, also add
     -- the second line to it.
-    local short_line_limit = 20
+    local short_line_limit = 600
 
     -- Prints the first diagnostic for the current line.
-    local echo_diagnostic = function()
+    local function echo_diagnostic()
       if echo_timer then
         echo_timer:stop()
       end
-      echo_timer = vim.defer_fn(function()
-        local line = vim.fn.line('.') - 1
-        local bufnr = vim.api.nvim_win_get_buf(0)
-        if last_echo[1] and last_echo[2] == bufnr and last_echo[3] == line then
-          return
-        end
-        local diags = vim.lsp.diagnostic.get_line_diagnostics()
-        if #diags == 0 then
-          -- If we previously echo'd a message, clear it out by echoing an empty
-          -- message.
-          if last_echo[1] then
-            last_echo = { false, -1, -1 }
-            vim.api.nvim_command('echo ""')
+
+      echo_timer = vim.defer_fn(
+        function()
+          local line = vim.fn.line('.') - 1
+          local bufnr = vim.api.nvim_win_get_buf(0)
+
+          if last_echo[1] and last_echo[2] == bufnr and last_echo[3] == line then
+            return
           end
-          return
-        end
-        last_echo = { true, bufnr, line }
-        local diag = diags[1]
-        local width = vim.api.nvim_get_option('columns') - 15
-        local lines = vim.split(diag.message, '\n')
-        local message = lines[1]
-        if #lines > 1 and #message <= short_line_limit then
-          message = message .. ' ' .. lines[2]
-        end
-        if width > 0 and #message >= width then
-          message = message:sub(1, width) .. '...'
-        end
-        local kind = 'Warning'
-        local hlgroup = warning_hlgroup
-        if diag.severity == vim.lsp.protocol.DiagnosticSeverity.Error then
-          kind = 'Error'
-          hlgroup = error_hlgroup
-        end
-        local chunks = {
-          { kind,          hlgroup },
-          { ' ' .. message },
-        }
-        vim.api.nvim_echo(chunks, false, {})
-      end, echo_timeout)
+
+          -- local diags = vim.lsp.diagnostic.get_line_diagnostics(bufnr, line, { severity_limit = 'Hint' })
+          local diags = vim.diagnostic.get(0, { lnum = line })
+
+          if #diags == 0 then
+            -- If we previously echo'd a message, clear it out by echoing an empty
+            -- message.
+            if last_echo[1] then
+              last_echo = { false, -1, -1 }
+              vim.api.nvim_command('echo ""')
+            end
+
+            return
+          end
+
+          last_echo = { true, bufnr, line }
+
+          local cmd_lines = vim.opt.cmdheight:get()
+
+          local chunks = {}
+          for i = 1, cmd_lines do
+            if #diags < i then
+              break
+            end
+            local diag = diags[i]
+            local width = vim.api.nvim_get_option('columns') - 15
+            local lines = vim.split(diag.message, "\n")
+            local message = lines[1]
+            -- local trimmed = false
+
+            if #lines > 1 and #message <= short_line_limit then
+              message = message .. ' ' .. lines[2]
+            end
+
+            if width > 0 and #message >= width then
+              message = message:sub(1, width) .. '...'
+            end
+
+            local kind = 'hint'
+            local hlgroup = hint_hlgroup
+            local padding = '  '
+
+            if diag.severity == vim.lsp.protocol.DiagnosticSeverity.Error then
+              kind = 'error'
+              hlgroup = error_hlgroup
+              padding = ' '
+            elseif diag.severity == vim.lsp.protocol.DiagnosticSeverity.Warning then
+              kind = 'warn'
+              hlgroup = warning_hlgroup
+              padding = '  '
+            end
+
+            if i < cmd_lines then
+              message = message .. '\n'
+            elseif #diags > cmd_lines then
+              message = message .. '   (' .. (#diags - cmd_lines) .. ' more)'
+            end
+
+            local chunk = {
+              { kind, hlgroup },
+              { padding .. message }
+            }
+            chunks = vim.list_extend(chunks, chunk)
+          end
+
+          vim.api.nvim_echo(chunks, false, {})
+        end,
+        echo_timeout
+      )
     end
+
     vim.api.nvim_create_autocmd({ "CursorMoved" }, {
       pattern = "*",
       callback = function()

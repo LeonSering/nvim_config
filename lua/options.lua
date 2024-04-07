@@ -21,6 +21,7 @@ vim.opt.clipboard:append("unnamed") -- yanks into "middle-mouse" clipboard
 vim.g.have_nerd_font = true
 vim.opt.breakindent = true          -- auto indent when breaking lines
 vim.opt.scrolloff = 4               -- always show lines below coursor
+vim.opt.cmdheight = 3               -- height of command line
 
 -- Case-insensitive searching UNLESS \C or capital in search
 vim.opt.ignorecase = true
