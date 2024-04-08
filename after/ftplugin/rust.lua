@@ -68,8 +68,8 @@ local function render_diagnostic(forward)
   end)
 end
 
-vim.keymap.set('n', ']e', function() render_diagnostic(true) end, { desc = "Rust: Render next diagnostics" })
-vim.keymap.set('n', '[e', function() render_diagnostic(false) end, { desc = "Rust: Render previous diagnostics" })
+vim.keymap.set('n', '<leader>e', function() render_diagnostic(true) end, { desc = "Rust: Render next diagnostics" })
+vim.keymap.set('n', '<leader>E', function() render_diagnostic(false) end, { desc = "Rust: Render previous diagnostics" })
 
 
 
@@ -177,5 +177,6 @@ local function explain_error(forward)
 end
 
 
-vim.keymap.set('n', ']E', function() explain_error(true) end, { desc = "Rust: Explain next error" })
-vim.keymap.set('n', '[E', function() explain_error(false) end, { desc = "Rust: Explain previous error" })
+vim.keymap.set('n', '<leader>ce', function() explain_error(true) end, { desc = "Rust: Explain next error" })
+vim.keymap.set('n', '<leader>cE', function() explain_error(false) end, { desc = "Rust: Explain previous error" })
+vim.keymap.set('n', '<leader>CE', function() explain_error(false) end, { desc = "Rust: Explain previous error" })

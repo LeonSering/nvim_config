@@ -48,7 +48,7 @@ B - one blank-sperated word backwards
 [m / ]m - go to previous / next method start
 [M / ]M - go to previous / next method end
 [t / ]t - go to previous / next TODO or NOTE
-[e / ]e - go to previous / next error or warning
+[e / ]e - go to previous / next diagnostic
 [g / ]g - go to previous / next git hunk
 
 ## scrolling
@@ -405,12 +405,10 @@ W or C - collapse all
 [Space]i - Lspsaga finder (show, definition, type-definition, references, and implementation)
 Enter / v / t - in preview window: open in current window, vertical split, new tab
 
-]e - go to next diagnostic and open floating window (rust: as in terminal)
-[e - go to previous diagnostics and open floating window (rust: as in terminal)
-]E - rust: explain next diagnostic
-[E - rust: explain previous diagnostics
-[Space]e - go to next diagnostic and open floating window with code actions
-[Space]E - go to previous diagnostic and open floating window with code actions
+[Space]e - go to next diagnostic and open floating window (rust: rendered as in terminal)
+[Space]E - go to previous diagnostics and open floating window (rust: rendered as in terminal)
+]e - go to next diagnostic and open floating window with code actions
+[E - go to previous diagnostic and open floating window with code actions
 [Space]l - toggle lsp lines
 [Space]r - rename
 [Space]p - format code
@@ -445,4 +443,5 @@ Shift-Tab - move to previous placeholder
 [Space]cb - build project
 [Space]cr - run project
 [Space]cd - open docs in browser
-
+[Space]ce - explain next error
+[Space]cE or [Space]CE - explain previous error
