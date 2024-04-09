@@ -3,7 +3,7 @@ return {
   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
   opts = {
     symbol_in_winbar = {
-      enable = false,
+      folder_level = 0,
     },
     code_action = {
       keys = {
@@ -26,7 +26,7 @@ return {
         edit = '<Cr>',
         vsplit = 'v',
         tabe = 't',
-        quit = {'<Esc>', 'q'},
+        quit = { '<Esc>', 'q' },
       }
     },
     lightbulb = {

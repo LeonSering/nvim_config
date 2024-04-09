@@ -1,6 +1,7 @@
 return {
   'nvim-telescope/telescope.nvim',
   tag = '0.1.5',
+  priority = 100,
   dependencies = {                                                  -- fuzzy finder
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',                              -- for syntax highlighting
@@ -11,6 +12,7 @@ return {
   config = function()
     require('telescope').setup {
       defaults = {
+        dynamic_preview_title = true,
         initial_mode = "normal",
         mappings = {
           i = {
@@ -69,6 +71,9 @@ return {
             width = 0.5,
             height = 0.8,
           },
+        },
+        registers = {
+          previewer = true
         },
         help_tags = {
           initial_mode = "insert",
@@ -129,6 +134,7 @@ return {
     -- load_extension, somewhere after setup function:
     require("telescope").load_extension("fzf")
 
+
     vim.api.nvim_set_hl(0, 'TelescopeMatching', { ctermfg = 'darkyellow', fg = 'Yellow', bold = true }) -- highlight matching text
 
     local builtin = require('telescope.builtin')
@@ -146,6 +152,7 @@ return {
     vim.keymap.set('n', '<leader>f/', builtin.search_history, { desc = "Telescope: Search history" })
     vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = "Telescope: Marks" })
     vim.keymap.set('n', '<leader>fr', builtin.registers, { desc = "Telescope: Registers" })
+    vim.keymap.set('n', '<leader>fp', require("telescope").extensions.yank_history.yank_history, { desc = "Telescope: Yank history" })
     vim.keymap.set('n', '<leader>fj', builtin.jumplist, { desc = "Telescope: Jump list" })
     vim.keymap.set('n', '<leader>fq', builtin.quickfix, { desc = "Telescope: Quickfix" })
     vim.keymap.set('n', '<leader>f:', builtin.commands, { desc = "Telescope: Commands" })

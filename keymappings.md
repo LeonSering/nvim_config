@@ -65,8 +65,10 @@ zt - center the screen on the top
 zb - center the screen on the bottom
 
 ## copy and past
-p - paste after cursor
-P - past before cursor
+p - paste after cursor line
+P - past before cursor line
+Ctrl-H - previous yanked entry (right after pasting)
+Ctrl-L - next yanked entry (right after pasting)
 y - yank next motion (or selection in visual mode)
 yy - yank line
 Y - yank until end of line
@@ -217,7 +219,8 @@ Ctrl-{H,J,K,L} : left, down, up, right
 Ctrl-/ - toggle comment for line
 
 ## inserting
-Ctrl-V - paste content of + register (system clipboard)
+Ctrl-V - paste at cursor position (even if lines were yanked)
+(afterwards in normal mode Ctrl-H / Ctrl-L - previous / next yanked entry)
 Ctrl-R[register] - insert content of register [register]
 
 ## deleting
@@ -237,8 +240,8 @@ o - exchange cursor position with start of selection
 J - joins all selected lines
 S[new] - change surrounding delimiter to [new]
 Ctrl-/ - toggle comment for block
-Ctrl-c - yank into register + (system clipboard)
-Ctrl-x - delete block and yank into register + (system clipboard)
+Ctrl-C - yank into register + (system clipboard)
+Ctrl-X - delete block and yank into register + (system clipboard)
 
 
 # Windows Control
@@ -299,6 +302,7 @@ Ctrl-Left - dissmiss suggestion
 [Space]fg - live grep in working directory
 [Space]fu - fuzzy find in current file
 
+[Space]fp - select from yank history for pasting
 [Space]fj - select jumplist
 [Space]fm - select marks
 [Space]fr - select from register

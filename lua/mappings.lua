@@ -25,9 +25,6 @@ vim.keymap.set({ 'i', 'c' }, '<C-x>', '<Del>') -- delete single char on the righ
 vim.keymap.set('i', '<C-w>', '<C-o>dw')        -- delete next word
 vim.keymap.set('i', '<C-a>', '<C-o>d$')        -- delete to end of line
 
--- paste
-vim.keymap.set({ 'i', 'c' }, '<C-v>', '<C-r>+') -- paste
-
 
 -- tab and shift-tab
 vim.keymap.set('i', '<S-Tab>', '<C-d>')
