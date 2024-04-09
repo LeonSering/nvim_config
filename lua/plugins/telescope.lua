@@ -104,6 +104,9 @@ return {
         autocommands = {
           initial_mode = "insert",
         },
+        diagnostics = {
+          severity_limit = "Warn", -- only show warnings and errors
+        },
         lsp_workspace_symbols = {
           initial_mode = "insert",
           fname_width = 0.4,
@@ -140,8 +143,12 @@ return {
     local builtin = require('telescope.builtin')
     vim.keymap.set('n', '\\', builtin.resume, {})
     vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Telescope: Find files" })
-    vim.keymap.set('n', '<leader>FF', '<cmd> lua require("telescope.builtin").find_files({hidden = true, no_ignore = true})<CR>', { desc = "Telescope: Find files including gitignored and hidden files" })
-    vim.keymap.set('n', '<leader>fF', '<cmd> lua require("telescope.builtin").find_files({hidden = true, no_ignore = true})<CR>', { desc = "Telescope: Find files including gitignored and hidden files" })
+    vim.keymap.set('n', '<leader>FF',
+      '<cmd> lua require("telescope.builtin").find_files({hidden = true, no_ignore = true})<CR>',
+      { desc = "Telescope: Find files including gitignored and hidden files" })
+    vim.keymap.set('n', '<leader>fF',
+      '<cmd> lua require("telescope.builtin").find_files({hidden = true, no_ignore = true})<CR>',
+      { desc = "Telescope: Find files including gitignored and hidden files" })
     vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = "Telescope: Open old / recent files" })
     vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Telescope: Live grep" })
     vim.keymap.set('n', '<leader>fu', builtin.current_buffer_fuzzy_find,
@@ -152,7 +159,8 @@ return {
     vim.keymap.set('n', '<leader>f/', builtin.search_history, { desc = "Telescope: Search history" })
     vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = "Telescope: Marks" })
     vim.keymap.set('n', '<leader>fr', builtin.registers, { desc = "Telescope: Registers" })
-    vim.keymap.set('n', '<leader>fp', require("telescope").extensions.yank_history.yank_history, { desc = "Telescope: Yank history" })
+    vim.keymap.set('n', '<leader>fp', require("telescope").extensions.yank_history.yank_history,
+      { desc = "Telescope: Yank history" })
     vim.keymap.set('n', '<leader>fj', builtin.jumplist, { desc = "Telescope: Jump list" })
     vim.keymap.set('n', '<leader>fq', builtin.quickfix, { desc = "Telescope: Quickfix" })
     vim.keymap.set('n', '<leader>f:', builtin.commands, { desc = "Telescope: Commands" })
