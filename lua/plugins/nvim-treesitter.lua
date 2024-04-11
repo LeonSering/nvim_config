@@ -1,5 +1,5 @@
 return {
-  'nvim-treesitter/nvim-treesitter', -- syntax highlighting, deactivated for rust
+  'nvim-treesitter/nvim-treesitter', -- syntax highlighting and text objects, deactivated for rust
   build = ':TSUpdate',
   config = function() 
     require('nvim-treesitter.configs').setup {

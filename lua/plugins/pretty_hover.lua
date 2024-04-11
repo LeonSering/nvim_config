@@ -1,5 +1,5 @@
 return {
-  "Fildo7525/pretty_hover",
+  "Fildo7525/pretty_hover", -- info when pressing K
   event = "LspAttach",
   config = function()
     require('pretty_hover').setup({

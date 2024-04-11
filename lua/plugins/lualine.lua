@@ -1,5 +1,5 @@
 return {
-  'nvim-lualine/lualine.nvim',
+  'nvim-lualine/lualine.nvim', -- statusline at the bottom of the window
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },

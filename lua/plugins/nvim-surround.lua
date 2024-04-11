@@ -1,6 +1,6 @@
 return {
-  "kylechui/nvim-surround",
-  event = "VeryLazy",  -- surround text with brackets
+  "kylechui/nvim-surround", -- surround text with brackets
+  event = "VeryLazy",
   opts = {
     surrounds = {
       ["("] = false,

@@ -1,6 +1,5 @@
 return {
-  'mrcjkb/rustaceanvim',
-  -- version = '^4', -- Recommended
+  'mrcjkb/rustaceanvim', -- lsp configuration for rust
   ft = { 'rust' },
   config = function()
     -- local capabilities = vim.lsp.protocol.make_client_capabilities()

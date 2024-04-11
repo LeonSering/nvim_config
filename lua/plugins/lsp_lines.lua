@@ -1,5 +1,5 @@
 return {
-  "ErichDonGubler/lsp_lines.nvim",
+  "ErichDonGubler/lsp_lines.nvim", -- show diagnostics between lines
   config = function()
     require("lsp_lines").setup()
     vim.diagnostic.config({

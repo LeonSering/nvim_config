@@ -1,6 +1,6 @@
 return
 {
-  "ray-x/lsp_signature.nvim",
+  "ray-x/lsp_signature.nvim", -- show function signature with <C-e>
   -- event = "VeryLazy",
   config = function()
     require 'lsp_signature'.setup({

@@ -1,5 +1,5 @@
 return {
-  'nvimdev/lspsaga.nvim',
+  'nvimdev/lspsaga.nvim', -- LSP UI, code actions, preview for definiton, type definition, references, implementation, rename, diagnostic, etc. also: top status line
   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
   opts = {
     symbol_in_winbar = {

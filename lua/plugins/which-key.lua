@@ -1,5 +1,5 @@
 return {
-  'folke/which-key.nvim',
+  'folke/which-key.nvim', -- preview keybindings on the bottom if a first key is pressed
   event = "VeryLazy",
   init = function()
     vim.o.timeout = true

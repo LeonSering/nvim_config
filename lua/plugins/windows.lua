@@ -1,5 +1,5 @@
 return {
-  'anuvyklack/windows.nvim',
+  'anuvyklack/windows.nvim', -- window management
   dependencies = {   -- enlarge current window, equal all others
     'anuvyklack/middleclass',
   },
