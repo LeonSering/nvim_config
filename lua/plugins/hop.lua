@@ -2,7 +2,8 @@ return {
   'smoka7/hop.nvim', -- jump to any word in the buffer
   config = function()
     require("hop").setup({
-      multi_windows = true
+      multi_windows = true,
+      keys = 'weruioasdfjklghcvbnmtp',
     })
     local hop = require('hop')
     local directions = require('hop.hint').HintDirection
@@ -16,7 +17,7 @@ return {
       hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
     end, { remap = true })
     vim.keymap.set('n', 't', function()
-      hop.hint_char1()
+      hop.hint_char1({ multi_windows = false })
     end, { remap = true })
     vim.keymap.set('n', 'T', function()
       hop.hint_char1({ multi_windows = true })

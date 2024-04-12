@@ -107,6 +107,10 @@ return {
         diagnostics = {
           severity_limit = "Warn", -- only show warnings and errors
         },
+        lsp_document_symbols = {
+          initial_mode = "insert",
+          symbol_width = 0.6,
+        },
         lsp_workspace_symbols = {
           initial_mode = "insert",
           fname_width = 0.4,
@@ -127,8 +131,6 @@ return {
         fzf = {
           fuzzy = true,                   -- false will only do exact matching
           override_generic_sorter = true, -- override the generic sorter
-          override_file_sorter = true,    -- override the file sorter
-          case_mode = "smart_case",       -- or "ignore_case" or "respect_case" the default case_mode is "smart_case"
         }
       },
     }

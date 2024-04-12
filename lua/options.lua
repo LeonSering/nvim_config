@@ -19,6 +19,7 @@ vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.clipboard:append("unnamed") -- yanks into "middle-mouse" clipboard
 vim.g.have_nerd_font = true
+vim.opt.textwidth = 120
 vim.opt.breakindent = true          -- auto indent when breaking lines
 vim.opt.scrolloff = 4               -- always show lines below coursor
 vim.opt.cmdheight = 3               -- height of command line

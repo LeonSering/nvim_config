@@ -9,14 +9,10 @@ return {
       -- Plugin configuration
       tools = {
       },
-      -- capabilities = capabilities,
       -- LSP configuration
       server = {
         on_attach = function(client, bufnr)
           vim.keymap.set('n', '<leader>cd', '<cmd> RustLsp openDocs<CR>', { desc = "Rust: Open documentation" })
-          -- vim.keymap.set('n', '<leader>e', require('rustaceanvim.commands.diagnostic').render_diagnostic, { desc = "Rust: Render diagnostics" })
-          -- vim.keymap.set('n', '<leader>e', '<cmd> RustLsp renderDiagnostic<CR>', { desc = "Rust: Render diagnostics" })
-          -- vim.keymap.set('n', '<leader>e', '<cmd> RustLsp explainError<CR>', { desc = "Rust: Explain error" })
         end,
         default_settings = {
           -- rust-analyzer language server configuration
