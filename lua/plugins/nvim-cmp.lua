@@ -2,7 +2,7 @@ return {
   'hrsh7th/nvim-cmp', -- Completion framework
   dependencies = {
     {
-      'L3MON4D3/LuaSnip', -- Snippet engine for cmp
+      {'L3MON4D3/LuaSnip', build = "make install_jsregexp"}, -- Snippet engine for cmp
       -- dependencies = {
       -- 'rafamadriz/friendly-snippets', -- Snippets for LuaSnip
       -- },
