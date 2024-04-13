@@ -59,10 +59,10 @@ vim.keymap.set('n', "<leader>'", "ci'")                   -- change text inside 
 vim.keymap.set('n', '<leader>`', 'ci`')                   -- change text inside double quotes
 
 vim.keymap.set('n', '<leader>?', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>', { desc = "Open keymappings.md" })
-vim.keymap.set('n', '<leader>/n', '<Cmd>! xdg-open ~/.config/nvim/cheat_sheet/normal_mode.pdf<CR><Esc>', { desc = "Open Cheat Sheet normal_mode.pdf" })
-vim.keymap.set('n', '<leader>/c', '<Cmd>! xdg-open ~/.config/nvim/cheat_sheet/ctrl.pdf<CR><Esc>', { desc = "Open Cheat Sheet ctrl.pdf" })
-vim.keymap.set('n', '<leader>/a', '<Cmd>! xdg-open ~/.config/nvim/cheat_sheet/alt.pdf<CR><Esc>', { desc = "Open Cheat Sheet alt.pdf" })
-vim.keymap.set('n', '<leader>/s', '<Cmd>! xdg-open ~/.config/nvim/cheat_sheet/space.pdf<CR><Esc>', { desc = "Open Cheat Sheet space.pdf" })
+vim.keymap.set('n', '<leader>/n', '<Cmd>! okular ~/.config/nvim/cheat_sheet.pdf --page 1<CR><Esc>', { desc = "Open cheat_sheet.pdf; page: normal_mode" })
+vim.keymap.set('n', '<leader>/s', '<Cmd>! okular ~/.config/nvim/cheat_sheet.pdf --page 2<CR><Esc>', { desc = "Open cheat_sheet.pdf; page: space" })
+vim.keymap.set('n', '<leader>/c', '<Cmd>! okular ~/.config/nvim/cheat_sheet.pdf --page 3<CR><Esc>', { desc = "Open cheat_sheet.pdf; page: ctrl" })
+vim.keymap.set('n', '<leader>/a', '<Cmd>! okular ~/.config/nvim/cheat_sheet.pdf --page 4<CR><Esc>', { desc = "Open cheat_sheet.pdf; page: alt" })
 vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/lua/options.lua<CR>', { desc = "Open options.lua" })
 vim.keymap.set('n', '<leader>|', '<Cmd>vsplit ~/.config/nvim/lua/mappings.lua<CR>', { desc = "Open mappings.lua" })
 vim.keymap.set('n', '<C-d>', '<C-d>zz') -- move down half a page and center cursor
