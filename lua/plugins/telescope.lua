@@ -131,7 +131,7 @@ return {
         fzf = {
           fuzzy = true,                   -- false will only do exact matching
           override_generic_sorter = true, -- override the generic sorter
-        }
+        },
       },
     }
 
@@ -181,6 +181,6 @@ return {
 
     vim.keymap.set('n', '<leader>gl', builtin.git_bcommits, { desc = "Telescope: Git log of current file" })
     require("telescope").load_extension("aerial")
-    vim.keymap.set('n', '<leader>fa', require("telescope").extensions.aerial.aerial, { desc = "Telescope: Aerial" })
+    vim.keymap.set('n', '<leader>fa', '<cmd> lua require("telescope").extensions.aerial.aerial({initial_mode="insert"})<CR>', { desc = "Telescope: Aerial" })
   end
 }

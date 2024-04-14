@@ -13,7 +13,7 @@ return {
     end,
     layout = { placement = "edge" },
     close_automatic_events = { "unfocus", "switch_buffer" },
-    autojump = true,
+    autojump = false,
     close_on_select = true,
     vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>AerialToggle<CR>"),
     vim.keymap.set("i", "<C-a>", "<Esc><cmd>AerialToggle<CR>"),

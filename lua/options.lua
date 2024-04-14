@@ -163,7 +163,12 @@ vim.api.nvim_set_hl(0, 'DiffDelete', { ctermfg = 'gray', ctermbg = 'none', fg = 
 vim.api.nvim_set_hl(0, 'DiffText', { ctermbg = 52, bg = 'DarkRed' })
 
 -- diagnostics
+vim.api.nvim_set_hl(0, 'DiagnosticWarn', { ctermfg = 214, fg = 'Orange' })
+vim.api.nvim_set_hl(0, 'WarningMsg', { ctermfg = 'black', fg = 'Black', ctermbg = 214, bg = 'Orange' })
 vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', { undercurl = true, sp = 'Orange' })
 vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { undercurl = true, sp = 'Orange' })
 vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', { undercurl = true, sp = 'Red' })
 vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { underline = true, sp = 'Grey62' })
+
+-- todo
+vim.api.nvim_set_hl(0, "Todo", { ctermbg = "blue", ctermfg = "black", bg = "Blue", fg = "black", })

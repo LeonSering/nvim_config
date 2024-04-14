@@ -9,7 +9,7 @@ return {
       Cursor = { text = "◉", color_nr = 15 },
       Search = { color_nr = 'green', color = 'Green' },
       Error = { color_nr = 'red', color = 'Red' },
-      Warn = { color_nr = 'yellow', color = 'Yellow' },
+      Warn = { color_nr = 214, color = 'Orange' },
       Info = { color_nr = 'cyan', color = 'Cyan' },
       Hint = { color_nr = 'white', color = 'White' },
       Misc = { color_nr = 'white', color = 'White' },

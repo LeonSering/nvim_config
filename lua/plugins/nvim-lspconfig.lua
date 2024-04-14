@@ -98,7 +98,6 @@ return {
 
     -- The highlight group to use for warning messages.
     local warning_hlgroup = 'WarningMsg'
-    vim.api.nvim_set_hl(0, 'WarningMsg', { ctermfg = 'black', fg = 'Black', ctermbg = 'yellow', bg = 'Yellow' })
 
     -- The highlight group to use for error messages.
     local error_hlgroup = 'ErrorMsg'
