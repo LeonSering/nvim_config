@@ -67,7 +67,9 @@ vim.keymap.set('n', '<leader>/a', '<Cmd>! okular ~/.config/nvim/cheat_sheet.pdf 
 vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/lua/options.lua<CR>', { desc = "Open options.lua" })
 vim.keymap.set('n', '<leader>|', '<Cmd>vsplit ~/.config/nvim/lua/mappings.lua<CR>', { desc = "Open mappings.lua" })
 vim.keymap.set('n', '<C-d>', '<C-d>zz') -- move down half a page and center cursor
-vim.keymap.set('n', '<C-u>', '<C-u>zz') -- move down half a page and center cursor
+vim.keymap.set('n', '<C-u>', '<C-u>zz') -- move down half a page and center cursorA
+
+vim.keymap.set('n', '<leader>w', '<Cmd>w<CR>', { desc = "Save file" })
 
 -- window control
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-q>', '<cmd>wincmd o<CR>')

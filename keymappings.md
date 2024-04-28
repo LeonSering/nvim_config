@@ -3,7 +3,7 @@
 u - undo
 U - undo all changes on the line (to the last saved version)
 Ctrl-R - redo
-:w - write file
+[Space]w or :w - write file
 :q - quit file
 :wq - write and quite file
 :q! - quite file without saving
