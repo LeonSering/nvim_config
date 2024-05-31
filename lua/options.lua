@@ -109,6 +109,10 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 ------ COLORSCHEME ------
 -------------------------
 
+-- load the old vim colorscheme
+vim.opt.termguicolors = false
+vim.cmd("colorscheme vim")
+
 local transparent_background = function()
   vim.api.nvim_set_hl(0, 'Normal', { bg = 'None', ctermbg = 'none' })
   vim.api.nvim_set_hl(0, 'NonText', { bg = 'None', ctermbg = 'none' })
@@ -134,8 +138,6 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   end
 })
 
--- set termguicolors
--- vim.opt.termguicolors = true
 
 -- line numbers
 vim.opt.number = true

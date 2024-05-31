@@ -33,7 +33,7 @@ return {
     lspconfig.lua_ls.setup {
       on_init = function(client)
         local path = client.workspace_folders[1].name
-        if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+        if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
           return
         end
 
@@ -47,7 +47,8 @@ return {
           workspace = {
             checkThirdParty = false,
             library = {
-              vim.env.VIMRUNTIME
+              vim.env.VIMRUNTIME,
+              "${3rd}/luv/library",
             }
           }
         })
@@ -140,7 +141,7 @@ return {
 
           last_echo = { true, bufnr, line }
 
-          local cmd_lines = vim.opt.cmdheight:get()
+          local cmd_lines = vim.api.nvim_get_option_value('cmdheight', {})
 
           local chunks = {}
           for i = 1, cmd_lines do
@@ -148,7 +149,7 @@ return {
               break
             end
             local diag = diags[i]
-            local width = vim.api.nvim_get_option('columns') - 15
+            local width = vim.api.nvim_get_option_value('columns', {}) - 15
             local lines = vim.split(diag.message, "\n")
             local message = lines[1]
             -- local trimmed = false

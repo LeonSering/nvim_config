@@ -28,7 +28,7 @@ return {
       end, opts('Live Filter: Clear'))
     end
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5 -- You can change this too
+    local WIDTH_RATIO = 0.5  -- You can change this too
     require("nvim-tree").setup({
       disable_netrw = true,
       respect_buf_cwd = true,
@@ -47,15 +47,16 @@ return {
         float = {
           enable = true,
           open_win_config = function()
+            local cmdheight = vim.api.nvim_get_option_value('cmdheight', {})
             local screen_w = vim.opt.columns:get()
-            local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+            local screen_h = vim.opt.lines:get() - cmdheight
             local window_w = screen_w * WIDTH_RATIO
             local window_h = screen_h * HEIGHT_RATIO
             local window_w_int = math.floor(window_w)
             local window_h_int = math.floor(window_h)
             local center_x = (screen_w - window_w) / 2
             local center_y = ((vim.opt.lines:get() - window_h) / 2)
-                - vim.opt.cmdheight:get()
+                - cmdheight
             return {
               border = "rounded",
               relative = "editor",
@@ -88,7 +89,7 @@ return {
     vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeFindFileToggle<CR>')
     vim.keymap.set({ 'i', 'v' }, '<C-n>', '<Esc><Cmd>NvimTreeFindFileToggle<CR>')
     vim.api.nvim_set_hl(0, 'NvimTreeCursorLine', { ctermbg = 'darkgray', bg = 'DarkGray', bold = true })
-    vim.api.nvim_set_hl(0, 'SpellCap', { ctermbg = 'None', bg = 'None', bold = true })                                 -- Readme.md and toml files
+    vim.api.nvim_set_hl(0, 'SpellCap', { ctermbg = 'None', bg = 'None', bold = true })                                     -- Readme.md and toml files
     vim.api.nvim_set_hl(0, 'SpellRare', { ctermbg = 'white', ctermfg = 'black', bg = 'White', fg = 'Black', bold = true }) -- Copies files
   end
 }
