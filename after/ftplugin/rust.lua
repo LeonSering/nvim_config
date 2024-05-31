@@ -64,7 +64,7 @@ local function render_diagnostic(forward)
       'markdown',
       { border = 'rounded', focusable = false }
     )
-    vim.api.nvim_buf_set_option_value(bufnr, 'filetype', vim.o.filetype)
+    vim.api.nvim_set_option_value('filetype', vim.o.filetype, {buf = bufnr})
   end)
 end
 
