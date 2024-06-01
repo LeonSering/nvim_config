@@ -11,6 +11,7 @@ K - show help or documentary for the word under the cursor
 [Space]p - format code (supports json, rs so far)
 z= - show spelling suggestions
 gt / gT - go to next / previous tab
+Ctrl-\ - open floating terminal
 
 ## basic movement
 h, j, k, l - left, down, up, right
@@ -24,10 +25,10 @@ H - go to the upper part of the window
 M - go to the middle of the window
 L - go to the lower part of the window
 f[char] - to the next occurence of [char] in current line (using hop char1)
-F[char] - to the last occurence of [char] in current line (usung hop char1)
-t[char] - hop char1 current window
-T[char] - hop char1 all visible windows
-; - hop word on all visible windows
+F[char] - to the previous occurence of [char] in current line (using hop char1)
+t[char] - one letter to the left of the next occurence of [char] in current line (using hop char1)
+T[char] - one letter to the right of previous occurence of [char] in current line (using hop char1)
+;[char] - hop char1 all visible windows
 G - goto the very last line
 gg - goto the very first line
 :[N] - goto line N
@@ -112,15 +113,22 @@ Enter or ciw - change word under cursor
 cis - change current sentence
 cip - change current paragraph
 
-[Bracket] = (, ), [, ], {, }, <, >, ", ', `, also w for word, s for sentence, p for paragraph
-[Space][Bracket] or ci[Bracket] - change inside brackets
-ca[Bracket] - change around brackets
-di[Bracket] - delete inside brackets
-da[Bracket] - delete around brackets
-yi[Bracket] - yank inside brackets
-ya[Bracket] - yank around brackets
-vi[Bracket] - select inside brackets
-va[Bracket] - select around brackets
+[Bracket] = (, ), [, ], {, }, <, >, ", ', `, 
+[Object] = w (word), p (paragraph), f (function), c (class), s (statement), l (loop), b (block), m (method call), a (argument), k (comment)
+[Space][Bracket] - change inside brackets
+ci[Bracket/Object] - change inside
+ca[Bracket/Object] - change around
+di[Bracket/Object] - delete inside
+da[Bracket/Object] - delete around
+yi[Bracket/Object] - yank inside
+ya[Bracket/Object] - yank around
+vi[Bracket/Object] - select inside
+va[Bracket/Object] - select around
+<i[Bracket/Object] - decrease indent inside
+<a[Bracket/Object] - decrease indent around
+>i[Bracket/Object] - increase indent inside
+>a[Bracket/Object] - increase indent around
+
 
 ## surround
 ys[motion][new] - add surrounding [new] to [motion]
@@ -293,6 +301,20 @@ Ctrl-Up - next suggestion
 Ctrl-Down - previous suggestion
 Ctrl-Left - dissmiss suggestion
 
+# ChatGPT (except for ac all commands need visual selection)
+[Space]ac - open chat window
+[Space]ae - edit with instruction
+[Space]ag - grammar correction
+[Space]at - translate to english
+[Space]ak - keywords
+[Space]ad - create docstring
+[Space]aa - add tests
+[Space]ao - optimize code
+[Space]as - summarize
+[Space]af - fix bug
+[Space]ax - explain code
+[Space]al - code readability analysis
+
 # Telescope
 \ - resume last telescope picker
 [Space]ff - find files
@@ -442,10 +464,11 @@ Tab - move to next placeholder
 Shift-Tab - move to previous placeholder
 
 # Rust
-[Space]ct - runt test under cursor
+[Space]ct - run test under cursor
 [Space]cT or [Space]CT - run all tests
-[Space]cb - build project
-[Space]cr - run project
+[Space]cb - cargo build
+[Space]cc - cargo clippy
+[Space]cr - cargo run
 [Space]cd - open docs in browser
 [Space]ce - explain next error
 [Space]cE or [Space]CE - explain previous error

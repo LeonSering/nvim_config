@@ -5,7 +5,7 @@ return {
       border     = 'single',
       dimensions = {
         height = 0.8,
-        width = 0.5,
+        width = 0.6,
       },
     })
 
