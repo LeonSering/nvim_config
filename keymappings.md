@@ -483,3 +483,13 @@ Shift-Tab - move to previous placeholder
 [Space]bi - step in
 [Space]bo - step out
 [Space]bu - toggle dap-ui
+
+# Neotest
+[Space]nt - run test under cursor
+[Space]nf - run all tests in file
+[Space]na - run all tests in project
+[Space]ns - stop running tests
+[Space]np - toggle output panel
+[Space]nn - toggle summary panel
+[Space]nw - toggle watch for test under cursor (runs automatically after text change)
+[Space]nc - clear output panel
