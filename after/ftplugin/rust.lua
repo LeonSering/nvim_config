@@ -177,6 +177,6 @@ local function explain_error(forward)
 end
 
 
-vim.keymap.set('n', '<leader>ce', function() explain_error(true) end, { desc = "Rust: Explain next error" })
-vim.keymap.set('n', '<leader>cE', function() explain_error(false) end, { desc = "Rust: Explain previous error" })
-vim.keymap.set('n', '<leader>CE', function() explain_error(false) end, { desc = "Rust: Explain previous error" })
+vim.keymap.set('n', '<leader>re', function() explain_error(true) end, { desc = "Rust: Explain next error" })
+vim.keymap.set('n', '<leader>rE', function() explain_error(false) end, { desc = "Rust: Explain previous error" })
+vim.keymap.set('n', '<leader>RE', function() explain_error(false) end, { desc = "Rust: Explain previous error" })

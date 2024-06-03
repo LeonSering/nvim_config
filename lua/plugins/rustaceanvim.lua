@@ -12,7 +12,7 @@ return {
       -- LSP configuration
       server = {
         on_attach = function(client, bufnr)
-          vim.keymap.set('n', '<leader>cd', '<cmd> RustLsp openDocs<CR>', { desc = "Rust: Open documentation" })
+          vim.keymap.set('n', '<leader>rd', '<cmd> RustLsp openDocs<CR>', { desc = "Rust: Open documentation" })
         end,
         default_settings = {
           -- rust-analyzer language server configuration
@@ -25,7 +25,9 @@ return {
       },
       -- DAP configuration
       dap = {
-      }
+      },
     }
+    vim.g.rustaceanvim.dap.autoload_configurations = true
+    vim.keymap.set('n', '<leader>bs', '<cmd>RustLsp debug<CR>', { desc = 'Dap: start new debugging session (for rust)' })
   end
 }

@@ -3,7 +3,8 @@
 u - undo
 U - undo all changes on the line (to the last saved version)
 Ctrl-R - redo
-[Space]w or :w - write file
+Ctrl-s - write/save file
+[Space]w or :w - write/save file and close window
 :q - quit file
 :wq - write and quite file
 :q! - quite file without saving
@@ -136,8 +137,8 @@ cs[old][new] - change surrounding [old] with [new]
 ds[old] - delete surrounding [old]
 yss[new] - add surrounding [new] to line
 S[new] - in visual mode: add surrounding [new]
-[space]b - change brackets (same as csb)
-[space]B - change quotes (same as csq)
+[space]c - change brackets (same as csb)
+[space]C - change quotes (same as csq)
 [new/old] = [Bracket], b (brackets: >,),],}), q (quotes: ',",`), s (brackets, quotes), t (html-tags), f (function), i (individual start and end)
 
 ## enter visual mode
@@ -436,7 +437,7 @@ Enter / v / t - in preview window: open in current window, vertical split, new t
 ]e - go to next diagnostic and open floating window with code actions
 [E - go to previous diagnostic and open floating window with code actions
 [Space]l - toggle lsp lines
-[Space]r - rename
+[Space]rn - rename symbol (refactoring)
 [Space]p - format code
 
 [Space]fe - list diagnostics
@@ -464,11 +465,21 @@ Tab - move to next placeholder
 Shift-Tab - move to previous placeholder
 
 # Rust
-[Space]ct - run test under cursor
-[Space]cT or [Space]CT - run all tests
-[Space]cb - cargo build
-[Space]cc - cargo clippy
-[Space]cr - cargo run
-[Space]cd - open docs in browser
-[Space]ce - explain next error
-[Space]cE or [Space]CE - explain previous error
+[Space]rt - run test under cursor
+[Space]rT or [Space]RT - run all tests
+[Space]rb - cargo build
+[Space]rc - cargo clippy
+[Space]rr - cargo run
+[Space]rd - open docs in browser
+[Space]re - explain next error
+[Space]rE or [Space]RE - explain previous error
+
+# Debugging
+[Space]bp - toggle breakpoint
+[Space]bs - start new debugging session
+[Space]bt - terminate
+[Space]bc - continue to next breakpoint
+[Space]bn - next step / step over
+[Space]bi - step in
+[Space]bo - step out
+[Space]bu - toggle dap-ui
