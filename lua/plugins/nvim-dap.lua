@@ -21,7 +21,7 @@ return {
             },
           },
           position = 'left',
-          size = 0.15,
+          size = 0.35,
         },
         {
           elements = {

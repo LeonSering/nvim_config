@@ -5,13 +5,13 @@
 -- INSERT MODE / COMMAND LINE MODE --
 
 -- movement
-vim.keymap.set({ 'i', 'c' }, '<C-h>', '<Left>')
-vim.keymap.set({ 'i', 'c' }, '<C-j>', '<Down>')
-vim.keymap.set({ 'i', 'c' }, '<C-k>', '<Up>')
-vim.keymap.set({ 'i', 'c' }, '<C-l>', '<Right>')
+vim.keymap.set({ 'i', 'c', 't' }, '<C-h>', '<Left>')
+vim.keymap.set({ 'i', 'c', 't' }, '<C-j>', '<Down>')
+vim.keymap.set({ 'i', 'c', 't' }, '<C-k>', '<Up>')
+vim.keymap.set({ 'i', 'c', 't' }, '<C-l>', '<Right>')
 
 -- deletion
-vim.keymap.set({ 'i', 'c' }, '<C-s>', '<Bs>') -- delete character under cursor
+vim.keymap.set({ 'i', 'c', 't' }, '<C-s>', '<Bs>') -- delete character under cursor
 vim.keymap.set('i', '<C-b>',
   function()
     if vim.api.nvim_win_get_cursor(0)[2] == vim.api.nvim_get_current_line():len() then
@@ -21,7 +21,7 @@ vim.keymap.set('i', '<C-b>',
     end
   end, { expr = true })                        -- delete previous word
 -- default setting: <C-u> delete everthing on the left
-vim.keymap.set({ 'i', 'c' }, '<C-x>', '<Del>') -- delete single char on the right of cursor
+vim.keymap.set({ 'i', 'c', 't' }, '<C-x>', '<Del>') -- delete single char on the right of cursor
 vim.keymap.set('i', '<C-w>', '<C-o>dw')        -- delete next word
 vim.keymap.set('i', '<C-a>', '<C-o>d$')        -- delete to end of line
 
