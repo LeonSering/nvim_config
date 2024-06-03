@@ -13,7 +13,7 @@ return {
     require("neotest").setup({
       adapters = {
         require("neotest-rust") {
-          args = { "--no-capture" },
+          -- args = { "--no-capture" },
         },
       },
       summary = {
@@ -39,7 +39,7 @@ return {
 
     local function set_fixed_vertical_size_and_nowrap_for_panel()
       vim.cmd('setlocal winfixwidth')
-      vim.cmd('vertical resize 100')
+      vim.cmd('vertical resize 130')
       vim.opt_local.wrap = false
     end
     vim.api.nvim_create_autocmd('BufWinEnter', {
