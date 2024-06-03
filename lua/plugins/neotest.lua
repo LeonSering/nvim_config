@@ -26,23 +26,25 @@ return {
     })
 
 
-    local function set_fixed_vertical_size_for_summary()
+    local function set_fixed_vertical_size_and_nowrap_for_summary()
       vim.cmd('setlocal winfixwidth')
       vim.cmd('vertical resize 60')
+      vim.opt_local.wrap = false
     end
 
     vim.api.nvim_create_autocmd('BufWinEnter', {
       pattern = 'Neotest Summary',
-      callback = set_fixed_vertical_size_for_summary
+      callback = set_fixed_vertical_size_and_nowrap_for_summary
     })
 
-    local function set_fixed_vertical_size_for_panel()
+    local function set_fixed_vertical_size_and_nowrap_for_panel()
       vim.cmd('setlocal winfixwidth')
       vim.cmd('vertical resize 100')
+      vim.opt_local.wrap = false
     end
     vim.api.nvim_create_autocmd('BufWinEnter', {
       pattern = 'Neotest Output Panel',
-      callback = set_fixed_vertical_size_for_panel
+      callback = set_fixed_vertical_size_and_nowrap_for_panel
     })
   end,
 
