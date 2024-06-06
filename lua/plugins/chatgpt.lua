@@ -10,6 +10,17 @@ return {
   config = function()
     require("chatgpt").setup({
       api_key_cmd = "cat /home/leon/openai_api_key.txt",
+
+      openai_params = {
+
+        -- model = "gpt-3.5-turbo",
+        model = "gpt-4o",
+        -- https://platform.openai.com/docs/models
+      },
+      openai_edit_params = {
+        model = "gpt-4o",
+      },
+
       edit_with_instructions = {
         keymaps = {
           close = "<esc><esc>",
@@ -24,6 +35,7 @@ return {
       chat = {
         keymaps = {
           close = "<esc><esc>",
+          toggle_system_role_open = "<C-a>",
         }
       },
 
