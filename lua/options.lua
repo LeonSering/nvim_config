@@ -22,7 +22,7 @@ vim.g.have_nerd_font = true
 vim.opt.textwidth = 120
 vim.opt.breakindent = true          -- auto indent when breaking lines
 vim.opt.scrolloff = 4               -- always show lines below coursor
-vim.opt.cmdheight = 3               -- height of command line
+vim.opt.cmdheight = 4               -- height of command line
 
 -- Case-insensitive searching UNLESS \C or capital in search
 vim.opt.ignorecase = true

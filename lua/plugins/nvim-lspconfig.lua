@@ -69,7 +69,7 @@ return {
       virtual_text = false, -- disable inline diagnostics
       signs = {
         -- severity_sort = true,
-        severity = {min = vim.diagnostic.severity.WARN},
+        severity = { min = vim.diagnostic.severity.WARN },
         severity_sort = true,
       }
     })
@@ -108,7 +108,7 @@ return {
 
     -- If the first diagnostic line has fewer than this many characters, also add
     -- the second line to it.
-    local short_line_limit = 600
+    local short_line_limit = 240
 
     -- Prints the first diagnostic for the current line.
     local function echo_diagnostic()
@@ -141,7 +141,7 @@ return {
 
           last_echo = { true, bufnr, line }
 
-          local cmd_lines = vim.api.nvim_get_option_value('cmdheight', {})
+          local cmd_lines = vim.api.nvim_get_option_value('cmdheight', {})-1
 
           local chunks = {}
           for i = 1, cmd_lines do
@@ -149,7 +149,7 @@ return {
               break
             end
             local diag = diags[i]
-            local width = vim.api.nvim_get_option_value('columns', {}) - 15
+            local width = vim.api.nvim_get_option_value('columns', {}) - 25
             local lines = vim.split(diag.message, "\n")
             local message = lines[1]
             -- local trimmed = false
@@ -183,7 +183,7 @@ return {
             end
 
             local chunk = {
-              { kind, hlgroup },
+              { kind,              hlgroup },
               { padding .. message }
             }
             chunks = vim.list_extend(chunks, chunk)

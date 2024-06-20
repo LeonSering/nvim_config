@@ -424,6 +424,27 @@ P - go to parent directory
 E - expand all
 W or C - collapse all
 
+# Visual-Multi (multiple cursors)
+Ctrl-m - search for word under cursor (selection in visual mode)
+Ctrl-M - search for word under cursor (selection in visual mode) and select all
+Ctrl-Up/Down/Left/Right - add cursor at current location and move to direction
+
+## in visual-multi mode:
+Tab - switch between cursor and extend mode
+[movement] - move all cursors (in extend mode j/k moves to start/end of line; use Shift-Up/Down instead)
+Up/Down/Left/Right - move independent of other cursors
+Ctrl-Up/Down/Left/Right - toggle additional cursor at current location and move to direction
+Shift-Up/Down/Left/Right - switch to extend mode and select in the direction
+n/N - go to next/previous match and add a cursor there
+q/Q - remove current cursor and go the next/previous match
+]/[ - go the next/previous cursor
+o - switch to other side of selection (in extend mode)
+[Space][Space] followed by
+    a - align at cursors
+    C - case conversion menue
+    n - add increasing numbers (starting with 1)
+    0n - add increasing numbers (starting with 0)
+
 # LSP
 [Space]a - code action
 [Space]d - peek definition
