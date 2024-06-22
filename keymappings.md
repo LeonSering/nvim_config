@@ -4,9 +4,9 @@ u - undo
 U - undo all changes on the line (to the last saved version)
 Ctrl-R - redo
 Ctrl-s - write/save file
-[Space]w or :w - write/save file and close window
-:q - quit file
-:wq - write and quite file
+[Space]w or Ctrl+s or :w - write buffer (save file)
+:q - quit window 
+[Space]q or :wq - write buffer and quit window 
 :q! - quite file without saving
 K - show help or documentary for the word under the cursor
 [Space]p - format code (supports json, rs so far)
@@ -303,18 +303,18 @@ Ctrl-Down - previous suggestion
 Ctrl-Left - dissmiss suggestion
 
 # ChatGPT (except for ac all commands need visual selection)
-[Space]ac - open chat window
-[Space]ae - edit with instruction
-[Space]ag - grammar correction
-[Space]at - translate to english
-[Space]ak - keywords
-[Space]ad - create docstring
-[Space]aa - add tests
-[Space]ao - optimize code
-[Space]as - summarize
-[Space]af - fix bug
-[Space]ax - explain code
-[Space]al - code readability analysis
+[Space]Ac - open chat window
+[Space]Ae - edit with instruction
+[Space]Ag - grammar correction
+[Space]At - translate to english
+[Space]Ak - keywords
+[Space]Ad - create docstring
+[Space]Aa - add tests
+[Space]Ao - optimize code
+[Space]As - summarize
+[Space]Af - fix bug
+[Space]Ax - explain code
+[Space]Al - code readability analysis
 
 # Telescope
 \ - resume last telescope picker

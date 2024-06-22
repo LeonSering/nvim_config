@@ -50,7 +50,7 @@ return {
         quit = { '<Esc>', 'q', '<C-c>' },
       }
     },
-    vim.keymap.set('n', '<leader>q', '<cmd>Lspsaga code_action<CR>', { desc = "LSP: Code action" }),
+    vim.keymap.set('n', '<leader>a', '<cmd>Lspsaga code_action<CR>', { desc = "LSP: Code action" }),
     vim.keymap.set('n', '<leader>d', '<cmd>Lspsaga peek_definition<CR>', { desc = "LSP: Peek definition" }),
     vim.keymap.set('n', '<leader>t', '<cmd>Lspsaga peek_type_definition<CR>', { desc = "LSP: Peek type definition" }),
     vim.keymap.set('n', '<leader>u', '<cmd>Lspsaga finder ref<CR>', { desc = "LSP: List references" }),
