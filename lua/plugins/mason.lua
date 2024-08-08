@@ -7,7 +7,9 @@ return {
   {
     'williamboman/mason-lspconfig.nvim', -- language server configurations
     config = function()
-      require('mason-lspconfig').setup()
+      require('mason-lspconfig').setup({
+      automatic_installation = true
+    })
       -- vim.cmd("MasonUpdate") -- update language servers on startup
     end
     -- :MasonInstall codelldb

@@ -11,10 +11,17 @@ return {
     vim.keymap.set('n', '<C-j>', '<Plug>(comment_toggle_linewise_current)<down>')
     vim.keymap.set('v', '<C-k>', '<Plug>(comment_toggle_linewise_visual)<up>')
     vim.keymap.set('v', '<C-j>', '<Plug>(comment_toggle_linewise_visual)<down>')
-    -- set Ctrl + / to toggle comment
-    vim.keymap.set('n', '<C-_>', '<Plug>(comment_toggle_linewise_current)')
-    vim.keymap.set('i', '<C-_>', '<C-o><Plug>(comment_toggle_linewise_current)')
-    vim.keymap.set('v', '<C-_>', '<Plug>(comment_toggle_blockwise_visual)')
+
+    ---- set Ctrl + / to toggle comment ----
+    -- linux:
+    -- vim.keymap.set('n', '<C-_>', '<Plug>(comment_toggle_linewise_current)')
+    -- vim.keymap.set('i', '<C-_>', '<C-o><Plug>(comment_toggle_linewise_current)')
+    -- vim.keymap.set('v', '<C-_>', '<Plug>(comment_toggle_blockwise_visual)')
+    -- mac
+    vim.keymap.set('n', '<C-/>', '<Plug>(comment_toggle_linewise_current)')
+    vim.keymap.set('i', '<C-/>', '<C-o><Plug>(comment_toggle_linewise_current)')
+    vim.keymap.set('v', '<C-/>', '<Plug>(comment_toggle_blockwise_visual)')
+
     -- disable auto comment on <CR>. <Esc>o can be used for new line with comment
     vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
       pattern = '*',

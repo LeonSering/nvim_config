@@ -8,8 +8,9 @@ return {
     "nvim-telescope/telescope.nvim"
   },
   config = function()
+    local home = vim.fn.expand("$HOME")
     require("chatgpt").setup({
-      api_key_cmd = "cat /home/leon/openai_api_key.txt",
+      api_key_cmd = "cat " .. home .. "/openai_api_key.txt",
 
       openai_params = {
 
@@ -41,28 +42,25 @@ return {
 
     })
 
-    local wk = require("which-key")
-    wk.register({
-      A = {
-        name = "ChatGPT",
-        c = { "<cmd>ChatGPT<CR>", "ChatGPT", mode = { "n", "v" } },
-        e = { "<cmd>ChatGPTEditWithInstruction<CR>", "Edit with instruction", mode = { "n", "v" } },
-        g = { "<cmd>ChatGPTRun grammar_correction<CR>", "Grammar Correction", mode = { "n", "v" } },
-        t = { "<cmd>ChatGPTRun translate<CR>", "Translate", mode = { "n", "v" } },
-        k = { "<cmd>ChatGPTRun keywords<CR>", "Keywords", mode = { "n", "v" } },
-        d = { "<cmd>ChatGPTRun docstring<CR>", "Docstring", mode = { "n", "v" } },
-        a = { "<cmd>ChatGPTRun add_tests<CR>", "Add Tests", mode = { "n", "v" } },
-        o = { "<cmd>ChatGPTRun optimize_code<CR>", "Optimize Code", mode = { "n", "v" } },
-        s = { "<cmd>ChatGPTRun summarize<CR>", "Summarize", mode = { "n", "v" } },
-        f = { "<cmd>ChatGPTRun fix_bugs<CR>", "Fix Bugs", mode = { "n", "v" } },
-        x = { "<cmd>ChatGPTRun explain_code<CR>", "Explain Code", mode = { "n", "v" } },
-        -- r = { "<cmd>ChatGPTRun roxygen_edit<CR>", "Roxygen Edit", mode = { "n", "v" } },
-        l = { "<cmd>ChatGPTRun code_readability_analysis<CR>", "Code Readability Analysis", mode = { "n", "v" } },
-      },
-    }, {
-      prefix = "<leader>",
-      mode = "v",
-    })
+    require("which-key").add(
+      {
+        {
+          mode = { "n", "v" },
+          { "<leader>Aa", "<cmd>ChatGPTRun add_tests<CR>",                 desc = "Add Tests" },
+          { "<leader>Ac", "<cmd>ChatGPT<CR>",                              desc = "ChatGPT" },
+          { "<leader>Ad", "<cmd>ChatGPTRun docstring<CR>",                 desc = "Docstring" },
+          { "<leader>Ae", "<cmd>ChatGPTEditWithInstruction<CR>",           desc = "Edit with instruction" },
+          { "<leader>Af", "<cmd>ChatGPTRun fix_bugs<CR>",                  desc = "Fix Bugs" },
+          { "<leader>Ag", "<cmd>ChatGPTRun grammar_correction<CR>",        desc = "Grammar Correction" },
+          { "<leader>Ak", "<cmd>ChatGPTRun keywords<CR>",                  desc = "Keywords" },
+          { "<leader>Al", "<cmd>ChatGPTRun code_readability_analysis<CR>", desc = "Code Readability Analysis" },
+          { "<leader>Ao", "<cmd>ChatGPTRun optimize_code<CR>",             desc = "Optimize Code" },
+          { "<leader>As", "<cmd>ChatGPTRun summarize<CR>",                 desc = "Summarize" },
+          { "<leader>At", "<cmd>ChatGPTRun translate<CR>",                 desc = "Translate" },
+          { "<leader>Ax", "<cmd>ChatGPTRun explain_code<CR>",              desc = "Explain Code" },
+        },
+        { "<leader>A", group = "ChatGPT", mode = "v" },
+      })
   end,
 
 }

@@ -167,7 +167,7 @@ return {
     vim.keymap.set('n', '<leader>f:', builtin.commands, { desc = "Telescope: Commands" })
     vim.keymap.set('n', '<leader>fs', builtin.spell_suggest, { desc = "Telescope: Spell suggest" })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = "Telescope: Keymaps" })
-    vim.keymap.set('n', '<leader>fz', builtin.builtin, { desc = "Telescope: Builtin" })
+    -- vim.keymap.set('n', '<leader>fz', builtin.builtin, { desc = "Telescope: Builtin" })
     vim.keymap.set('n', '<leader>fzc', builtin.colorscheme, { desc = "Telescope: Colorscheme" })
     vim.keymap.set('n', '<leader>fzo', builtin.vim_options, { desc = "Telescope: Vim options" })
     vim.keymap.set('n', '<leader>fzh', builtin.highlights, { desc = "Telescope: Highlights" })
