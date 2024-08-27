@@ -5,7 +5,7 @@ return {
   },
   opts = {
     autowidth = {
-      winwidth = 30,   -- width of current window &textwidth + value
+      winwidth = 30  -- width of current window &textwidth + value
     },
     vim.keymap.set({ 'n', 'i', 'v' }, '<A-w>', '<cmd>WindowsMaximize<CR>'),
   }

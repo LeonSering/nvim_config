@@ -494,6 +494,9 @@ Shift-Tab - move to previous placeholder
 [Space]rd - open docs in browser
 [Space]re - explain next error
 [Space]rE or [Space]RE - explain previous error
+[Space]rlb - build test coverage (cargo llvm-cov) and show signs
+[Space]rlt - toggle test coverage signs
+[Space]rls - show test coverage summary
 
 # Debugging
 [Space]bp - toggle breakpoint
