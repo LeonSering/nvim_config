@@ -14,7 +14,7 @@ return {
       -- end, -- deactivates as there where conflics with vim-visual-multi this way
       layout = { placement = "edge" },
       close_automatic_events = { "unfocus", "switch_buffer" },
-      autojump = false,
+      autojump = true,
       close_on_select = true,
       vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>AerialToggle<CR>"),
       vim.keymap.set("i", "<C-a>", "<Esc><cmd>AerialToggle<CR>"),
