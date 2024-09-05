@@ -64,17 +64,22 @@ return {
     vim.keymap.set('n', '<leader>bo', '<cmd>DapStepOut<CR>', { desc = 'Debug: step out' })
     vim.keymap.set('n', '<leader>bu', '<cmd>lua require("dapui").toggle()<CR>', { desc = 'Debug: toggle dap-ui' })
     vim.keymap.set({ 'n', 'i', 'v' }, '<A-c>', function()
-        if require("dap").session() then
-          require("dap").close();
+        if vim.fn.tabpagenr('$') == 1 then
+          vim.cmd('wincmd o')
+          vim.cmd('enew')
+        else
+          if require("dap").session() then
+            require("dap").close();
+          end
+          vim.cmd('tabclose')
         end
-        vim.cmd('tabclose')
       end,
       { desc = 'Debug: terminate Dap session if active' })
 
     vim.api.nvim_set_hl(0, 'DapBreakpoint', { fg = 'Red', ctermfg = 'red' })
     vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakPoint', linehl = '', numhl = '' })
 
-    vim.api.nvim_set_hl(0, 'DapStopped', {bg = 'NavyBlue', ctermbg = 17})
+    vim.api.nvim_set_hl(0, 'DapStopped', { bg = 'NavyBlue', ctermbg = 17 })
     vim.fn.sign_define('DapStopped', { text = '', linehl = 'DapStopped', numhl = 'DapStopped' })
 
 

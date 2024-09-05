@@ -19,11 +19,11 @@ vim.keymap.set('i', '<C-b>',
     else
       return "<C-o>db"
     end
-  end, { expr = true })                        -- delete previous word
+  end, { expr = true })                             -- delete previous word
 -- default setting: <C-u> delete everthing on the left
 vim.keymap.set({ 'i', 'c', 't' }, '<C-x>', '<Del>') -- delete single char on the right of cursor
-vim.keymap.set('i', '<C-w>', '<C-o>dw')        -- delete next word
-vim.keymap.set('i', '<C-a>', '<C-o>d$')        -- delete to end of line
+vim.keymap.set('i', '<C-w>', '<C-o>dw')             -- delete next word
+vim.keymap.set('i', '<C-a>', '<C-o>d$')             -- delete to end of line
 
 
 -- tab and shift-tab
@@ -60,13 +60,17 @@ vim.keymap.set('n', "<leader>'", "ci'")                   -- change text inside 
 vim.keymap.set('n', '<leader>`', 'ci`')                   -- change text inside double quotes
 
 vim.keymap.set('n', '<leader>?', '<Cmd>vsplit ~/.config/nvim/keymappings.md<CR>', { desc = "Open keymappings.md" })
-vim.keymap.set('n', '<leader>/n', '<Cmd>! osascript ~/.config/nvim/gotopage.scpt ~/.config/nvim/cheat_sheet.pdf 1<CR><Esc>',
+vim.keymap.set('n', '<leader>/n',
+  '<Cmd>! osascript ~/.config/nvim/gotopage.scpt ~/.config/nvim/cheat_sheet.pdf 1<CR><Esc>',
   { desc = "Open cheat_sheet.pdf; page: normal_mode" })
-vim.keymap.set('n', '<leader>/s', '<Cmd>! osascript ~/.config/nvim/gotopage.scpt ~/.config/nvim/cheat_sheet.pdf 2<CR><Esc>',
+vim.keymap.set('n', '<leader>/s',
+  '<Cmd>! osascript ~/.config/nvim/gotopage.scpt ~/.config/nvim/cheat_sheet.pdf 2<CR><Esc>',
   { desc = "Open cheat_sheet.pdf; page: space" })
-vim.keymap.set('n', '<leader>/c', '<Cmd>! osascript ~/.config/nvim/gotopage.scpt ~/.config/nvim/cheat_sheet.pdf 3<CR><Esc>',
+vim.keymap.set('n', '<leader>/c',
+  '<Cmd>! osascript ~/.config/nvim/gotopage.scpt ~/.config/nvim/cheat_sheet.pdf 3<CR><Esc>',
   { desc = "Open cheat_sheet.pdf; page: ctrl" })
-vim.keymap.set('n', '<leader>/a', '<Cmd>! osascript ~/.config/nvim/gotopage.scpt ~/.config/nvim/cheat_sheet.pdf 4<CR><Esc>',
+vim.keymap.set('n', '<leader>/a',
+  '<Cmd>! osascript ~/.config/nvim/gotopage.scpt ~/.config/nvim/cheat_sheet.pdf 4<CR><Esc>',
   { desc = "Open cheat_sheet.pdf; page: alt" })
 -- vim.keymap.set('n', '<leader>/n', '<Cmd>! okular ~/.config/nvim/cheat_sheet.pdf --page 1 &<CR><Esc>',
 --   { desc = "Open cheat_sheet.pdf; page: normal_mode" })
@@ -84,13 +88,13 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz') -- move down half a page and center curs
 vim.keymap.set('n', '<leader>w', '<Cmd>w<CR>', { desc = "Write buffer (Save file)" })
 vim.keymap.set('n', '<C-s>', '<Cmd>w<CR>', { desc = "Write buffer (Save file)" })
 vim.keymap.set('n', '<leader>q', function()
-  -- Check if the current buffer has a filename
-  if vim.bo.buftype == '' then
+  -- Check if the current buffer is of normal type and has a filename
+  if vim.bo.buftype == '' and vim.api.nvim_buf_get_name(0) ~= '' then
     -- Save the buffer
     vim.cmd('w')
   end
   -- Quit the buffer
-  vim.cmd('q')
+  vim.cmd('q!')
 end, { desc = "Write buffer and quit window" })
 
 -- window control
@@ -101,8 +105,22 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<A-t>', '<cmd>wincmd T<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-a>', '<cmd>wincmd W<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-s>', '<cmd>wincmd =<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-d>', '<cmd>wincmd w<CR>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<A-z>', '<cmd>q<CR>')
-vim.keymap.set({ 'n', 'i', 'v' }, '<A-x>', '<cmd>vsplit vnew<CR>')
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-z>', function()
+    if vim.fn.winnr('$') == 1 then
+      if vim.fn.tabpagenr('$') == 1 then
+        vim.cmd('enew')
+      else
+        vim.cmd('tabclose')
+      end
+    else
+      vim.cmd('q!')
+    end
+  end,
+  { desc = "quit buffer" }
+)
+
+
+vim.keymap.set({ 'n', 'i', 'v' }, '<A-x>', '<cmd>rightbelow vsplit | enew<CR>')
 -- vim.keymap.set({ 'n', 'i', 'v' }, '<A-c>', '<cmd>tabclose<CR>') -- overwritten by nvim-dap
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-v>', '<cmd>wincmd v<CR>')
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-h>', '<cmd>wincmd W<CR>')
@@ -135,7 +153,7 @@ vim.keymap.set('i', '<C-f>', '<Nop>')
 -- vim.keymap.set({ 'i', 'v', 'c' }, '<BS>', '<Nop>')    -- disable Backspace in insert mode (use <C-s> instead)
 -- vim.keymap.set({ 'n', 'i', 'v', 'c' }, '<Del>', '<Nop>') -- disable Delete in insert mode (use <C-x> instead)
 vim.keymap.set({ 'n', 'i', 'v', 'c' }, '<Home>', '<Nop>') -- disable Home in insert mode (go to normal mode and use 0 instead)
-vim.keymap.set({ 'n', 'i', 'v', 'c' }, '<End>', '<Nop>') -- disable End in insert mode (go to normal mode use $ instead)
+vim.keymap.set({ 'n', 'i', 'v', 'c' }, '<End>', '<Nop>')  -- disable End in insert mode (go to normal mode use $ instead)
 -- vim.keymap.set({ 'n', 'i', 'v', 'c' }, '<Left>', '<Nop>') -- disable Left in insert mode (use <C-h> instead)
 -- vim.keymap.set({ 'n', 'i', 'v', 'c' }, '<Down>', '<Nop>') -- disable Down in insert mode (use <C-j> instead)
 -- vim.keymap.set({ 'n', 'i', 'v', 'c' }, '<Up>', '<Nop>') -- disable Up in insert mode (use <C-k> instead)
