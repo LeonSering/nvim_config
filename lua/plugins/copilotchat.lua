@@ -65,7 +65,7 @@ return {
             { "<leader>Ae", "<cmd>CopilotChatFixDiagnostic<CR>", desc = "CopilotChat: Fix Diagnostic" },
             { "<leader>At", "<cmd>CopilotChatTests<CR>",         desc = "CopilotChat: Generate Tests" },
             { "<leader>Ad", "<cmd>CopilotChatDocs<CR>",          desc = "CopilotChat: Add Documentation" },
-            { "<leader>Ap", "<cmd>CopilotChatCommentFormat<CR>", desc = "CopilotChat: FormatComment to 100 Chars per Line" },
+            { "<leader>Ap", "<cmd>CopilotChatCommentFormat<CR>", desc = "CopilotChat: Format Comment to 100 Chars per Line" },
             { "<leader>As", "<cmd>CopilotChatSpelling<CR>",      desc = "CopilotChat: Correct Spelling" },
             { "<leader>Aw", "<cmd>CopilotChatWording<CR>",       desc = "CopilotChat: Improve Wording" },
             { "<leader>Am", "<cmd>CopilotChatSummarize<CR>",     desc = "CopilotChat: Summarize" },
