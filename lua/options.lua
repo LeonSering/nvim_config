@@ -10,7 +10,7 @@ vim.o.equalalways = false
 vim.g.mapleader = " "       -- set <leader> key to <space>
 vim.opt.autowriteall = true -- auto save
 vim.opt.hidden = false      -- allow switching between buffers without saving
-vim.opt.undofile = false     -- save undo history between sessions
+vim.opt.undofile = false    -- save undo history between sessions
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.tabstop = 2
@@ -20,9 +20,9 @@ vim.opt.autoindent = true
 vim.opt.clipboard:append("unnamed") -- yanks into "middle-mouse" clipboard
 vim.g.have_nerd_font = true
 vim.opt.textwidth = 120
-vim.opt.breakindent = true          -- auto indent when breaking lines
-vim.opt.scrolloff = 4               -- always show lines below coursor
-vim.opt.cmdheight = 4               -- height of command line
+vim.opt.breakindent = true -- auto indent when breaking lines
+vim.opt.scrolloff = 4      -- always show lines below coursor
+vim.opt.cmdheight = 4      -- height of command line
 
 -- Case-insensitive searching UNLESS \C or capital in search
 vim.opt.ignorecase = true
