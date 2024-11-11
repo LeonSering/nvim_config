@@ -141,7 +141,7 @@ return {
 
           last_echo = { true, bufnr, line }
 
-          local cmd_lines = vim.api.nvim_get_option_value('cmdheight', {})-1
+          local cmd_lines = vim.api.nvim_get_option_value('cmdheight', {}) - 1
 
           local chunks = {}
           for i = 1, cmd_lines do

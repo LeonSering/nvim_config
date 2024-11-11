@@ -1,5 +1,5 @@
 return {
-  'nvim-telescope/telescope.nvim', -- fuzzy finder
+  'nvim-telescope/telescope.nvim',                                  -- fuzzy finder
   priority = 100,
   dependencies = {                                                  -- fuzzy finder
     'nvim-lua/plenary.nvim',
@@ -52,6 +52,7 @@ return {
         oldfiles = {
           theme = "dropdown",
           previewer = false,
+          cwd_only = true,
           layout_config = {
             width = 0.5,
             height = 0.8,
@@ -180,6 +181,8 @@ return {
 
     vim.keymap.set('n', '<leader>gl', builtin.git_bcommits, { desc = "Telescope: Git log of current file" })
     require("telescope").load_extension("aerial")
-    vim.keymap.set('n', '<leader>fa', '<cmd> lua require("telescope").extensions.aerial.aerial({initial_mode="insert"})<CR>', { desc = "Telescope: Aerial" })
+    vim.keymap.set('n', '<leader>fa',
+      '<cmd> lua require("telescope").extensions.aerial.aerial({initial_mode="insert"})<CR>',
+      { desc = "Telescope: Aerial" })
   end
 }
