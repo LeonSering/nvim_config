@@ -6,7 +6,7 @@ return
     signs = false,
     keywords = {
       HACK = {
-        alt = { "TEMP"},
+        alt = { "TEMP" },
       },
     },
     highlight = {
@@ -41,6 +41,5 @@ return
       require("todo-comments").jump_prev()
     end, { desc = "Previous todo comment" }),
 
-    vim.keymap.set("n", "<leader>ft", "<cmd> TodoTelescope<CR>", { desc = "Telescope: TODOs and NOTEs" }),
   }
 }

@@ -84,6 +84,9 @@ return {
         header = "",
       })
     end) ]]
+    vim.keymap.set('n', '<leader>h', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
+      { desc = "LSP: Toggle inlay hints" })
+    vim.api.nvim_set_hl(0, 'LspInlayHint', { ctermfg = 103, fg = '#8787af', italic = true })
 
     -- DISPLAY DIAGNOSTICS IN THE COMMAND BAR
 

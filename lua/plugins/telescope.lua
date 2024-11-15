@@ -9,22 +9,36 @@ return {
     -- if fzf not found: Do :Lazy -> Enter on telescope-fzf-native.nvim -> gb to build
   },
   config = function()
+    local actions = require("telescope.actions")
     require('telescope').setup {
       defaults = {
         dynamic_preview_title = true,
+        layout_config = {
+          scroll_speed = 2,
+        },
         initial_mode = "normal",
         mappings = {
           i = {
             ["<C-j>"] = "move_selection_next",
             ["<C-k>"] = "move_selection_previous",
-            ["<C-Down>"] = "cycle_history_next",
-            ["<C-Up>"] = "cycle_history_prev",
+            ["<Down>"] = "cycle_history_next",
+            ["<Up>"] = "cycle_history_prev",
+            -- set the following shortcuts to "Send Escape Sequence" in iterm2: in the profile settings:
+            -- ^Up to [1;5A  (for Ctrl+Up)
+            -- ^Down to [1;5B  (for Ctrl+Down)
+            -- ^Right to [1;5C (for Ctrl+Right)
+            -- ^Left to [1;5D  (for Ctrl+Left)
+            ["<C-Up>"] = "preview_scrolling_up",
+            ["<C-Down>"] = "preview_scrolling_down",
+            ["<C-Left>"] = "preview_scrolling_left",
+            ["<C-Right>"] = "preview_scrolling_right",
             ["<C-h>"] = { "<Left>", type = "command" },
             ["<C-l>"] = { "<Right>", type = "command" },
             ["<C-s>"] = { "<Bs>", type = "command" },
             ["<C-b>"] = { "<C-o>db<Bs>", type = "command" },
             ["<C-u>"] = { "<C-o>d0", type = "command" },
             ["<C-x>"] = { "<Del>", type = "command" },
+            ["<C-d>"] = { "<Del>", type = "command" },
             ["<C-w>"] = { "<C-o>dw", type = "command" },
             ["<C-a>"] = { "<C-o>d$", type = "command" },
             ["<C-v>"] = "select_vertical",
@@ -32,8 +46,14 @@ return {
           n = {
             ["v"] = "select_vertical",
             ["t"] = "select_tab",
-            ["<C-Down>"] = "cycle_history_next",
-            ["<C-Up>"] = "cycle_history_prev",
+            ["<Down>"] = "cycle_history_next",
+            ["<Up>"] = "cycle_history_prev",
+            ["<C-Up>"] = "preview_scrolling_up",
+            ["<C-Down>"] = "preview_scrolling_down",
+            ["<C-Left>"] = "preview_scrolling_left",
+            ["<C-Right>"] = "preview_scrolling_right",
+            ["<C-j>"] = "move_selection_next",
+            ["<C-k>"] = "move_selection_previous",
           }
         },
       },
@@ -115,6 +135,16 @@ return {
           initial_mode = "insert",
           fname_width = 0.4,
         },
+        lsp_type_definitions = {
+          jump_type = "never",
+          path_display = { "tail" },
+        },
+        lsp_incoming_calls = {
+          jump_type = "never",
+        },
+        lsp_references = {
+          jump_type = "never",
+        },
         git_bcommits = {
           mappings = {
             i = {
@@ -168,7 +198,8 @@ return {
     vim.keymap.set('n', '<leader>f:', builtin.commands, { desc = "Telescope: Commands" })
     vim.keymap.set('n', '<leader>fs', builtin.spell_suggest, { desc = "Telescope: Spell suggest" })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = "Telescope: Keymaps" })
-    -- vim.keymap.set('n', '<leader>fz', builtin.builtin, { desc = "Telescope: Builtin" })
+    vim.keymap.set("n", "<leader>ft", "<cmd> TodoTelescope<CR>", { desc = "Telescope: TODOs and NOTEs" })
+    vim.keymap.set('n', '<leader>fzz', builtin.builtin, { desc = "Telescope: Builtin" })
     vim.keymap.set('n', '<leader>fzc', builtin.colorscheme, { desc = "Telescope: Colorscheme" })
     vim.keymap.set('n', '<leader>fzo', builtin.vim_options, { desc = "Telescope: Vim options" })
     vim.keymap.set('n', '<leader>fzh', builtin.highlights, { desc = "Telescope: Highlights" })
@@ -178,6 +209,10 @@ return {
     vim.keymap.set('n', '<leader>fv', builtin.lsp_document_symbols, { desc = "Telescope: LSP document symbols" })
     vim.keymap.set('n', '<leader>fV', builtin.lsp_workspace_symbols, { desc = "Telescope: LSP workspace symbols" })
     vim.keymap.set('n', '<leader>FV', builtin.lsp_workspace_symbols, { desc = "Telescope: LSP workspace symbols" })
+
+    vim.keymap.set('n', '<leader>t', builtin.lsp_type_definitions, { desc = "Telescope: LSP type definitions" })
+    vim.keymap.set('n', '<leader>i', builtin.lsp_incoming_calls, { desc = "Telescope: LSP incoming calls" })
+    vim.keymap.set('n', '<leader>u', builtin.lsp_references, { desc = "Telescope: LSP References" })
 
     vim.keymap.set('n', '<leader>gl', builtin.git_bcommits, { desc = "Telescope: Git log of current file" })
     require("telescope").load_extension("aerial")

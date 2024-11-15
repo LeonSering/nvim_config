@@ -396,7 +396,11 @@ C-y - accept diff
 [Space]fzh - find highlights
 [Space]fza - find autocommands
 
-[Space]fz - find telescope picker
+[Space]fzz - find telescope picker
+
+[Space]t - list type definitions
+[Space]u - list usages/references
+[Space]i - list incoming calls
 
 Ctrl-U / Ctrl-D - scroll preview window up/down (normal mode in telescope)
 Ctrl-V / Ctrl-T (or v / t in normal mode) - open in new vsplit / tab
@@ -409,17 +413,19 @@ Enter - open file
 Ctrl-V - open file in vertical split
 Ctrl-T - open file in new tab
 Ctrl-{J,K} - move up and down in insert mode
-Ctrl-Up,Ctrl-Down - last and next history
+Up,Down - last and next history
+Ctrl-{Up,Down,Left,Right} - scroll to preview window
 Ctrl-? - show help
 Esc - go to normal mode
 
 #### normal mode:
 
 Enter - open file
-v - open file in vertical split
-t - open file in new tab
+v or Ctrl-V - open file in vertical split
+t or Ctrl-T - open file in new tab
 j,k - move up and down
-Ctrl-Up,Ctrl-Down - last and next history
+Up,Down - last and next history
+Ctrl-{Up,Down,Left,Right} - scroll to preview window
 ? - show help
 
 # Spectre
@@ -510,15 +516,16 @@ n - add increasing numbers (starting with 1)
 
 [Space]a - code action
 [Space]d - peek definition
-[Space]t - peek type definition
-[Space]u - list usages/references
-[Space]i - Lspsaga finder (show, definition, type-definition, references, and implementation)
+[Space]t - list type definitions (telescope)
+[Space]u - list usages/references (telescope)
+[Space]i - list incoming calls (telescope)
 Enter / v / t - in preview window: open in current window, vertical split, new tab
 
 [Space]e - go to next diagnostic and open floating window (rust: rendered as in terminal)
 [Space]E - go to previous diagnostics and open floating window (rust: rendered as in terminal)
 ]e - go to next diagnostic and open floating window with code actions
 [E - go to previous diagnostic and open floating window with code actions
+[Space]h - toggle inlay hints
 [Space]l - toggle lsp lines
 [Space]rn - rename symbol (refactoring)
 [Space]p - format code
