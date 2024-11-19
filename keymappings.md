@@ -1,4 +1,20 @@
-#Normal Mode
+# Iterm2 settings:
+
+Preferences -> Profiles -> Keys -> Key Mappings -> +
+-> "Send Escape Sequence"
+
+^Return to [13;5u (Ctrl+Enter)
+^Up to [1;5A (for Ctrl+Up)
+^Down to [1;5B (for Ctrl+Down)
+^Right to [1;5C (for Ctrl+Right)
+^Left to [1;5D (for Ctrl+Left)
+^Return [13;2u (for Shift+Enter)
+
+-> "Send Hex Codes"
+
+^/ to 0x1f (for Ctrl-/)
+
+# Normal Mode
 
 ## basic commands
 

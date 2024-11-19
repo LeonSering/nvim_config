@@ -13,14 +13,10 @@ return {
     vim.keymap.set('v', '<C-j>', '<Plug>(comment_toggle_linewise_visual)<down>')
 
     ---- set Ctrl + / to toggle comment ----
-    -- linux:
-    -- vim.keymap.set('n', '<C-_>', '<Plug>(comment_toggle_linewise_current)')
-    -- vim.keymap.set('i', '<C-_>', '<C-o><Plug>(comment_toggle_linewise_current)')
-    -- vim.keymap.set('v', '<C-_>', '<Plug>(comment_toggle_blockwise_visual)')
-    -- mac
-    vim.keymap.set('n', '<C-/>', '<Plug>(comment_toggle_linewise_current)')
-    vim.keymap.set('i', '<C-/>', '<C-o><Plug>(comment_toggle_linewise_current)')
-    vim.keymap.set('v', '<C-/>', '<Plug>(comment_toggle_blockwise_visual)')
+    -- for iterm2, set ^/ (Ctrl + /) to "Send Hex Codes" with value 0x1f in the profile settings
+    vim.keymap.set('n', '<C-_>', '<Plug>(comment_toggle_linewise_current)')
+    vim.keymap.set('i', '<C-_>', '<C-o><Plug>(comment_toggle_linewise_current)')
+    vim.keymap.set('v', '<C-_>', '<Plug>(comment_toggle_blockwise_visual)')
 
     -- disable auto comment on <CR>. <Esc>o can be used for new line with comment
     vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
@@ -31,6 +27,7 @@ return {
     })
     -- set Shift+Enter to new line with comment
     -- set Return+Shift to \E[13;2u in terminal profil to allow this combination
+    -- for iterm2, set ^Return (Shift+Enter) to "Send Escape Sequence" with value [13;2u in the profile settings
     vim.keymap.set('i', '<S-CR>', '<Esc>o')
   end
 }
