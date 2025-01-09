@@ -43,20 +43,18 @@ return {
         },
       })
       vim.keymap.set("n", "<C-C>", "<cmd>CopilotChatToggle<CR>", { desc = "CopilotChat toggle" })
+      local function quick_chat()
+        local input = vim.fn.input("Quick Chat: ")
+        if input ~= "" then
+          require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+        end
+      end
       require("which-key").add(
         {
           {
             mode = { "n", "v" },
-            {
-              "<leader>Aq",
-              function()
-                local input = vim.fn.input("Quick Chat: ")
-                if input ~= "" then
-                  require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
-                end
-              end,
-              desc = "CopilotChat - Quick chat (full buffer)",
-            },
+            { "<leader>Aq", quick_chat,                          desc = "CopilotChat - Quick chat (full buffer)", },
+            { "<leader>AQ", quick_chat,                          desc = "which_key_ignore", },
             { "<leader>Ac", "<cmd>CopilotChatOpen<CR>",          desc = "CopilotChat" },
             { "<leader>AC", "<cmd>CopilotChatOpen<CR>",          desc = "which_key_ignore" },
             { "<leader>Ax", "<cmd>CopilotChatExplain<CR>",       desc = "CopilotChat: Explain Code" },
