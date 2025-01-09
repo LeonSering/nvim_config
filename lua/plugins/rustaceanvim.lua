@@ -23,6 +23,14 @@ return {
             checkOnSave = {
               command = 'clippy',
             },
+            imports = {
+              granularity = {
+                group = "module",
+              },
+            },
+            rustfmt = {
+              extraArgs = "+nightly",
+            }
           },
         },
       },

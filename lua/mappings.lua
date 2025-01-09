@@ -85,13 +85,37 @@ vim.keymap.set('n', '<leader>|', '<Cmd>vsplit ~/.config/nvim/lua/mappings.lua<CR
 vim.keymap.set('n', '<C-d>', '<C-d>zz') -- move down half a page and center cursor
 vim.keymap.set('n', '<C-u>', '<C-u>zz') -- move down half a page and center cursorA
 
-vim.keymap.set('n', '<leader>w', '<Cmd>w<CR>', { desc = "Write buffer (Save file)" })
-vim.keymap.set('n', '<C-s>', '<Cmd>w<CR>', { desc = "Write buffer (Save file)" })
+
+local function save_if_modified()
+  if vim.bo.readonly then
+    print("Buffer is not writable. Cannot save.")
+  elseif vim.bo.modified then
+    vim.cmd('w')
+  else
+    print("Buffer is not modified. No need to save.")
+  end
+end
+
+-- Update key mappings to use the common function
+vim.keymap.set('n', '<leader>w', save_if_modified, { desc = "Write buffer (Save file)" })
+vim.keymap.set('n', '<C-s>', save_if_modified, { desc = "Write buffer (Save file)" })
+vim.keymap.set('n', '<leader>w', save_if_modified, { desc = "Write buffer (Save file)" })
+vim.keymap.set('n', '<C-s>', save_if_modified, { desc = "Write buffer (Save file)" })
 vim.keymap.set('n', '<leader>q', function()
   -- Check if the current buffer is of normal type and has a filename
   if vim.bo.buftype == '' and vim.api.nvim_buf_get_name(0) ~= '' then
-    -- Save the buffer
-    vim.cmd('w')
+    -- Get the file path
+    local filepath = vim.api.nvim_buf_get_name(0)
+    -- Check if the file is writable
+    if vim.fn.filewritable(filepath) == 1 then
+      -- Check if the buffer has unsaved changes
+      if vim.bo.modified then
+        -- Save the buffer
+        vim.cmd('w')
+      end
+    else
+      print("File is not writable")
+    end
   end
   -- Quit the buffer
   vim.cmd('q!')
