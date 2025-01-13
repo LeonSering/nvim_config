@@ -174,3 +174,79 @@ vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { underline = true, sp = 'Grey
 
 -- todo
 vim.api.nvim_set_hl(0, "Todo", { ctermbg = "blue", ctermfg = "black", bg = "Blue", fg = "black", })
+
+
+-- open at most 4 vertical splits:
+local max_splits = 4
+
+-- Function to manage vertical splits
+local function manage_splits()
+  -- Check if the current tab is the first (leftmost) tab
+  local current_tab = vim.api.nvim_get_current_tabpage()
+  local all_tabs = vim.api.nvim_list_tabpages()
+  table.sort(all_tabs) -- Sort tabs to ensure the first tab is at index 1
+
+  if current_tab ~= all_tabs[1] then
+    return -- Exit the function if the current tab is not the first tab
+  end
+
+  local new_win_id = vim.api.nvim_get_current_win()             -- The newest window
+  local all_windows = vim.api.nvim_tabpage_list_wins(current_tab) -- Get windows for the current tab only
+
+  -- Determine the positions of all windows
+  local window_positions = {}
+  local new_win_pos = vim.api.nvim_win_get_position(new_win_id)
+
+  for _, win in ipairs(all_windows) do
+    local win_config = vim.api.nvim_win_get_config(win)
+    if win_config.relative == "" then -- Exclude floating and sidebar windows
+      table.insert(window_positions, {
+        win_id = win,
+        pos = vim.api.nvim_win_get_position(win),
+      })
+    end
+  end
+
+  if #window_positions <= max_splits then
+    return
+  end
+
+  -- Sort windows by their column positions (left to right)
+  table.sort(window_positions, function(a, b)
+    return a.pos[2] < b.pos[2]
+  end)
+
+  -- Check if the new split is the rightmost window
+  local rightmost_window = window_positions[#window_positions]
+  if new_win_id == rightmost_window.win_id then
+    -- Get the leftmost window
+    local leftmost_window = window_positions[1]
+
+    -- Close the leftmost window
+    vim.api.nvim_win_close(leftmost_window.win_id, true)
+
+    -- Move the new window to the leftmost position
+    vim.cmd("wincmd H") -- Move the current window to the far left
+  else
+    -- Close the window immediately to the right of the new window
+    local target_win_id = nil
+    for _, win_info in ipairs(window_positions) do
+      if win_info.pos[1] == new_win_pos[1] and win_info.pos[2] > new_win_pos[2] then
+        target_win_id = win_info.win_id
+        break
+      end
+    end
+
+    -- Close the target window if it exists and there are at least 4 vertical windows
+    if target_win_id then
+      vim.api.nvim_win_close(target_win_id, true)
+    end
+  end
+end
+
+-- Autocommand to trigger the function after opening a new window
+vim.api.nvim_create_autocmd("WinNew", {
+  callback = function()
+    manage_splits()
+  end,
+})
