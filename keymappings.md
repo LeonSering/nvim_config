@@ -556,7 +556,7 @@ Ctrl-e - toggle signature help (in insert mode)
 # Autocomplete (cmp)
 
 Ctrl-Space - open autocomplete menu
-Tab - open autocomplete menu (if text of the left)
+Tab - open autocomplete menu (if text on the left of cursor)
 
 ## in autocomplete menu
 
@@ -565,8 +565,9 @@ Ctrl-k - move up
 Tab - next suggestion
 Shift-Tab - previous suggestion
 Enter or Ctrl-Space - confirm suggestion
-Ctrl-U - scroll docs up
-Ctrl-D - scroll docs down
+Ctrl-e - toggle docs
+Ctrl-u - scroll docs up
+Ctrl-d - scroll docs down
 Esc - close menu
 
 ## in function snippet
