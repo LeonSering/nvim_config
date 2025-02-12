@@ -553,17 +553,15 @@ Enter / v / t - in preview window: open in current window, vertical split, new t
 
 Ctrl-e - toggle signature help (in insert mode)
 
-# Autocomplete (cmp)
+# Autocomplete (blink.cmp)
 
 Ctrl-Space - open autocomplete menu
 Tab - open autocomplete menu (if text on the left of cursor)
 
 ## in autocomplete menu
 
-Ctrl-j - move down
-Ctrl-k - move up
-Tab - next suggestion
-Shift-Tab - previous suggestion
+Tab / Ctrl-j - move down
+Shift-Tab / Ctrl-k - move up
 Enter or Ctrl-Space - confirm suggestion
 Ctrl-e - toggle docs
 Ctrl-u - scroll docs up
