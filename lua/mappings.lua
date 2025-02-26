@@ -36,10 +36,10 @@ vim.keymap.set('x', '>', '>gv<esc>') -- keep cursor at current position after in
 
 
 -- VISUAL MODE --
-vim.keymap.set('v', '<C-c>', '"+y')  -- copy
-vim.keymap.set('v', '<C-x>', '"+d')  -- cut
-vim.keymap.set('v', 'y', 'ygv<esc>') -- keep cursor at current position after yank
-vim.keymap.set('v', '<CR>', 'c')     -- change selection
+vim.keymap.set('x', '<C-c>', '"+y')  -- copy
+vim.keymap.set('x', '<C-x>', '"+d')  -- cut
+vim.keymap.set('x', 'y', 'ygv<esc>') -- keep cursor at current position after yank
+vim.keymap.set('x', '<CR>', 'c')     -- change selection
 
 
 -- NORMAL MODE --

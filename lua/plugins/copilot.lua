@@ -1,10 +1,19 @@
 return {
   'github/copilot.vim', -- copilot autocompletion
+
   config = function()
     -- you must set Return+Ctrl to \E[13;5u in terminal profil to allow this combination
     -- for iterm2, set ^Return (Ctrl+Enter) to "Send Escape Sequence" with value [13;5u in the profile settings
-    vim.keymap.set('i', '<C-CR>', 'copilot#Accept("")', { expr = true, replace_keycodes = false })
-    vim.keymap.set('i', '<C-p>', '<Plug>(copilot-accept-line)')
+    -- vim.keymap.set('i', '<C-CR>', 'copilot#Accept("")', { expr = true, replace_keycodes = false })
+    vim.keymap.set('i', '<C-CR>', function()
+      vim.snippet.stop()
+      return vim.fn['copilot#Accept']("")
+    end, { expr = true, replace_keycodes = false })
+    -- vim.keymap.set('i', '<C-p>', '<Plug>(copilot-accept-line)')
+    vim.keymap.set('i', '<C-p>', function()
+      vim.snippet.stop()
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Plug>(copilot-accept-line)', true, true, true), 'n', false)
+    end, {})
     vim.keymap.set('i', '<C-o>', '<Plug>(copilot-accept-word)')
     -- also set:
     -- ^Up to [1;5A  (for Ctrl+Up)
