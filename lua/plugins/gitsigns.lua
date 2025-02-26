@@ -5,16 +5,21 @@ return {
     sign_priority = 1000,
     attach_to_untracked = true,
     on_attach = function(bufnr)
-      local function map(mode, lhs, rhs, opts)
-        opts = vim.tbl_extend('force', { noremap = true, silent = true }, opts or {})
-        vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+      local gitsigns = require('gitsigns')
+      local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
       end
-      local gs = require('gitsigns')
       map('n', '<leader>gs', '<cmd>Gitsigns toggle_signs<CR>', { desc = 'Toggle git signs' })
       map('n', '<leader>gw', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'Toggle git word diff' })
+      map('n', '<leader>ga', '<cmd>Gitsigns stage_hunk<CR>', { desc = 'Stage / unstage git hunk' })
+      map('v', '<leader>ga', function()
+          gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+        end,
+        { desc = 'Stage / unstage git hunk' })
       map('n', ']g', '<cmd>Gitsigns next_hunk<CR>', { desc = 'Next git hunk' })
       map('n', '[g', '<cmd>Gitsigns prev_hunk<CR>', { desc = 'Previous git hunk' })
-
     end,
     vim.api.nvim_set_hl(0, 'GitSignsAdd',
       { ctermfg = 'darkgreen', fg = 'DarkGreen', ctermbg = 'none', bg = 'None', bold = true }),

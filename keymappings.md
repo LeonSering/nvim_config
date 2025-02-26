@@ -469,6 +469,7 @@ dd - toggle item
 [Space]gh - open git DiffviewFileHistory of current file
 [Space]gH - open git DiffviewFileHistory of working directory
 [Space]gd - open git Diffview against current index (three-way diff)
+[Space]ga - stages / unstages git hunk (in visual mode only selected lines)
 
 # Aerial
 
