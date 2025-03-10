@@ -40,9 +40,9 @@ return {
 
 
       ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
-      ['C-d'] = { 'scroll_documentation_down', 'fallback' },
+      ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
 
-      ['C-e'] = { 'show_documentation', 'hide_documentation' },
+      ['<C-e>'] = { 'show_documentation', 'hide_documentation' },
     },
 
     appearance = {
