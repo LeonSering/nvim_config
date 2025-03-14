@@ -385,7 +385,9 @@ C-y - accept diff
 [Space]fF or [Space] FF - find files including ignored and hidden files
 [Space]fo - select old / recent files
 [Space]fb - select buffers
-[Space]fg - live grep in working directory
+[Space]fg - live grep in working directory (normal or visual mode)
+[Space]fG or [Space] FG - live grep in working directory (word under cursor)
+[Space]fw - find word under cursor
 [Space]fu - fuzzy find in current file
 
 [Space]fp - select from yank history for pasting
