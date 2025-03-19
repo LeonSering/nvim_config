@@ -174,6 +174,7 @@ return {
 
     local builtin = require('telescope.builtin')
     vim.keymap.set('n', '\\', builtin.resume, {})
+
     vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Telescope: Find files" })
     vim.keymap.set('n', '<leader>FF',
       '<cmd> lua require("telescope.builtin").find_files({hidden = true, no_ignore = true})<CR>',
@@ -182,19 +183,26 @@ return {
       '<cmd> lua require("telescope.builtin").find_files({hidden = true, no_ignore = true})<CR>',
       { desc = "Telescope: Find files including gitignored and hidden files" })
     vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = "Telescope: Open old / recent files" })
+
     vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Telescope: Live grep" })
+
     local function grep_word_under_cursor()
       local word = vim.fn.expand('<cword>')
       require('telescope.builtin').live_grep({ default_text = word })
     end
     vim.keymap.set('n', '<leader>fG', grep_word_under_cursor, { desc = "Telescope: Live grep word under cursor" })
     vim.keymap.set('n', '<leader>FG', grep_word_under_cursor, { desc = "Telescope: Live grep word under cursor" })
-    vim.keymap.set('v', '<leader>fg', function()
+
+    local function grep_visual_selection()
       vim.cmd('normal! "zy')
       local search_text = vim.fn.getreg('z')
       search_text = search_text:gsub('\n', ' '):gsub('\r', ' ')
       require('telescope.builtin').live_grep({ default_text = search_text })
-    end, { desc = "Telescope: Live grep with selection" })
+    end
+    vim.keymap.set('v', '<leader>fg', grep_visual_selection, { desc = "Telescope: Live grep with selection" })
+    vim.keymap.set('v', '<leader>fG', grep_visual_selection, { desc = "Telescope: Live grep with selection" })
+    vim.keymap.set('v', '<leader>FG', grep_visual_selection, { desc = "Telescope: Live grep with selection" })
+
     vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = "Telescope: Word under cursor" })
     vim.keymap.set('n', '<leader>fu', builtin.current_buffer_fuzzy_find,
       { desc = "Telescope: Fuzzy find in current buffer" })
