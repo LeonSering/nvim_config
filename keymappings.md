@@ -161,14 +161,18 @@ va[Bracket/Object] - select around
 
 ## surround
 
-ys[motion][new] - add surrounding [new] to [motion]
-cs[old][new] - change surrounding [old] with [new]
-ds[old] - delete surrounding [old]
-yss[new] - add surrounding [new] to line
-S[new] - in visual mode: add surrounding [new]
+sa[motion][new] - add surrounding [new] to [motion]
+sc[old][new] - change surrounding [old] with [new]
+sd[old] - delete surrounding [old]
+ss[new] - add surrounding [new] around current word
+saa[new] - add surrounding [new] around current line
 [space]c - change brackets (same as csb)
 [space]C - change quotes (same as csq)
-[new/old] = [Bracket], b (brackets: >,),],}), q (quotes: ',",`), s (brackets, quotes), t (html-tags), f (function), i (individual start and end)
+s[new] - in visual mode: add surrounding [new] around selection
+S[new] - in visual mode: add surrounding [new] around selection inserting line breaks
+[new/old] = (, ), [, ], {, }, <, >, ", ', `, t (html-tag: <tag>inner<\tag>), f (function: my_function(inner)), g (generic: MyType<Inner>)
+[new] = i (individual start and end)
+[old] = b (any bracket <>, (), [], {}), q (any quote '',"",``), s (any bracket or quote)
 
 ## enter visual mode
 

@@ -2,6 +2,8 @@
 --- BASIC CONFIGURATION ----
 ----------------------------
 
+vim.o.timeout = true
+vim.o.timeoutlen = 600
 -- disable netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -190,7 +192,7 @@ local function manage_splits()
     return -- Exit the function if the current tab is not the first tab
   end
 
-  local new_win_id = vim.api.nvim_get_current_win()             -- The newest window
+  local new_win_id = vim.api.nvim_get_current_win()               -- The newest window
   local all_windows = vim.api.nvim_tabpage_list_wins(current_tab) -- Get windows for the current tab only
 
   -- Determine the positions of all windows

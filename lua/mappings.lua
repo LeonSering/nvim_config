@@ -156,6 +156,7 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<A-n>', '<cmd>tabprevious<CR>')
 
 -- DISABLE KEYS --
 -- disable some unused keys
+vim.keymap.set('n', 's', '<Nop>')
 vim.keymap.set('n', '!', '<Nop>')
 vim.keymap.set({ 'n', 'v' }, 'q:', '<Nop>')
 vim.keymap.set('n', 'q/', '<Nop>')
