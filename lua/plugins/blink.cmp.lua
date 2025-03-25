@@ -7,6 +7,9 @@ return {
   version = '*',
 
   opts = {
+    -- Disable popup menu for command line
+    cmdline = { enabled = false },
+
     -- 'default' for mappings similar to built-in completion
     -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
     -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
@@ -82,7 +85,6 @@ return {
 
       -- disable in command line mode
       menu = {
-        auto_show = function(ctx) return ctx.mode ~= 'cmdline' end,
         border = 'single',
         scrollbar = false,
       },
