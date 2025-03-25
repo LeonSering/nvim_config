@@ -543,7 +543,7 @@ Enter / v / t - in preview window: open in current window, vertical split, new t
 [Space]e - go to next diagnostic and open floating window (rust: rendered as in terminal)
 [Space]E - go to previous diagnostics and open floating window (rust: rendered as in terminal)
 ]e - go to next diagnostic and open floating window with code actions
-[E - go to previous diagnostic and open floating window with code actions
+[e - go to previous diagnostic and open floating window with code actions
 [Space]h - toggle inlay hints / show types
 [Space]l - toggle lsp lines
 [Space]rn - rename symbol (refactoring)
@@ -589,6 +589,8 @@ Shift-Tab - move to previous placeholder
 [Space]rlb - build test coverage (cargo llvm-cov) and show signs
 [Space]rlt - toggle test coverage signs
 [Space]rls - show test coverage summary
+[Space]rk - move item up / left
+[Space]rj - move item down / right
 
 # Debugging
 

@@ -6,7 +6,7 @@ return {
     -- cargo test and scroll to the bottom of the vim-terminal
     vim.keymap.set('n', '<leader>rt', ':vertical RustTest<CR>G', { desc = "Cargo: Run current test" }) -- run test under cursor
     vim.keymap.set('n', '<leader>rT', ':vertical RustTest!<CR>G', { desc = "Cargo: Run all tests" })   -- run all tests
-    vim.keymap.set('n', '<leader>RT', ':vertical RustTest!<CR>G', { desc = "which_key_ignore" })       -- run all tests
+    vim.keymap.set('n', '<leader>RT', ':vertical RustTest!<CR>G', { desc = "Cargo: Run all tests" })   -- run all tests
     vim.keymap.set('n', '<leader>rr', ':Crun<CR>G', { desc = "Cargo: Run" })
     vim.keymap.set('n', '<leader>rb', ':Cbuild<CR>G', { desc = "Cargo: Build" })
     vim.keymap.set('n', '<leader>rc', ':Cargo clippy<CR>G', { desc = "Cargo: Clippy" })
