@@ -114,18 +114,18 @@ return {
     vim.snippet.stop()
     if vim.fn.mode() == 's' then
       -- Change from select mode to insert mode
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>a', true, false, true), 'n', false)
+      return vim.api.nvim_replace_termcodes('<Esc>a', true, false, true)
     end
-  end),
+  end, { expr = true }),
 
   vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { link = 'NormalFloat' }),
   vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder', { link = 'NormalFloat' }),
-  -- Stop snippets when pressing Esc
   vim.keymap.set({ 'i', 'v', 's' }, '<Esc>', function()
+    -- Stop snippets
     vim.snippet.stop()
-    -- Return to normal mode (equivalent to pressing Esc)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
-  end, { noremap = true }),
+
+    return vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
+  end, { noremap = true, expr = true }),
 
   vim.keymap.set('i', '<Tab>', function()
     -- Check if cursor is within a function parameter using Treesitter
