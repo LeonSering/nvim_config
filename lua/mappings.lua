@@ -19,11 +19,14 @@ vim.keymap.set('i', '<C-b>',
     else
       return "<C-o>db"
     end
-  end, { expr = true })                             -- delete previous word
+  end, { expr = true })                                            -- delete previous word
 -- default setting: <C-u> delete everthing on the left
-vim.keymap.set({ 'i', 'c', 't' }, '<C-x>', '<Del>') -- delete single char on the right of cursor
-vim.keymap.set('i', '<C-w>', '<C-o>dw')             -- delete next word
-vim.keymap.set('i', '<C-a>', '<C-o>d$')             -- delete to end of line
+vim.keymap.set({ 'i', 'c', 't' }, '<C-x>', '<Del>')                -- delete single char on the right of cursor
+vim.keymap.set('i', '<C-w>', '<C-o>dw')                            -- delete next word
+vim.keymap.set('i', '<C-a>', '<C-o>d$')                            -- delete to end of line
+-- x and X delete character wihout register to unnamed register
+vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true }) -- delete without yanking
+vim.keymap.set("n", "X", '"_X', { noremap = true, silent = true }) -- delete without yanking
 
 
 -- tab and shift-tab

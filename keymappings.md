@@ -122,18 +122,24 @@ i - insert text before the cursor
 I - insert text before the first non-blank in the line
 o - open a new line below and append text
 O - open a new line above and append text
+cw - delete the next word (yanking) and go to insert mode (can use other motions as well)
+C - delete everthing on right (yanking) and go to insert mode
+cc or S - delete line (yanking) and go to insert mode
+Backspace - delete the character before the cursor (yanking) go to insert mode
 
 ## deleting
 
-x or Del - delete the character under the cursor
-X - delete the character before the cursor
-d[motion] - delete next motion
-dd - delete full line
-D - delete end of line
-J - join line below (in visual mode, joins all selected lines)
-cw - delete the next word and go to insert mode (can use other motions as well)
-C - delete everthing on right and go to insert mode
-cc or S - delete line and go to insert mode
+Del - delete the character under the cursor (yanking)
+x - delete the character under the cursor (no yanking)
+X - delete the character before the cursor (no yanking)
+x / X in visual mode - delete selection (no yanking)
+d[motion] - delete next motion (yanking)
+dd - delete full line (yanking)
+D - delete end of line (yanking)
+cw - delete the next word (yanking) and go to insert mode (can use other motions as well)
+C - delete everthing on right (yanking) and go to insert mode
+cc or S - delete line (yanking) and go to insert mode
+Backspace - delete the character before the cursor (yanking) go to insert mode
 
 ## inside/around commands
 
@@ -300,6 +306,7 @@ Ctrl-D (insert mode) - unindent line
 o - exchange cursor position with start of selection
 J - joins all selected lines
 S[new] - change surrounding delimiter to [new]
+x - delete without yanking
 Ctrl-/ - toggle comment for block
 Ctrl-C - yank into register + (system clipboard)
 Ctrl-X - delete block and yank into register + (system clipboard)
