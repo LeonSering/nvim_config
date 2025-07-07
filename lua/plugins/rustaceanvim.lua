@@ -38,7 +38,7 @@ return {
             rustfmt = {
               extraArgs = { "+nightly", "--config-path=/Users/leon.sering/rustfmt.toml" },
             },
-            checkOnSave = {
+            check = {
               command = 'clippy',
             },
             imports = {
