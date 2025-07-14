@@ -389,73 +389,60 @@ C-y - accept diff
 [Enter] in normal mode / Ctrl-Enter in insert mode - send message
 [Esc] - close chat window
 
-# Telescope
+# FzfLua
 
-\ - resume last telescope picker
-[Space]ff - find files
-[Space]fF or [Space] FF - find files including ignored and hidden files
-[Space]fo - select old / recent files
-[Space]fb - select buffers
+\ - resume last FzfLua picker
+[Space]ff - files
+[Space]fF or [Space] FF - files including ignored and hidden files
+[Space]fo - old / recent files
+[Space]fb - buffers
 [Space]fg - live grep in working directory (normal or visual mode)
 [Space]fG or [Space] FG - live grep in working directory (word under cursor)
-[Space]fw - find word under cursor
+[Space]fw - grep word under cursor
 [Space]fu - fuzzy find in current file
 
-[Space]fp - select from yank history for pasting
-[Space]fj - select jumplist
-[Space]fm - select marks
-[Space]fr - select from register
-[Space]f/ - select from search history
-[Space]fc - select from command history
-[Space]f: - find commands
-[Space]fh - find help tags
-[Space]fk - find keymaps
+[Space]fj - jumplist
+[Space]fm - marks
+[Space]fr - register
+[Space]f/ - search history
+[Space]fc - command history
+[Space]f: - commands
+[Space]fh - help tags
+[Space]fk - keymaps
 
-[Space]fe - list diagnostics
-[Space]fv - list symbols (variable names) of current file
-[Space]fV - list symbols (variable names) of workspace
-[Space]fa - open aerial picker
-[Space]fq - select quickfix
-[Space]fs - select spell suggestions
+[Space]fe - errors
+[Space]fE or [Space]FE - errors and warnings
+[Space]fi - incoming calls
+[Space]fv - symbols of current file
+[Space]fV or [Space]FV - symbols of workspace
+[Space]fa - LSP document structure (aerial like)
+[Space]fq - quickfix
 
-[Space]ft - select TODOs and NOTEs
+[Space]fs - spell suggestions
+[Space]fp - select from yank history for pasting (telescope)
+[Space]ft - select TODOs and NOTEs (telescope)
 
-[Space]fzc - select colorscheme
-[Space]fzo - find vim-options
-[Space]fzh - find highlights
-[Space]fza - find autocommands
+[Space]fzc - colorscheme
+[Space]fzo - vim-options
+[Space]fzh - highlights
+[Space]fza - autocommands
 
-[Space]fzz - find telescope picker
+[Space]fzz - FzfLua picker
 
-[Space]t - list type definitions
-[Space]u - list usages/references
-[Space]i - list incoming calls
+[Space]gl - Git log of current file
 
-Ctrl-U / Ctrl-D - scroll preview window up/down (normal mode in telescope)
-Ctrl-V / Ctrl-T (or v / t in normal mode) - open in new vsplit / tab
+#### in FzfLua picker
 
-## in telescope picker
-
-#### insert mode:
-
-Enter - open file
-Ctrl-V - open file in vertical split
-Ctrl-T - open file in new tab
-Ctrl-{J,K} - move up and down in insert mode
-Up,Down - last and next history
-Ctrl-{Up,Down,Left,Right} - scroll to preview window
-Ctrl-? - show help
-Esc - go to normal mode
-
-#### normal mode:
-
-Enter - open file
-v or Ctrl-V - open file in vertical split
-t or Ctrl-T - open file in new tab
-j,k - move up and down
-Up,Down - last and next history
-Ctrl-{Up,Down,Left,Right} - scroll to preview window
-? - show help
+Esc - close picker
+Enter - open file or select item
+Ctrl-{j,k} - move up and down
+Ctrl-v / Ctrl-t (or v / t in normal mode) - open in new vsplit / tab
+Shift-up/down - scroll preview window up/down
+Shift-Alt-up/down - scroll preview window up/down fast
+F1 - show keymappings
+F2 - toggle fullscreen
+F3 - wrap lines in preview window
+F4 - toggle preview window
 
 # Spectre
 
@@ -487,7 +474,6 @@ dd - toggle item
 # Aerial
 
 Ctrl-a - toggle aerial view (also in visual and insert mode)
-[Space]fa - open telescope picker for aerial
 
 # NvimTree
 
@@ -500,7 +486,7 @@ Enter - open file
 v / Ctrl-v - open file in vertical split
 t / Ctrl-t - open file in new tab
 r - rename show full path
-Ctrl-R - rename omit base name
+Ctrl-r - rename omit base name
 Backspace - Close directory
 Tab - open preview (open but stay in nvim-tree)
 f - start filter
@@ -521,8 +507,8 @@ W or C - collapse all
 
 # Visual-Multi (multiple cursors)
 
-Ctrl-m - search for word under cursor (selection in visual mode)
-Ctrl-M - search for word under cursor (selection in visual mode) and select all
+[Space]m - search for word under cursor (selection in visual mode)
+[Space]M - search for word under cursor (selection in visual mode) and select all
 Ctrl-Up/Down/Left/Right - add cursor at current location and move to direction
 
 ## in visual-multi mode:
@@ -546,9 +532,8 @@ n - add increasing numbers (starting with 1)
 
 [Space]a - code action
 [Space]d - peek definition
-[Space]t - list type definitions (telescope)
-[Space]u - list usages/references (telescope)
-[Space]i - list incoming calls (telescope)
+[Space]t - list type definitions
+[Space]u - list usages/references/definitions/type_definitions
 Enter / v / t - in preview window: open in current window, vertical split, new tab
 
 [Space]e - go to next diagnostic and open floating window (rust: rendered as in terminal)
