@@ -7,10 +7,10 @@ return {
     })
     local hop = require('hop')
     local directions = require('hop.hint').HintDirection
-    vim.keymap.set('n', ';', function()
+    vim.keymap.set({ 'n', 'x', 'o' }, ';', function()
       hop.hint_char1({ multi_windows = false })
     end, { remap = true })
-    vim.keymap.set({ "n", "x", "o" }, 'f', function()
+    vim.keymap.set({ 'n', 'x', 'o' }, 'f', function()
       hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
     end, { remap = true })
     vim.keymap.set({ 'n', 'x', 'o' }, 'F', function()
