@@ -5,6 +5,6 @@ return {
     require('pretty_hover').setup({
       toggle = true,
     })
-    vim.keymap.set("n", "K", require('pretty_hover').hover, {desc = "LSP: Hover"})
+    vim.keymap.set("n", "K", require('pretty_hover').hover, { desc = "LSP: Hover" })
   end,
 }
