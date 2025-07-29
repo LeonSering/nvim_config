@@ -35,14 +35,14 @@ return {
       vim.cmd("rightbelow vnew")
       local terminal_bufnr = vim.api.nvim_get_current_buf()
 
-      local command = 'cargo llvm-cov --workspace --remap-path-prefix -- --skip systemtest'
-          -- .. ' && cargo llvm-cov report --output-dir target/coverage'
+      local command = 'mkdir -p target/coverage'
+          .. ' && cargo llvm-cov --workspace --remap-path-prefix -- --skip systemtest'
           .. ' && cargo llvm-cov report --lcov --output-path target/coverage/lcov.info'
           .. ' && exit' .. '\n'
 
       -- Start the job in the terminal buffer and attach an on_exit callback
-      local job_id = vim.fn.termopen(command, {
-        on_exit = function(job_id, exit_code, _)
+      vim.fn.jobstart(command, {
+        on_exit = function(_, exit_code, _)
           if exit_code == 0 then
             -- close terminal
             vim.api.nvim_command("bdelete " .. terminal_bufnr)
@@ -54,9 +54,12 @@ return {
         end,
         stdout_buffered = true,
         stderr_buffered = true,
+        term = true,
       })
+
       -- stay at the end of the terminal buffer
       vim.api.nvim_command("normal! G")
+
       -- back to the original window
       vim.api.nvim_set_current_win(current_win)
 
