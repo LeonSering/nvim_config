@@ -19,6 +19,26 @@ return {
       summary = {
         -- follow = true,
         -- open = "botright vsplit | vertical resize 80",
+        mappings = {
+          expand = "e",
+          expand_all = "E",
+          output = "o",
+          short = "O",
+          attach = "a",
+          jumpto = { "<CR>", "<2-LeftMouse>" },
+          stop = "u",
+          run = "r",
+          debug = "d",
+          mark = "m",
+          run_marked = "R",
+          debug_marked = "D",
+          clear_marked = "M",
+          target = "t",
+          clear_target = "T",
+          next_failed = "J",
+          prev_failed = "K",
+          watch = "w",
+        },
       },
       output_panel = {
         open = "botright vsplit"
