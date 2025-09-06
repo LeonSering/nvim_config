@@ -6,14 +6,14 @@ return {
       -- insert = "<C-g>s",
       -- insert_line = "<C-g>S",
       normal = "sa",
-      normal_cur = "saa",
+      normal_cur = "sA",
       -- normal_line = "sA",
       -- normal_cus_line = "sAA",
       visual = "s",
       visual_line = "S",
       delete = "sd",
       change = "sc",
-      change_line = "sC",
+      -- change_line = "sC",
     },
     surrounds = {
       -- "function"

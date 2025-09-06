@@ -61,17 +61,19 @@ b - one word backwards
 B - one blank-sperated word backwards
 ) - sentence forward
 ( - sentence backwards
-} - paragraph forward
-{ - paragraph backwards
 % - find the next bracket
 
 ## jumps
 
-[m / ]m - go to previous / next method start
-[M / ]M - go to previous / next method end
+[f / ]f - go to previous / next function start
+[F / ]F - go to previous / next function end
+`[[ / ]]`- go to previous / next class start
+[] / ][ - go to previous / next class end
 [t / ]t - go to previous / next TODO or NOTE
 [e / ]e - go to previous / next diagnostic
 [g / ]g - go to previous / next git hunk
+{ - previsous aerial section
+} - next aerial section
 
 ## scrolling
 
@@ -145,7 +147,7 @@ Backspace - delete the character before the cursor (yanking) go to insert mode
 
 Enter or ciw - change word under cursor
 [Space]Enter ci( - change inside parentheses
-cis - change current sentence
+cis - change current statement
 cip - change current paragraph
 
 [Bracket] = (, ), [, ], {, }, <, >, ", ', `,
@@ -171,7 +173,7 @@ sa[motion][new] - add surrounding [new] to [motion]
 sc[old][new] - change surrounding [old] with [new]
 sd[old] - delete surrounding [old]
 ss[new] - add surrounding [new] around current word
-saa[new] - add surrounding [new] around current line
+sA[new] - add surrounding [new] around current line
 [space]c - change brackets (same as csb)
 [space]C - change quotes (same as csq)
 s[new] - in visual mode: add surrounding [new] around selection
