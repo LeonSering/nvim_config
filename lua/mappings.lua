@@ -5,10 +5,33 @@
 -- INSERT MODE / COMMAND LINE MODE --
 
 -- movement
+
+-- move by display lines (visual up / down) when no count is given
+vim.keymap.set({ 'n', 'v' }, 'j', function() return vim.v.count == 0 and 'gj' or 'j' end, { expr = true })
+vim.keymap.set({ 'n', 'v' }, 'k', function() return vim.v.count == 0 and 'gk' or 'k' end, { expr = true })
+
+local function insert_down()
+  local old_cursor = vim.o.guicursor
+  vim.o.guicursor = 'a:ver25'
+  vim.cmd('normal! gj')
+  vim.cmd('startinsert')
+  vim.o.guicursor = old_cursor
+end
+
+local function insert_up()
+  local old_cursor = vim.o.guicursor
+  vim.o.guicursor = 'a:ver25'
+  vim.cmd('normal! gk')
+  vim.cmd('startinsert')
+  vim.o.guicursor = old_cursor
+end
+
 vim.keymap.set({ 'i', 'c', 't' }, '<C-h>', '<Left>')
-vim.keymap.set({ 'i', 'c', 't' }, '<C-j>', '<Down>')
-vim.keymap.set({ 'i', 'c', 't' }, '<C-k>', '<Up>')
+vim.keymap.set({ 'i', 'c', 't' }, '<C-j>', insert_down)
+vim.keymap.set({ 'i', 'c', 't' }, '<C-k>', insert_up)
 vim.keymap.set({ 'i', 'c', 't' }, '<C-l>', '<Right>')
+vim.keymap.set({ 'i', 'c', 't' }, '<Down>', insert_down)
+vim.keymap.set({ 'i', 'c', 't' }, '<Up>', insert_up)
 
 -- deletion
 vim.keymap.set({ 'i', 'c', 't' }, '<C-s>', '<Bs>') -- delete character under cursor
