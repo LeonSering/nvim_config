@@ -27,11 +27,14 @@ local function insert_up()
 end
 
 vim.keymap.set({ 'i', 'c', 't' }, '<C-h>', '<Left>')
-vim.keymap.set({ 'i', 'c', 't' }, '<C-j>', insert_down)
-vim.keymap.set({ 'i', 'c', 't' }, '<C-k>', insert_up)
 vim.keymap.set({ 'i', 'c', 't' }, '<C-l>', '<Right>')
-vim.keymap.set({ 'i', 'c', 't' }, '<Down>', insert_down)
-vim.keymap.set({ 'i', 'c', 't' }, '<Up>', insert_up)
+vim.keymap.set({ 'c', 't' }, '<C-j>', '<Down>')
+vim.keymap.set({ 'c', 't' }, '<C-k>', '<Up>')
+
+vim.keymap.set('i', '<C-j>', insert_down)
+vim.keymap.set('i', '<C-k>', insert_up)
+vim.keymap.set('i', '<Down>', insert_down)
+vim.keymap.set('i', '<Up>', insert_up)
 
 -- deletion
 vim.keymap.set({ 'i', 'c', 't' }, '<C-s>', '<Bs>') -- delete character under cursor
