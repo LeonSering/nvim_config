@@ -10,6 +10,11 @@ return {
       ['run_current_replace'] = {
         map = "<leader>r",
       },
+      ['send_to_qf'] = {
+        map = "<nop>",
+        cmd = "<cmd>lua require('spectre.actions').send_to_qf()<CR>",
+        desc = "send all items to quickfix"
+      },
     },
 
     vim.keymap.set('n', '<leader>SR', function() require("spectre").open() end, {
