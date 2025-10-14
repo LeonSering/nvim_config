@@ -18,6 +18,8 @@ return {
       vim.keymap.set('n', '<Esc>', api.tree.close, opts('Close'))
       vim.keymap.set('n', 'C', api.tree.collapse_all, opts('Collapse All'))
       vim.keymap.set('n', 'K', api.node.show_info_popup, opts('Info'))
+      vim.keymap.set('n', '<C-j>', 'j', opts('Down'))
+      vim.keymap.set('n', '<C-k>', 'k', opts('Up'))
       vim.keymap.set('n', 'f', function()
         api.tree.expand_all()
         api.live_filter.start()
@@ -86,8 +88,8 @@ return {
       nested = true,
     })
 
-    vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeFindFileToggle<CR>')
-    vim.keymap.set({ 'i', 'v' }, '<C-n>', '<Esc><Cmd>NvimTreeFindFileToggle<CR>')
+    vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeFindFileToggle<CR>', { noremap = true })
+    vim.keymap.set({ 'i', 'v' }, '<C-n>', '<Esc><Cmd>NvimTreeFindFileToggle<CR>', { noremap = true })
     vim.api.nvim_set_hl(0, 'NvimTreeCursorLine', { ctermbg = 'darkgray', bg = 'DarkGray', bold = true })
     vim.api.nvim_set_hl(0, 'SpellCap', { ctermbg = 'None', bg = 'None', bold = true })                                     -- Readme.md and toml files
     vim.api.nvim_set_hl(0, 'SpellRare', { ctermbg = 'white', ctermfg = 'black', bg = 'White', fg = 'Black', bold = true }) -- Copies files

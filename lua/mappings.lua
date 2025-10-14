@@ -200,7 +200,6 @@ vim.keymap.set('i', '<C-z>', '<Nop>')
 vim.keymap.set('i', '<C-c>', '<Nop>')
 vim.keymap.set('i', '<C-@>', '<Nop>')
 vim.keymap.set('i', '<C-i>', '<Nop>')
-vim.keymap.set('i', '<C-n>', '<Nop>')
 vim.keymap.set('i', '<C-f>', '<Nop>')
 
 -- disable keys for learning:

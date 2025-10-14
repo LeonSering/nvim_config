@@ -124,9 +124,9 @@ return {
       { desc = "FzfLua: LSP incoming calls" })
     vim.keymap.set('n', '<leader>fv', "<cmd>FzfLua lsp_document_symbols<cr>",
       { desc = "FzfLua: LSP document symbols" })
-    vim.keymap.set('n', '<leader>fV', "<cmd>FzfLua lsp_workspace_symbols<cr>",
+    vim.keymap.set('n', '<leader>fV', "<cmd>FzfLua lsp_live_workspace_symbols<cr>",
       { desc = "FzfLua: LSP workspace symbols" })
-    vim.keymap.set('n', '<leader>FV', "<cmd>FzfLua lsp_workspace_symbols<cr>",
+    vim.keymap.set('n', '<leader>FV', "<cmd>FzfLua lsp_live_workspace_symbols<cr>",
       { desc = "FzfLua: LSP workspace symbols" })
     vim.keymap.set('n', '<leader>fa', function()
       require('fzf-lua').lsp_document_symbols({
