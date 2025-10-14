@@ -268,10 +268,11 @@ Ctrl-J - toggle comment for line and go down
 [Space]\ - open nvim config file lua/options.lua
 [Space]| - open nvim config file lua/mappings.lua
 [Space]? - open this keymappings.md
-[Space]/n - open cheat sheet normal_mode.pdf
-[Space]/s - open cheat sheet space.pdf
-[Space]/c - open cheat sheet ctrl.pdf
-[Space]/a - open cheat sheet alt.pdf
+[Space]/n - open cheat sheet normal_mode
+[Space]/s - open cheat sheet space
+[Space]/c - open cheat sheet ctrl
+[Space]/a - open cheat sheet alt
+[Space]/f - open cheat sheet FzfLua
 
 # Insert Mode:
 
@@ -401,12 +402,12 @@ C-y - accept diff
 [Space]fg - live grep in working directory (normal or visual mode)
 [Space]fG or [Space] FG - live grep in working directory (word under cursor)
 [Space]fw - grep word under cursor
-[Space]fu - fuzzy find in current file
+[Space]f/ - fuzzy find in current file
 
 [Space]fj - jumplist
 [Space]fm - marks
 [Space]fr - register
-[Space]f/ - search history
+[Space]f? - search history
 [Space]fc - command history
 [Space]f: - commands
 [Space]fh - help tags
@@ -414,6 +415,7 @@ C-y - accept diff
 
 [Space]fe - errors
 [Space]fE or [Space]FE - errors and warnings
+[Space]fu - references / usages
 [Space]fi - incoming calls
 [Space]fv - symbols of current file
 [Space]fV or [Space]FV - symbols of workspace

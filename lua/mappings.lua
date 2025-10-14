@@ -101,6 +101,9 @@ vim.keymap.set('n', '<leader>/c',
 vim.keymap.set('n', '<leader>/a',
   '<Cmd>! osascript ~/.config/nvim/gotopage.scpt ~/.config/nvim/cheat_sheet.pdf 4<CR><Esc>',
   { desc = "Open cheat_sheet.pdf; page: alt" })
+vim.keymap.set('n', '<leader>/f',
+  '<Cmd>! osascript ~/.config/nvim/gotopage.scpt ~/.config/nvim/cheat_sheet.pdf 5<CR><Esc>',
+  { desc = "Open cheat_sheet.pdf; page: FzfLua" })
 -- vim.keymap.set('n', '<leader>/n', '<Cmd>! okular ~/.config/nvim/cheat_sheet.pdf --page 1 &<CR><Esc>',
 --   { desc = "Open cheat_sheet.pdf; page: normal_mode" })
 -- vim.keymap.set('n', '<leader>/s', '<Cmd>! okular ~/.config/nvim/cheat_sheet.pdf --page 2 &<CR><Esc>',
@@ -109,6 +112,8 @@ vim.keymap.set('n', '<leader>/a',
 --   { desc = "Open cheat_sheet.pdf; page: ctrl" })
 -- vim.keymap.set('n', '<leader>/a', '<Cmd>! okular ~/.config/nvim/cheat_sheet.pdf --page 4 &<CR><Esc>',
 --   { desc = "Open cheat_sheet.pdf; page: alt" })
+-- vim.keymap.set('n', '<leader>/f', '<Cmd>! okular ~/.config/nvim/cheat_sheet.pdf --page 5 &<CR><Esc>',
+--   { desc = "Open cheat_sheet.pdf; page: FzfLua" })
 vim.keymap.set('n', '<leader>\\', '<Cmd>vsplit ~/.config/nvim/lua/options.lua<CR>', { desc = "Open options.lua" })
 vim.keymap.set('n', '<leader>|', '<Cmd>vsplit ~/.config/nvim/lua/mappings.lua<CR>', { desc = "Open mappings.lua" })
 vim.keymap.set('n', '<C-d>', '<C-d>zz') -- move down half a page and center cursor

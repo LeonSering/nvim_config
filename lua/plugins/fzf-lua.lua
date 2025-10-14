@@ -76,6 +76,7 @@ return {
     -- keymaps
     vim.keymap.set('n', '\\', "<cmd>FzfLua resume<cr>", { desc = "FzfLua: Resume" })
 
+
     vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "FzfLua: Files" })
     vim.keymap.set("n", "<leader>fF", "<cmd>FzfLua files hidden=true no_ignore=true<cr>",
       { desc = "FzfLua: Find files including gitignored and hidden files" })
@@ -103,13 +104,13 @@ return {
     vim.keymap.set('v', '<leader>FG', grep_visual_selection, { desc = "FzfLua: Live grep with selection" })
 
     vim.keymap.set('n', '<leader>fw', "<cmd>FzfLua grep_cword<cr>", { desc = "FzfLua: Grep word under cursor" })
-    vim.keymap.set('n', '<leader>fu', "<cmd>FzfLua grep_curbuf<cr>",
+    vim.keymap.set('n', '<leader>f/', "<cmd>FzfLua grep_curbuf<cr>",
       { desc = "FzfLua: Fuzzy find in current buffer" })
 
     vim.keymap.set('n', '<leader>fj', "<cmd>FzfLua jumps<cr>", { desc = "FzfLua: Jumps" })
     vim.keymap.set('n', '<leader>fm', "<cmd>FzfLua marks<cr>", { desc = "FzfLua: Marks" })
     vim.keymap.set('n', '<leader>fr', "<cmd>FzfLua registers<cr>", { desc = "FzfLua: Registers" })
-    vim.keymap.set('n', '<leader>f/', "<cmd>FzfLua search_history<cr>", { desc = "FzfLua: Search history" })
+    vim.keymap.set('n', '<leader>f?', "<cmd>FzfLua search_history<cr>", { desc = "FzfLua: Search history" })
     vim.keymap.set('n', '<leader>fc', "<cmd>FzfLua command_history<cr>", { desc = "FzfLua: Commands history" })
     vim.keymap.set('n', '<leader>f:', "<cmd>FzfLua commands<cr>", { desc = "FzfLua: Commands" })
     vim.keymap.set("n", "<leader>fh", "<cmd>FzfLua help_tags<cr>", { desc = "FzfLua: Help Tags" })
@@ -120,6 +121,7 @@ return {
       { desc = "FzfLua: Errors" })
     vim.keymap.set('n', '<leader>fE', "<cmd>FzfLua diagnostics_workspace<cr>", { desc = "FzfLua: Errors and Warnings" })
     vim.keymap.set('n', '<leader>FE', "<cmd>FzfLua diagnostics_workspace<cr>", { desc = "FzfLua: Errors and Warnings" })
+    vim.keymap.set("n", "<leader>fu", "<cmd>FzfLua lsp_finder<cr>", { desc = "FzfLua: LSP references" })
     vim.keymap.set('n', '<leader>fi', "<cmd>FzfLua lsp_incoming_calls<cr>",
       { desc = "FzfLua: LSP incoming calls" })
     vim.keymap.set('n', '<leader>fv', "<cmd>FzfLua lsp_document_symbols<cr>",
