@@ -37,7 +37,7 @@ return {
       lightbulb = {
         virtual_text = false,
       },
-      rename = {
+      --[[ rename = {
         in_select = false,
         auto_save = true,
         keys = {
@@ -45,7 +45,7 @@ return {
           exec = '<Cr>',
           select = 'x',
         },
-      },
+      }, ]]
       beacon = {
         frequency = 15,
       },
@@ -60,7 +60,7 @@ return {
     vim.keymap.set('n', '<leader>d', '<cmd>Lspsaga peek_definition<CR>', { desc = "LSP: Peek definition" })
     vim.keymap.set('n', '<leader>t', '<cmd>Lspsaga finder tyd<CR>', { desc = "LSP: List type definitions" })
     vim.keymap.set('n', '<leader>u', '<cmd>Lspsaga finder<CR>', { desc = "LSP: List references" })
-    vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<CR>A', { desc = "LSP: Rename" })
+    -- vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<CR>A', { desc = "LSP: Rename" })
     vim.keymap.set('n', '<leader>E', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { desc = "LSP: Previous diagnostic" })
     vim.keymap.set('n', '<leader>e', '<cmd>Lspsaga diagnostic_jump_next<CR>', { desc = "LSP: Next diagnostic" })
     vim.keymap.set('n', '[e', '<cmd>Lspsaga diagnostic_jump_prev<CR>', { desc = "LSP: Previous diagnostic" })
