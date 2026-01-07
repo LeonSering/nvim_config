@@ -1,5 +1,15 @@
 return {
   'nvim-tree/nvim-tree.lua', -- file explorer
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
+    -- mkdir -p ~/.local/share/fonts
+    -- cd ~/.local/share/fonts
+    -- wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip
+    -- unzip -o Hack.zip -d Hack
+    -- rm Hack.zip
+    -- fc-cache -fv
+    -- Add to profil: restart yakuake, edit profil -> appearance -> font
+  },
   config = function()
     local function my_on_attach(bufnr)
       local api = require "nvim-tree.api"

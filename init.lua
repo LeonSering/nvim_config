@@ -19,11 +19,13 @@ vim.opt.rtp:prepend(lazypath)
 -- require "plugins"
 require("lazy").setup({
   spec = {
-    {import = "plugins" },
+    { import = "plugins" },
+  },
+  rocks = {
+    enabled = false, -- Deaktiviert luarocks komplett
   },
   change_detection = {
     notify = false,
   },
 })
 require("mappings")
-

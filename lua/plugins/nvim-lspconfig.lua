@@ -1,36 +1,25 @@
 return {
-  'neovim/nvim-lspconfig', -- LSP configuration
+  'neovim/nvim-lspconfig',
+  dependencies = {
+    -- If you use Mason, mason-lspconfig should be here
+    -- 'williamboman/mason-lspconfig.nvim',
+  },
   config = function()
-    -- Setup language servers.
-    local lspconfig = require('lspconfig')
-
-    -- disable semantic highlighting for all languages
+    -- 1. DISABLE SEMANTIC HIGHLIGHTING
+    -- Prevents LSP from overwriting Treesitter colors
     for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
       vim.api.nvim_set_hl(0, group, {})
     end
 
-    -- enables auto-completion with snippets (automatic insertion of arguemnts)
-    --[[     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits', } }
+    -- 2. STANDARD SERVER SETUP
+    local servers = { 'jsonls', 'pyright', 'taplo', 'yamlls', 'marksman' }
+    for _, lsp in ipairs(servers) do
+      vim.lsp.config[lsp] = {}
+      vim.lsp.enable(lsp)
+    end
 
-      -- for rust lsp, see rustaceanvim.lua
-      lspconfig.rust_analyzer.setup {
-        capabilities = capabilities,
-        settings = {
-          ['rust-analyzer'] = {
-            checkOnSave = {
-              command = 'clippy',
-            },
-          },
-        ,
-     } ]]
-
-    lspconfig.jsonls.setup {}
-
-    lspconfig.pyright.setup {}
-
-    lspconfig.lua_ls.setup {
+    -- 3. LUA_LS SPECIAL CONFIGURATION
+    vim.lsp.config.lua_ls = {
       on_init = function(client)
         local path = client.workspace_folders[1].name
         if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
@@ -57,38 +46,29 @@ return {
         Lua = {}
       }
     }
+    vim.lsp.enable('lua_ls')
 
-    lspconfig.taplo.setup {}    -- TOML
-
-    lspconfig.yamlls.setup {}   -- YAML
-
-    lspconfig.marksman.setup {} -- markdown
-
-    -- Set up diagnostics.
+    -- 4. GLOBAL DIAGNOSTICS SETTINGS
     vim.diagnostic.config({
       virtual_text = false, -- disable inline diagnostics
       signs = {
-        -- severity_sort = true,
         severity = { min = vim.diagnostic.severity.WARN },
         severity_sort = true,
       }
     })
 
+    -- 5. KEYMAPS & INLAY HINTS
     -- set hotkey for formatting
     vim.keymap.set('n', '<leader>p', function() vim.lsp.buf.format { async = true } end, { desc = "LSP: Format" })
-    --[[ vim.keymap.set('n', '<leader>e', function()
-      vim.diagnostic.open_float({
-        border = 'rounded',
-        focusable = false,
-        scope = "cursor",
-        header = "",
-      })
-    end) ]]
-    vim.keymap.set('n', '<leader>h', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
-      { desc = "LSP: Toggle inlay hints" })
+    
+    vim.keymap.set('n', '<leader>h', function() 
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) 
+    end, { desc = "LSP: Toggle inlay hints" })
+    
+    -- Styling for Inlay Hints (Gray/Italic)
     vim.api.nvim_set_hl(0, 'LspInlayHint', { ctermfg = 103, fg = '#8787af', italic = true })
 
-    -- DISPLAY DIAGNOSTICS IN THE COMMAND BAR
+    -- 6. DISPLAY DIAGNOSTICS IN THE COMMAND BAR
 
     -- Location information about the last message printed. The format is
     -- `(did print, buffer number, line number)`.
@@ -128,7 +108,6 @@ return {
             return
           end
 
-          -- local diags = vim.lsp.diagnostic.get_line_diagnostics(bufnr, line, { severity_limit = 'Hint' })
           local diags = vim.diagnostic.get(0, { lnum = line })
 
           if #diags == 0 then
@@ -155,7 +134,6 @@ return {
             local width = vim.api.nvim_get_option_value('columns', {}) - 25
             local lines = vim.split(diag.message, "\n")
             local message = lines[1]
-            -- local trimmed = false
 
             if #lines > 1 and #message <= short_line_limit then
               message = message .. ' ' .. lines[2]
@@ -169,11 +147,11 @@ return {
             local hlgroup = hint_hlgroup
             local padding = '  '
 
-            if diag.severity == vim.lsp.protocol.DiagnosticSeverity.Error then
+            if diag.severity == vim.diagnostic.severity.ERROR then
               kind = 'error'
               hlgroup = error_hlgroup
               padding = ' '
-            elseif diag.severity == vim.lsp.protocol.DiagnosticSeverity.Warning then
+            elseif diag.severity == vim.diagnostic.severity.WARN then
               kind = 'warn'
               hlgroup = warning_hlgroup
               padding = '  '

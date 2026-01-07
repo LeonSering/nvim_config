@@ -5,6 +5,7 @@ return {
     dependencies = {
       { "github/copilot.vim" },    -- or github/copilot.vim
       { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+      { "folke/which-key.nvim"}
     },
     build = "make tiktoken",       -- Only on MacOS or Linux
     config = function()

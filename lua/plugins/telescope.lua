@@ -3,7 +3,7 @@ return {
   priority = 100,
   dependencies = {                                                  -- fuzzy finder
     'nvim-lua/plenary.nvim',
-    'nvim-treesitter/nvim-treesitter',                              -- for syntax highlighting
+    -- 'nvim-treesitter/nvim-treesitter',                              -- for syntax highlighting
     'nvim-tree/nvim-web-devicons',                                  -- for icons
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }, -- fzf backend,
     -- if fzf not found: Do :Lazy -> Enter on telescope-fzf-native.nvim -> gb to build

@@ -1,6 +1,10 @@
 return {
-  'nvimdev/lspsaga.nvim', -- LSP UI, code actions, preview for definiton, type definition, references, implementation, rename, diagnostic, etc. also: top status line
-  dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+  -- 'nvimdev/lspsaga.nvim', -- LSP UI, code actions, preview for definiton, type definition, references, implementation, rename, diagnostic, etc. also: top status line
+  'leeguooooo/lspsaga.nvim', -- fixing the deprecation warning, which is not merged yet.
+  branch = 'fix-client-method-deprecations',
+  dependencies = {
+    -- 'nvim-treesitter/nvim-treesitter',
+    'nvim-tree/nvim-web-devicons' },
 
   config = function(_, opts)
     require('lspsaga').setup {

@@ -1,7 +1,7 @@
 return {
   'stevearc/aerial.nvim', -- sidebar for functions, classes, etc on the right side
   dependencies = {
-    'nvim-treesitter/nvim-treesitter',
+    -- 'nvim-treesitter/nvim-treesitter',
     'nvim-tree/nvim-web-devicons',
   },
   config = function()
