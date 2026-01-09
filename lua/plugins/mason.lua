@@ -19,6 +19,7 @@ return {
           'taplo',
           'yamlls',
           'marksman',
+          'rust_analyzer',
         },
         -- Automatically set up installed servers with default config
         automatic_installation = true,
