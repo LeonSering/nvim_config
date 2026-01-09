@@ -21,6 +21,7 @@ return {
           'marksman',
           'rust_analyzer',
         },
+        -- :MasonInstall codelldb
         -- Automatically set up installed servers with default config
         automatic_installation = true,
       })

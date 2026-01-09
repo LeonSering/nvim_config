@@ -13,5 +13,6 @@ return {
       },
       ident = { enable = true },
     }
+    vim.cmd('syntax on') -- activate basic regex highlighting as fallback
   end
 }

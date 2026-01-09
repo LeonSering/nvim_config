@@ -2,7 +2,7 @@ return {
   'neovim/nvim-lspconfig',
   dependencies = {
     -- If you use Mason, mason-lspconfig should be here
-    -- 'williamboman/mason-lspconfig.nvim',
+    -- 'mason-org/mason-lspconfig.nvim',
   },
   config = function()
     -- 1. DISABLE SEMANTIC HIGHLIGHTING
@@ -60,11 +60,11 @@ return {
     -- 5. KEYMAPS & INLAY HINTS
     -- set hotkey for formatting
     vim.keymap.set('n', '<leader>p', function() vim.lsp.buf.format { async = true } end, { desc = "LSP: Format" })
-    
-    vim.keymap.set('n', '<leader>h', function() 
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) 
+
+    vim.keymap.set('n', '<leader>h', function()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { desc = "LSP: Toggle inlay hints" })
-    
+
     -- Styling for Inlay Hints (Gray/Italic)
     vim.api.nvim_set_hl(0, 'LspInlayHint', { ctermfg = 103, fg = '#8787af', italic = true })
 

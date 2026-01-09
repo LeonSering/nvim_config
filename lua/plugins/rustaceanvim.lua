@@ -36,7 +36,7 @@ return {
           -- rust-analyzer language server configuration
           ['rust-analyzer'] = {
             rustfmt = {
-              extraArgs = { "+nightly", "--config-path=/Users/leon.sering/rustfmt.toml" },
+              extraArgs = { "+nightly", "--config-path=" .. vim.fn.expand("~") .. "/rustfmt.toml" },
             },
             check = {
               command = 'clippy',
