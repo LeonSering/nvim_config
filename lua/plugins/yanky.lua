@@ -1,7 +1,7 @@
 return
 {
   "gbprod/yanky.nvim", -- better yanking and pasting
-  priority = 10, -- must be smaller than of telescope
+  priority = 10,       -- must be smaller than of telescope
   config = function()
     local utils = require("yanky.utils")
     local mapping = require("yanky.telescope.mapping")

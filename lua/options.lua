@@ -19,7 +19,7 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.autoindent = true
-vim.opt.clipboard:append("unnamed") -- yanks into "middle-mouse" clipboard
+vim.opt.clipboard:append("unnamed,unnamedplus") -- yanks into "middle-mouse" clipboard and system clipboard
 vim.g.have_nerd_font = true
 vim.opt.textwidth = 120
 vim.opt.breakindent = true -- auto indent when breaking lines
